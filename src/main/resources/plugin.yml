@@ -1,0 +1,46 @@
+name: TestPlugin
+version: '${project.version}'
+main: its.wurm.testplugin.Main
+api-version: 1.17
+authors: [ Wurm ]
+description: learning how to do plugin stuff
+commands:
+  giveall:
+    description: Give all test items to the player
+    usage: /<command>
+  testgui:
+    description: Open a custom GUI to the player
+    usage: /<command>
+  customsummon/dummy:
+    description: Summon the Dummy mob
+    usage: /<command>
+  customsummon/chillZombie:
+    description: Summon a Frozen Undead
+    usage: /<command>
+  customsummon/fencerZombie:
+    description: Summon a Fencer Zombie
+    usage: /<command>
+  customsummon/armorZombie:
+    description: Summon an Armored Zombie
+    usage: /<command>
+  customsummon/regenZombie:
+    description: Summon a Relentless Corpse
+    usage: /<command>
+  customsummon/smolGhast:
+    description: Summon a Baby Ghast
+    usage: /<command>
+  customsummon/bersZombie:
+    description: Summon a Raging Zombie
+    usage: /<command>
+  marker:
+    description: Create a damage marker
+    usage: /<command>
+  customsummon/noviceSkele:
+    description: Create a Novice Skeleton
+    usage: /<command>
+  defaultStat:
+    description: Set player's stats
+    usage: /<command>
+  check:
+    description: check player's item
+    usage: /<command>
