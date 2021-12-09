@@ -30,7 +30,7 @@ public class Commands implements CommandExecutor {
         }
         Player player = (Player) sender;
         if (cmd.getName().equalsIgnoreCase("giveall")) {
-            player.getInventory().addItem(ItemManager.hammerDev);
+            player.getInventory().addItem(ItemManager.createDevHammer());
             player.getInventory().addItem(ItemManager.moon_glove);
             player.getInventory().addItem(ItemManager.echostone);
             player.getInventory().addItem(ItemManager.sower_contract);

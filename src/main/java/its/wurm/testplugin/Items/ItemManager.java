@@ -25,15 +25,10 @@ public class ItemManager implements Listener {
     public ItemManager(Main plugin) { this.plugin = plugin;}
 
 
-    //Fire Ball Name
-    public static ItemStack testItem;
-    //Enchanted Dripstone
     public static ItemStack edripstone;
     //The Drip
     public static ItemStack the_drip;
     //Dev Hammer
-    public static ItemStack hammerDev;
-    //Enchanted Deepslate
     public static ItemStack edeepslate;
     //Emchanted Polished Deepslate
     public static ItemStack sedeepslate;
@@ -176,13 +171,14 @@ public class ItemManager implements Listener {
     public static ItemStack alloy_legs;
     //Alloy Boots
     public static ItemStack alloy_boots;
-    //Stat Menu
+    //Netherite Saber
+    public static ItemStack netherite_saber;
+    //Test Shortbow
+    public static ItemStack test_shortbow;
 
 
 
     public static void init() {
-        createItem1();
-        createDevHammer();
         create_e_dripstone();
         create_the_drip();
         create_e_deepslate();
@@ -255,24 +251,25 @@ public class ItemManager implements Listener {
         create_alloy_chestplate();
         create_alloy_leggings();
         create_alloy_boots();
+        create_netherite_saber();
+        create_test_shortbow();
 
     }
 
     // This is Fire Ball Name
-    private static void createItem1() {
-        ItemStack item = new ItemStack(Material.FIRE_CHARGE, 1);
-        ItemMeta meta = item.getItemMeta();
+    public static ItemStack createItem1() {
+        ItemStack testItem = new ItemStack(Material.FIRE_CHARGE, 1);
+        ItemMeta meta = testItem.getItemMeta();
         meta.setDisplayName("§cFire Ball Name");
         List<String> lore = new ArrayList<>();
         lore.add("§c§lSPECIAL");
         meta.setLore(lore);
         meta.addEnchant(Enchantment.LUCK, 1, false);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        item.setItemMeta(meta);
-        testItem = item;
+        testItem.setItemMeta(meta);
 
         // Shaped Recipe for Fire Ball Name
-        ShapedRecipe sr = new ShapedRecipe(NamespacedKey.minecraft("testitem_s"), item);
+        ShapedRecipe sr = new ShapedRecipe(NamespacedKey.minecraft("testitem_s"), testItem);
         sr.shape("S S",
                  " F ",
                  "S S");
@@ -281,23 +278,24 @@ public class ItemManager implements Listener {
         Bukkit.getServer().addRecipe(sr);
 
         // Shapeless Recipe for Fire Ball Name
-        ShapelessRecipe slr = new ShapelessRecipe(NamespacedKey.minecraft("testitem_sl"), item);
+        ShapelessRecipe slr = new ShapelessRecipe(NamespacedKey.minecraft("testitem_sl"), testItem);
         slr.addIngredient(1, Material.BLAZE_ROD);
         slr.addIngredient(1, Material.COAL_BLOCK);
         slr.addIngredient(1, Material.FIREWORK_STAR);
         Bukkit.getServer().addRecipe(slr);
 
         // Furnace Recipe for Fire Ball Name
-        FurnaceRecipe fr = new FurnaceRecipe(NamespacedKey.minecraft("testitem_f"), item,
+        FurnaceRecipe fr = new FurnaceRecipe(NamespacedKey.minecraft("testitem_f"), testItem,
                 Material.FIRE_CHARGE, 20.0f, 40);
         Bukkit.getServer().addRecipe(fr);
 
+        return testItem;
     }
 
     //This is Dev Hammer
-    private static void createDevHammer() {
-        ItemStack item = new ItemStack(Material.IRON_AXE, 1);
-        ItemMeta meta = item.getItemMeta();
+    public static ItemStack createDevHammer() {
+        ItemStack devHammer = new ItemStack(Material.IRON_AXE, 1);
+        ItemMeta meta = devHammer.getItemMeta();
         meta.setDisplayName("§cDev Hammer");
         List<String> lore = new ArrayList<>();
         lore.add("§7Down any mob in one hit with this mighty weapon");
@@ -309,8 +307,9 @@ public class ItemManager implements Listener {
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Dev Hammer");
-        item.setItemMeta(meta);
-        hammerDev = item;
+        devHammer.setItemMeta(meta);
+
+        return devHammer;
     }
 
     //This is Menu Glass
@@ -1369,7 +1368,7 @@ public class ItemManager implements Listener {
         sr.shape(" N ",
                  "NNN",
                  " N ");
-        sr.setIngredient('N', new RecipeChoice.ExactChoice(vsenetherite));
+        sr.setIngredient('N', new RecipeChoice.ExactChoice(senetherite));
         Bukkit.getServer().addRecipe(sr);
     }
 
@@ -1682,6 +1681,64 @@ public class ItemManager implements Listener {
         sr.setIngredient('S', Material.STICK);
         Bukkit.getServer().addRecipe(sr);
     }
+
+    //This is Netherite Scimitar
+    private static void create_netherite_saber() {
+        ItemStack item = new ItemStack(Material.NETHERITE_SWORD, 1);
+        ItemMeta meta = item.getItemMeta();
+        meta.setUnbreakable(true);
+        meta.setDisplayName("§aNetherite Scimitar");
+        List<String> lore = new ArrayList<>();
+        lore.add("§7Damage: " + "§c+60");
+        lore.add("§7Strength: " + "§c+25");
+        lore.add(" ");
+        lore.add("§a§lUNCOMMON SWORD");
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Damage"), PersistentDataType.DOUBLE, 60.0);
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Strength"), PersistentDataType.DOUBLE, 25.0);
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "sword");
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Netherite Scimitar");
+
+        meta.setLore(lore);
+        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        item.setItemMeta(meta);
+        netherite_saber = item;
+
+        //Shaped recipe for Netherite Scimitar
+        ShapedRecipe sr = new ShapedRecipe(NamespacedKey.minecraft("netherite_scimitar_s"), item);
+        sr.shape("  N",
+                 " N ",
+                 "S  ");
+        sr.setIngredient('N', new RecipeChoice.ExactChoice(enetherite));
+        sr.setIngredient('S', Material.STICK);
+        Bukkit.getServer().addRecipe(sr);
+    }
+
+    //This is Test Shortbow
+    private static void create_test_shortbow() {
+        ItemStack item = new ItemStack(Material.BOW, 1);
+        ItemMeta meta = item.getItemMeta();
+        meta.setUnbreakable(true);
+        meta.setDisplayName("§cTest Shortbow");
+        List<String> lore = new ArrayList<>();
+        lore.add(" ");
+        lore.add("§c§lSPECIAL BOW");
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Damage"), PersistentDataType.DOUBLE, 666.0);
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "bow");
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Test Shortbow");
+
+        meta.setLore(lore);
+        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        item.setItemMeta(meta);
+        test_shortbow = item;
+
+        //Shaped recipe for Test Shortbow
+        ShapedRecipe sr = new ShapedRecipe(NamespacedKey.minecraft("test_bow_s"), item);
+        sr.shape("  S",
+                 " S ",
+                 "S  ");
+        sr.setIngredient('S', Material.STRING);
+        Bukkit.getServer().addRecipe(sr);
+    }
 //------------------------------------------ARMOR SECTION c:armor-------------------------------------------------------
 
     //This is The Drip
@@ -1879,7 +1936,7 @@ public class ItemManager implements Listener {
         meta.setLore(lore);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         item.setItemMeta(meta);
-        diamond_saber = item;
+      alloy_boots = item;
 
         //Shaped recipe for Alloy Boots
         ShapedRecipe sr = new ShapedRecipe(NamespacedKey.minecraft("alloy_boots_s"), item);

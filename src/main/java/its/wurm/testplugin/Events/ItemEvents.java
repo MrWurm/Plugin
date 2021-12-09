@@ -8,6 +8,7 @@ import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Ageable;
+import org.bukkit.block.data.type.Snow;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -200,6 +201,9 @@ public class ItemEvents implements Listener{
                             player.sendMessage(ChatColor.GREEN + "Used Echo");
                             cooldown_echo.put(player.getName(), System.currentTimeMillis() + (3 * 1000));
                             break;
+                        case "Test Shortbow":
+                            player.launchProjectile(Arrow.class, player.getLocation().getDirection());
+                            break;
                         default:
                             return;
                     }
@@ -259,6 +263,9 @@ public class ItemEvents implements Listener{
                             player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 100, 2);
                             player.sendMessage(ChatColor.GREEN + "Used Echo");
                             cooldown_echo.put(player.getName(), System.currentTimeMillis() + (3 * 1000));
+                            break;
+                        case "Test Shortbow":
+                            player.launchProjectile(Arrow.class, player.getLocation().getDirection());
                             break;
                         default:
                             return;

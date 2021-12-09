@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.SmallFireball;
 import org.bukkit.event.EventHandler;
@@ -1106,9 +1107,9 @@ if (player.getInventory().getHelmet() != null &&
                 PlayerStatEvents.updateStats(player, plugin);
 
                 float speed = (float) (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
-                                        PersistentDataType.DOUBLE) * 1430);
-                player.setWalkSpeed(speed);
-                
+                                        PersistentDataType.DOUBLE) / 1000);
+                player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speed);
+
                 if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CoolDown"),
                     PersistentDataType.DOUBLE) == 0) {
                     StatFunctions.ShowStat(player, plugin);
