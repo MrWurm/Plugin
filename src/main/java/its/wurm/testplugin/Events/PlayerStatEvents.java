@@ -62,15 +62,8 @@ public class PlayerStatEvents implements Listener {
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CritModifier"),
                 PersistentDataType.DOUBLE, 0.0);
 
-        //Define Attack Speed
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "ASBase"),
-                PersistentDataType.DOUBLE, 20.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "ASModifier"),
-                PersistentDataType.DOUBLE, 0.0);
 
         //Define Damage
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageMain"),
-                PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageBase"),
                 PersistentDataType.DOUBLE, 1.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
@@ -79,7 +72,7 @@ public class PlayerStatEvents implements Listener {
         //Define Speed
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "SpeedBase"),
                 PersistentDataType.DOUBLE, 100.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "ASModifier"),
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "SpeedModifier"),
                 PersistentDataType.DOUBLE, 0.0);
 
         //Define Intelligence
@@ -953,90 +946,90 @@ if (player.getInventory().getHelmet() != null &&
             PersistentDataType.DOUBLE, (1 + critMod) * crit);
 
 
-    //take base attack speed
-    double AS = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "ASBase"),
+    //take base speed
+    double speed = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedBase"),
             PersistentDataType.DOUBLE);
 
     //Check player's main hand item for attack speed and apply it to attack speed
     if (player.getInventory().getItemInMainHand() != null &&
         player.getInventory().getItemInMainHand().getItemMeta() != null &&
         player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() != null &&
-        player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AS"),
+        player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
                 PersistentDataType.DOUBLE) != null) {
 
-        AS = AS + player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AS"),
+        speed = speed + player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
                 PersistentDataType.DOUBLE);
     }
 
-    //Check player's off hand item for attack speed and apply it to attack speed
+    //Check player's off hand item for speed and apply it to attack speed
     if (player.getInventory().getItemInOffHand() != null &&
         player.getInventory().getItemInOffHand().getItemMeta() != null &&
         player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer() != null &&
-        player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AS"),
+        player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
                 PersistentDataType.DOUBLE) != null &&
         player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Dual"),
                 PersistentDataType.STRING) != null) {
 
-        AS = AS + player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AS"),
+        speed = speed + player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
                 PersistentDataType.DOUBLE);
     }
 
-    //Check player's helmet for attack speed and apply it to attack speed
+    //Check player's helmet for speed and apply it to attack speed
     if (player.getInventory().getHelmet() != null &&
         player.getInventory().getHelmet().getItemMeta() != null &&
         player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer() != null &&
-        player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AS"),
+        player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
                 PersistentDataType.DOUBLE) != null) {
 
-        AS = AS + player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AS"),
+        speed = speed + player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
                 PersistentDataType.DOUBLE);
     }
 
-    //Check player's chest for attack speed and apply it to attack speed
+    //Check player's chest for speed and apply it to attack speed
     if (player.getInventory().getChestplate() != null &&
         player.getInventory().getChestplate().getItemMeta() != null &&
         player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer() != null &&
-        player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AS"),
+        player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
                 PersistentDataType.DOUBLE) != null) {
 
-        AS = AS + player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AS"),
+        speed = speed + player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
                 PersistentDataType.DOUBLE);
     }
 
-    //Check player's legs for attack speed and apply it to attack speed
+    //Check player's legs for speed and apply it to attack speed
     if (player.getInventory().getLeggings() != null &&
         player.getInventory().getLeggings().getItemMeta() != null &&
         player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer() != null &&
-        player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AS"),
+        player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
                 PersistentDataType.DOUBLE) != null) {
 
-        AS = AS + player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AS"),
+        speed = speed + player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
                 PersistentDataType.DOUBLE);
     }
 
-    //Check player's boots for attack speed and apply it to attack speed
+    //Check player's boots for speed and apply it to attack speed
     if (player.getInventory().getBoots() != null &&
         player.getInventory().getBoots().getItemMeta() != null &&
         player.getInventory().getBoots().getItemMeta().getPersistentDataContainer() != null &&
-        player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AS"),
+        player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
                 PersistentDataType.DOUBLE) != null) {
 
-        AS = AS + player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AS"),
+        speed = speed + player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
                 PersistentDataType.DOUBLE);
     }
 
-    //take base attack speed modifier
-    double ASMod = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "ASModifier"),
+    //take base speed modifier
+    double speedMod = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
             PersistentDataType.DOUBLE);
 
-    //Check player's main hand item for crit modifier and apply it to crit modifier
+    //Check player's main hand item for speed modifier and apply it to Speed modifier
     if (player.getInventory().getItemInMainHand() != null &&
         player.getInventory().getItemInMainHand().getItemMeta() != null &&
         player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() != null &&
-        player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ASModifier"),
+        player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
 
-        ASMod = ASMod + player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ASModifier"),
+        speedMod = speedMod + player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
                 PersistentDataType.DOUBLE);
     }
 
@@ -1044,61 +1037,61 @@ if (player.getInventory().getHelmet() != null &&
     if (player.getInventory().getItemInOffHand() != null &&
         player.getInventory().getItemInOffHand().getItemMeta() != null &&
         player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer() != null &&
-        player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ASModifier"),
+        player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
                 PersistentDataType.DOUBLE) != null &&
         player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Dual"),
                 PersistentDataType.STRING) != null) {
 
-        ASMod = ASMod + player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ASModifier"),
+        speedMod = speedMod + player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
                 PersistentDataType.DOUBLE);
     }
 
-    //Check player's helmet for crit modifier and apply it to crit modifier
+    //Check player's helmet for speed modifier and apply it to speed modifier
     if (player.getInventory().getHelmet() != null &&
         player.getInventory().getHelmet().getItemMeta() != null &&
         player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer() != null &&
-        player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ASModifier"),
+        player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
 
-        ASMod = ASMod + player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ASModifier"),
+        speedMod = speedMod + player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
                 PersistentDataType.DOUBLE);
     }
 
-    //Check player's chest for crit modifier and apply it to crit modifier
+    //Check player's chest for speed modifier and apply it to speed modifier
     if (player.getInventory().getChestplate() != null &&
         player.getInventory().getChestplate().getItemMeta() != null &&
         player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer() != null &&
-        player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ASModifier"),
+        player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
 
-        ASMod = ASMod + player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ASModifier"),
+        speedMod = speedMod + player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
                 PersistentDataType.DOUBLE);
     }
 
-    //Check player's legs for crit mod and apply it to crit mod
+    //Check player's legs for speed mod and apply it to speed mod
     if (player.getInventory().getLeggings() != null &&
         player.getInventory().getLeggings().getItemMeta() != null &&
         player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer() != null &&
-        player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ASModifier"),
+        player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
 
-        ASMod = ASMod + player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ASModifier"),
+        speedMod = speedMod + player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
                 PersistentDataType.DOUBLE);
     }
 
-    //Check player's boots for crit mod and apply it to crit mod
+    //Check player's boots for speed mod and apply it to speed mod
     if (player.getInventory().getBoots() != null &&
         player.getInventory().getBoots().getItemMeta() != null &&
         player.getInventory().getBoots().getItemMeta().getPersistentDataContainer() != null &&
-        player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ASModifier"),
+        player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
 
-        ASMod = ASMod + player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ASModifier"),
+        speedMod = speedMod + player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
                 PersistentDataType.DOUBLE);
     }
 
-    player.getPersistentDataContainer().set(new NamespacedKey(plugin, "AttackSpeed"),
-            PersistentDataType.DOUBLE, (1 + ASMod) * AS);
+    player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Speed"),
+            PersistentDataType.DOUBLE, (1 + speedMod) * speed);
 }
 
     @EventHandler
@@ -1112,6 +1105,10 @@ if (player.getInventory().getHelmet() != null &&
 
                 PlayerStatEvents.updateStats(player, plugin);
 
+                float speed = (float) (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
+                                        PersistentDataType.DOUBLE) * 1430);
+                player.setWalkSpeed(speed);
+                
                 if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CoolDown"),
                     PersistentDataType.DOUBLE) == 0) {
                     StatFunctions.ShowStat(player, plugin);

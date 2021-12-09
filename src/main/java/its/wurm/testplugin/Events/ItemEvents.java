@@ -214,9 +214,9 @@ public class ItemEvents implements Listener{
             if (event.getItem() != null) {
                 Player player = event.getPlayer();
                 if (player.getInventory().getItemInMainHand() != null &&
-                        player.getInventory().getItemInMainHand().getItemMeta() != null &&
-                        player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
-                                PersistentDataType.STRING) != null) {
+                    player.getInventory().getItemInMainHand().getItemMeta() != null &&
+                    player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                            PersistentDataType.STRING) != null) {
                     switch (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
                             PersistentDataType.STRING)) {
                         case "Test Fireball":
@@ -272,22 +272,31 @@ public class ItemEvents implements Listener{
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {
             Player player = (Player) event.getDamager();
-            if (player.getInventory().getItemInMainHand().getItemMeta() == null) {
-                return;
-            }
-            if (player.getInventory().getItemInMainHand().getItemMeta().equals(ItemManager.hammerDev.getItemMeta())) {
-                Entity target = event.getEntity();
-                target.remove();
+            Entity target = event.getEntity();
+            if (player.getInventory().getItemInMainHand() != null) {
+                if (player.getInventory().getItemInMainHand() != null &&
+                        player.getInventory().getItemInMainHand().getItemMeta() != null &&
+                        player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                                PersistentDataType.STRING) != null) {
+                    switch (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                            PersistentDataType.STRING)) {
+                        case "devhammer":
+                            target.remove();
+                            break;
 
-            }
-            if (player.getInventory().getItemInMainHand().getItemMeta().equals(ItemManager.moon_glove.getItemMeta())) {
-                if (event.getEntity() instanceof Creature) {
-                    ((Creature) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,
-                            40, 6));
-                }
-                if (event.getEntity() instanceof Player) {
-                    ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,
-                            40, 6));
+                        case "Moon Glove":
+                            if (target instanceof Creature) {
+                                ((Creature) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,
+                                        40, 6));
+                            }
+                            if (event.getEntity() instanceof Player) {
+                                ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,
+                                        40, 6));
+                            }
+                            break;
+                        default:
+                            return;
+                    }
                 }
             }
         }

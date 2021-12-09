@@ -308,6 +308,7 @@ public class ItemManager implements Listener {
         meta.addEnchant(Enchantment.LUCK, 1, false);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Dev Hammer");
         item.setItemMeta(meta);
         hammerDev = item;
     }
@@ -1397,6 +1398,7 @@ public class ItemManager implements Listener {
         lore.add("§7Crouch to slow your decent");
         lore.add(" ");
         lore.add("§9§lRARE");
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Feather Charm");
         meta.setLore(lore);
         item.setItemMeta(meta);
         fcharm = item;
@@ -1448,6 +1450,7 @@ public class ItemManager implements Listener {
         lore.add("§7still continues after death");
         lore.add(" ");
         lore.add("§5§lEPIC");
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Sower's Will");
         meta.setLore(lore);
         item.setItemMeta(meta);
         sower_contract = item;
@@ -1464,6 +1467,7 @@ public class ItemManager implements Listener {
         lore.add("§7or two.");
         lore.add(" ");
         lore.add("§9§lRARE");
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Nutri Bar");
         meta.setLore(lore);
         item.setItemMeta(meta);
     }
@@ -1499,7 +1503,7 @@ public class ItemManager implements Listener {
         lore.add("§7Launch a pufferfish");
         lore.add(" ");
         lore.add("§9§lRARE WAND");
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "puffer canon");
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Pufferfish Canon");
         meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "wand");
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.setLore(lore);
@@ -1519,7 +1523,7 @@ public class ItemManager implements Listener {
         lore.add("§7Teleport forward 8 blocks.");
         lore.add(" ");
         lore.add("§9§lRARE SWORD");
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "aote");
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Aspect of The End");
         meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "sword");
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.setLore(lore);
@@ -1566,6 +1570,8 @@ public class ItemManager implements Listener {
         meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Damage"), PersistentDataType.DOUBLE, 25.0);
         meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Strength"), PersistentDataType.DOUBLE, 15.0);
         meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "sword");
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Stone Scimitar");
+
         meta.setLore(lore);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         item.setItemMeta(meta);
@@ -1597,6 +1603,8 @@ public class ItemManager implements Listener {
         meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"CC"), PersistentDataType.DOUBLE, 10.0);
         meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Crit"), PersistentDataType.DOUBLE, 20.0);
         meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "sword");
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Iron Scimitar");
+
         meta.setLore(lore);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         item.setItemMeta(meta);
@@ -1620,13 +1628,12 @@ public class ItemManager implements Listener {
         meta.setDisplayName("§aGolden Scimitar");
         List<String> lore = new ArrayList<>();
         lore.add("§7Damage: " + "§c+15");
-        lore.add("§7Crit Damage: " + "§c+10");
-        lore.add("§7Attack Speed: " + "§c+20");
+        lore.add("§7Crit Damage: " + "§c+15");
         lore.add(" ");
         lore.add("§a§lUNCOMMON SWORD");
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Damage"), PersistentDataType.DOUBLE, 20.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Crit"), PersistentDataType.DOUBLE, 10.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"AS"), PersistentDataType.DOUBLE, 20.0);
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Damage"), PersistentDataType.DOUBLE, 15.0);
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Crit"), PersistentDataType.DOUBLE, 15.0);
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Gold Scimitar");
         meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "sword");
         meta.setLore(lore);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
@@ -1659,6 +1666,8 @@ public class ItemManager implements Listener {
         meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Crit"), PersistentDataType.DOUBLE, 25.0);
         meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Strength"), PersistentDataType.DOUBLE, 25.0);
         meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "sword");
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Diamond Scimitar");
+
         meta.setLore(lore);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         item.setItemMeta(meta);
@@ -1686,6 +1695,7 @@ public class ItemManager implements Listener {
         List<String> lore = new ArrayList<>();
         lore.add("§9§lRARE BOOTS");
         meta.setLore(lore);
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "The Drip");
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         item.setItemMeta(meta);
         the_drip = item;
@@ -1712,6 +1722,8 @@ public class ItemManager implements Listener {
         lore.add("§5§lEPIC BOOTS");
         meta.setLore(lore);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Supreme Drip™");
+
         item.setItemMeta(meta);
         the_driptm = item;
 
@@ -1740,6 +1752,7 @@ public class ItemManager implements Listener {
         lore.add("§5§lEPIC CHESTPLATE");
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.setLore(lore);
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Spectral Wings");
         item.setItemMeta(meta);
         sWings = item;
 
@@ -1766,9 +1779,10 @@ public class ItemManager implements Listener {
         lore.add(" ");
         lore.add("§9§lRARE HELMET");
         meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Health"), PersistentDataType.DOUBLE, 15.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 25.0);
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 35.0);
         meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Strength"), PersistentDataType.DOUBLE, 25.0);
         meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "armor");
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Alloy Helmet");
         meta.setLore(lore);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         item.setItemMeta(meta);
@@ -1791,14 +1805,15 @@ public class ItemManager implements Listener {
         meta.setDisplayName("§9Alloy Chestplate");
         List<String> lore = new ArrayList<>();
         lore.add("§7Health: " + "§c+30");
-        lore.add("§7Defense: " + "§c+50");
-        lore.add("§7Strength: " + "§c+10");
+        lore.add("§7Defense: " + "§c+60");
+        lore.add("§7Strength: " + "§c+15");
         lore.add(" ");
         lore.add("§9§lRARE CHESTPLATE");
         meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Health"), PersistentDataType.DOUBLE, 30.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 50.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Strength"), PersistentDataType.DOUBLE, 10.0);
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 60.0);
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Strength"), PersistentDataType.DOUBLE, 15.0);
         meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "armor");
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Alloy Chestplate");
         meta.setLore(lore);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         item.setItemMeta(meta);
@@ -1821,14 +1836,15 @@ public class ItemManager implements Listener {
         meta.setDisplayName("§9Alloy Leggings");
         List<String> lore = new ArrayList<>();
         lore.add("§7Health: " + "§c+25");
-        lore.add("§7Defense: " + "§c+40");
+        lore.add("§7Defense: " + "§c+45");
         lore.add("§7Strength: " + "§c+10");
         lore.add(" ");
         lore.add("§9§lRARE LEGGINGS");
         meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Health"), PersistentDataType.DOUBLE, 25.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 40.0);
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 45.0);
         meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Strength"), PersistentDataType.DOUBLE, 10.0);
         meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "armor");
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Alloy Leggings");
         meta.setLore(lore);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         item.setItemMeta(meta);
@@ -1851,14 +1867,15 @@ public class ItemManager implements Listener {
         meta.setDisplayName("§9Alloy Boots");
         List<String> lore = new ArrayList<>();
         lore.add("§7Health: " + "§c+10");
-        lore.add("§7Defense: " + "§c+20");
+        lore.add("§7Defense: " + "§c+25");
         lore.add("§7Strength: " + "§c+5");
         lore.add(" ");
         lore.add("§9§lRARE BOOTS");
         meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Health"), PersistentDataType.DOUBLE, 10.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 20.0);
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 25.0);
         meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Strength"), PersistentDataType.DOUBLE, 5.0);
         meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "armor");
+        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Alloy Boots");
         meta.setLore(lore);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         item.setItemMeta(meta);
