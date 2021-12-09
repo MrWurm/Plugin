@@ -153,11 +153,11 @@ public class ItemEvents implements Listener{
         if (event.getAction() == Action.RIGHT_CLICK_AIR) {
             if (event.getItem() != null) {
                 Player player = event.getPlayer();
-                if (player.getItemInUse() != null &&
-                    player.getItemInUse().getItemMeta() != null &&
-                    player.getItemInUse().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                if (player.getInventory().getItemInMainHand() != null &&
+                    player.getInventory().getItemInMainHand().getItemMeta() != null &&
+                    player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
                             PersistentDataType.STRING) != null) {
-                    switch (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                    switch (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
                             PersistentDataType.STRING)) {
                         case "Test Fireball":
                             player.getWorld().spawnParticle(Particle.FLAME, player.getLocation(), 40);
@@ -213,11 +213,11 @@ public class ItemEvents implements Listener{
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (event.getItem() != null) {
                 Player player = event.getPlayer();
-                if (player.getItemInUse() != null &&
-                        player.getItemInUse().getItemMeta() != null &&
-                        player.getItemInUse().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                if (player.getInventory().getItemInMainHand() != null &&
+                        player.getInventory().getItemInMainHand().getItemMeta() != null &&
+                        player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
                                 PersistentDataType.STRING) != null) {
-                    switch (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                    switch (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
                             PersistentDataType.STRING)) {
                         case "Test Fireball":
                             player.getWorld().spawnParticle(Particle.FLAME, player.getLocation(), 40);
