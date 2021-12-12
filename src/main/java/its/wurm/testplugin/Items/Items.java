@@ -12,341 +12,171 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 //c:beginning, c:start
+
+public enum TestItems implements ItemLike {
+
+    TEST_FIREBALL {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.FIRE_CHARGE);
+            ItemMeta meta = item.getItemMeta();
+            List<String> lore = new ArrayList<>();
+            meta.setDisplayName(ChatColor.RED + "Fire Ball Name");
+            lore.add(ChatColor.RED + "§lSPECIAL");
+            meta.addEnchant(Enchantment.LUCK, 1, false);
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Test Fireball Name");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "SPECIAL");
+            item.setItemMeta(meta);
+
+            // Shaped Recipe for Fire Ball Name
+            ShapedRecipe sr = new ShapedRecipe(NamespacedKey.minecraft("testitem_s"), item);
+            sr.shape("S S",
+                    " F ",
+                    "S S");
+            sr.setIngredient('S', Material.STICK);
+            sr.setIngredient('F', Material.FIRE_CHARGE);
+            Bukkit.getServer().addRecipe(sr);
+
+            // Shapeless Recipe for Fire Ball Name
+            ShapelessRecipe slr = new ShapelessRecipe(NamespacedKey.minecraft("testitem_sl"), item);
+            slr.addIngredient(1, Material.BLAZE_ROD);
+            slr.addIngredient(1, Material.COAL_BLOCK);
+            slr.addIngredient(1, Material.FIREWORK_STAR);
+            Bukkit.getServer().addRecipe(slr);
+
+            // Furnace Recipe for Fire Ball Name
+            FurnaceRecipe fr = new FurnaceRecipe(NamespacedKey.minecraft("testitem_f"), item,
+                    Material.FIRE_CHARGE, 20.0f, 40);
+            Bukkit.getServer().addRecipe(fr);
+
+            return item;
+        }
+    },
+
+    DEV_HAMMER {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.IRON_AXE);
+            ItemMeta meta = item.getItemMeta();
+            List<String> lore = new ArrayList<>();
+            meta.setDisplayName(ChatColor.RED + "Dev Hammer");
+            lore.add(ChatColor.GRAY + "Down any mob in one hit");
+            lore.add(ChatColor.GRAY + "with this mighty weapon");
+            lore.add(" ");
+            lore.add(ChatColor.RED + "§lSPECIAL");
+            meta.addEnchant(Enchantment.LUCK, 1, false);
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Dev Hammer");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "SPECIAL");
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    MENU_GLASS {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(" ");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Menu Glass");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, " ");
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    BACK_ARROW {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.ARROW);
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName("Go Back");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Back Arrow");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, " ");
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    PREVIOUS_ARROW {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.ARROW);
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName("Previous Page");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Previous Page");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, " ");
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    NEXT_ARROW {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.ARROW);
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName("Next Page");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Next Page");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, " ");
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    SHORTBOW {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.BOW, 1);
+            ItemMeta meta = item.getItemMeta();
+            meta.setUnbreakable(true);
+            meta.setDisplayName("§cTest Shortbow");
+            List<String> lore = new ArrayList<>();
+            lore.add(" ");
+            lore.add("§c§lSPECIAL BOW");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "Damage"), PersistentDataType.DOUBLE, 666.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "Type"), PersistentDataType.STRING, "bow");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Test Shortbow");
+
+            meta.setLore(lore);
+            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            item.setItemMeta(meta);
+
+            //Shaped recipe for Test Shortbow
+            ShapedRecipe sr = new ShapedRecipe(NamespacedKey.minecraft("test_bow_s"), item);
+            sr.shape("  S",
+                    " S ",
+                    "S  ");
+            sr.setIngredient('S', Material.STRING);
+            Bukkit.getServer().addRecipe(sr);
+
+            return item;
+        }
+    };
+
+    public abstract ItemStack getItem(Plugin plugin);
+}
+
 
 public class ItemManager implements Listener {
 
-    static Main plugin;
+    Main plugin;
 
     public ItemManager(Main plugin) { this.plugin = plugin;}
-
-
-    public static ItemStack edripstone;
-    //The Drip
-    public static ItemStack the_drip;
-    //Dev Hammer
-    public static ItemStack edeepslate;
-    //Emchanted Polished Deepslate
-    public static ItemStack sedeepslate;
-    //Emchanted Deepslate Tiles
-    public static ItemStack vsedeepslate;
-    //Enchanted Block Of Dripstone
-    public static ItemStack sedripstone;
-    //The Drip™
-    public static ItemStack the_driptm;
-    //Enchanted Coal
-    public static ItemStack ecoal;
-    //Enchanted Coal Block
-    public static ItemStack secoal;
-    //Menu Glass
-    public static ItemStack menu_glass;
-    //Back Arrow
-    public static ItemStack back_arrow;
-    //Enchanted Iron
-    public static ItemStack eiron;
-    //Enchanted Iron Block
-    public static ItemStack seiron;
-    //Rookie Shovel
-    //Enchanted Bamboo
-    public static ItemStack ebamboo;
-    //Moon Glove
-    public static ItemStack moon_glove;
-    //Aspect of the end
-    public static ItemStack aote;
-    //Bamboo Bundle
-    public static ItemStack sebamboo;
-    //Tomato
-    public static ItemStack tomato;
-    //Lesser Wand of Healing
-    public static ItemStack lheal_wand;
-    //Enchanted Feather
-    public static ItemStack efeather;
-    //Enchanted Feather
-    public static ItemStack fcharm;
-    //Enchanted Phantom Membrane
-    public static ItemStack emembrane;
-    //Spectral Wings
-    public static ItemStack sWings;
-    //Echo Stone
-    public static ItemStack echostone;
-    //Enchanted Gold
-    public static ItemStack egold;
-    //Enchanted Gold Block
-    public static ItemStack segold;
-    //Enchanted Sand
-    public static ItemStack esand;
-    //Enchanted Compacted Sand
-    public static ItemStack sesand;
-    //Enchanted Sandstone
-    public static ItemStack vsesand;
-    //Enchanted Copper
-    public static ItemStack ecopper;
-    //Enchanted Copper Block
-    public static ItemStack secopper;
-    //Enchanted Cut Copper Block
-    public static ItemStack vsecopper;
-    //Enchanted Quartz
-    public static ItemStack equartz;
-    //Enchanted Quartz Block
-    public static ItemStack sequartz;
-    //Enchanted Quartz Sculpture
-    public static ItemStack vsequartz;
-    //Sower's Will
-    public static ItemStack sower_contract;
-    //Iron Scimitar
-    public static ItemStack iron_saber;
-    //Alloy
-    public static ItemStack alloy;
-    //Enchanted Cobblestone
-    public static ItemStack ecobble;
-    //Enchanted Diamond
-    public static ItemStack ediamond;
-    //Enchanted Emerald
-    public static ItemStack eemerald;
-    //Stone Scimitar
-    public static ItemStack stone_saber;
-    //Gold Scimitar
-    public static ItemStack golden_saber;
-    //Diamond Scimitar
-    public static ItemStack diamond_saber;
-    //Enchanted Lapis
-    public static ItemStack elapis;
-    //Enchanted Lapis Block
-    public static ItemStack selapis;
-    //Enchanted Redstone
-    public static ItemStack eredstone;
-    //Enchanted Redstone Block
-    public static ItemStack seredstone;
-    //Enchanted Wool
-    public static ItemStack ewool;
-    //Enchanted Mutton
-    public static ItemStack emutton;
-    //Enchanted Chicken
-    public static ItemStack echicken;
-    //Enchanted Beef
-    public static ItemStack ebeef;
-    //Enchanted Pork
-    public static ItemStack epork;
-    //Enchanted Rabbit
-    public static ItemStack erabbit;
-    //Enchanted Tropical Fish
-    public static ItemStack eclown;
-    //Enchanted Pufferfish
-    public static ItemStack epuffer;
-    //Enchanted Cod
-    public static ItemStack ecod;
-    //Enchanted Cooked Cod
-    public static ItemStack secod;
-    //Enchanted Salmon
-    public static ItemStack esalmon;
-    //Enchanted Cooked Salmon
-    public static ItemStack sesalmon;
-    //Enchanted Kelp
-    public static ItemStack ekelp;
-    //Enchanted Dried Kelp
-    public static ItemStack sekelp;
-    //Enchanted Kelp Block
-    public static ItemStack vsekelp;
-    //Enchanted Netherite Scrap
-    public static ItemStack enetherite;
-    //Enchanted Netherite Ingot
-    public static ItemStack senetherite;
-    //Enchanted Netherite Ingot
-    public static ItemStack vsenetherite;
-    //Next Page Arrow
-    public static ItemStack next_arrow;
-    //Previous Page Arrow
-    public static ItemStack last_arrow;
-    //Pufferfish Canon
-    public static ItemStack puffer_gun;
-    //Alloy Helmet
-    public static ItemStack alloy_helmet;
-    //Alloy Chestplate
-    public static ItemStack alloy_chestplate;
-    //Alloy Leggings
-    public static ItemStack alloy_legs;
-    //Alloy Boots
-    public static ItemStack alloy_boots;
-    //Netherite Saber
-    public static ItemStack netherite_saber;
-    //Test Shortbow
-    public static ItemStack test_shortbow;
-
-
-
-    public static void init() {
-        create_e_dripstone();
-        create_the_drip();
-        create_e_deepslate();
-        create_se_deepslate();
-        create_se_dripstone();
-        create_vse_deepslate();
-        create_the_driptm();
-        create_e_coal();
-        create_se_coal();
-        create_menu();
-        create_back_arrow();
-        create_e_iron();
-        create_e_bamboo();
-        create_moon_glove();
-        create_se_iron();
-        create_se_bamboo();
-        create_tomato();
-        create_lheal_wand();
-        create_e_feather();
-        create_fcharm();
-        create_e_membrane();
-        create_spectral_wings();
-        create_echo_stone();
-        create_e_gold();
-        create_se_gold();
-        create_e_sand();
-        create_se_sand();
-        create_vse_sand();
-        create_e_copper();
-        create_se_copper();
-        create_vse_copper();
-        create_e_quartz();
-        create_se_quartz();
-        create_vse_quartz();
-        create_sower_contract();
-        create_iron_saber();
-        create_alloy();
-        create_e_cobble();
-        create_e_diamond();
-        create_e_emerald();
-        create_stone_saber();
-        create_gold_saber();
-        create_diamond_saber();
-        create_e_wool();
-        create_e_mutton();
-        create_e_chicken();
-        create_e_pork();
-        create_e_beef();
-        create_e_clown();
-        create_e_puffer();
-        create_e_rabbit();
-        create_e_cod();
-        create_se_cod();
-        create_e_salmon();
-        create_se_salmon();
-        create_e_kelp();
-        create_se_kelp();
-        create_vse_kelp();
-        create_e_redstone();
-        create_se_redstone();
-        create_e_lapis();
-        create_se_lapis();
-        create_e_netherite();
-        create_se_netherite();
-        create_vse_netherite();
-        create_next_arrow();
-        create_last_arrow();
-        create_puffer_canon();
-        create_alloy_helmet();
-        create_alloy_chestplate();
-        create_alloy_leggings();
-        create_alloy_boots();
-        create_netherite_saber();
-        create_test_shortbow();
-
-    }
-
-    // This is Fire Ball Name
-    public static ItemStack createItem1() {
-        ItemStack testItem = new ItemStack(Material.FIRE_CHARGE, 1);
-        ItemMeta meta = testItem.getItemMeta();
-        meta.setDisplayName("§cFire Ball Name");
-        List<String> lore = new ArrayList<>();
-        lore.add("§c§lSPECIAL");
-        meta.setLore(lore);
-        meta.addEnchant(Enchantment.LUCK, 1, false);
-        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        testItem.setItemMeta(meta);
-
-        // Shaped Recipe for Fire Ball Name
-        ShapedRecipe sr = new ShapedRecipe(NamespacedKey.minecraft("testitem_s"), testItem);
-        sr.shape("S S",
-                 " F ",
-                 "S S");
-        sr.setIngredient('S', Material.STICK);
-        sr.setIngredient('F', Material.FIRE_CHARGE);
-        Bukkit.getServer().addRecipe(sr);
-
-        // Shapeless Recipe for Fire Ball Name
-        ShapelessRecipe slr = new ShapelessRecipe(NamespacedKey.minecraft("testitem_sl"), testItem);
-        slr.addIngredient(1, Material.BLAZE_ROD);
-        slr.addIngredient(1, Material.COAL_BLOCK);
-        slr.addIngredient(1, Material.FIREWORK_STAR);
-        Bukkit.getServer().addRecipe(slr);
-
-        // Furnace Recipe for Fire Ball Name
-        FurnaceRecipe fr = new FurnaceRecipe(NamespacedKey.minecraft("testitem_f"), testItem,
-                Material.FIRE_CHARGE, 20.0f, 40);
-        Bukkit.getServer().addRecipe(fr);
-
-        return testItem;
-    }
-
-    //This is Dev Hammer
-    public static ItemStack createDevHammer() {
-        ItemStack devHammer = new ItemStack(Material.IRON_AXE, 1);
-        ItemMeta meta = devHammer.getItemMeta();
-        meta.setDisplayName("§cDev Hammer");
-        List<String> lore = new ArrayList<>();
-        lore.add("§7Down any mob in one hit with this mighty weapon");
-        lore.add(" ");
-        lore.add("§c§lSPECIAL");
-        meta.setLore(lore);
-        meta.setUnbreakable(true);
-        meta.addEnchant(Enchantment.LUCK, 1, false);
-        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Dev Hammer");
-        devHammer.setItemMeta(meta);
-
-        return devHammer;
-    }
-
-    //This is Menu Glass
-    private static void create_menu() {
-        ItemStack item = new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1);
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(" ");
-        item.setItemMeta(meta);
-        menu_glass = item;
-    }
-
-    //This is Back Arrow
-    private static void create_back_arrow() {
-        ItemStack item = new ItemStack(Material.ARROW, 1);
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName("Go Back");
-        item.setItemMeta(meta);
-        back_arrow = item;
-    }
-
-    //This is Back Arrow
-    private static void create_next_arrow() {
-        ItemStack item = new ItemStack(Material.ARROW, 1);
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName("Next Page");
-        item.setItemMeta(meta);
-        next_arrow = item;
-    }
-
-    //This is Previous Arrow
-    private static void create_last_arrow() {
-        ItemStack item = new ItemStack(Material.ARROW, 1);
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName("Previous Page");
-        item.setItemMeta(meta);
-        last_arrow = item;
-    }
 
 
 
@@ -363,7 +193,6 @@ public class ItemManager implements Listener {
         meta.addEnchant(Enchantment.LUCK, 1, false);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         item.setItemMeta(meta);
-        edripstone = item;
 
         // Shapeless Recipe for Enchanted Dripstone
         ShapelessRecipe slr = new ShapelessRecipe(NamespacedKey.minecraft("e_dripstone_sl"), item);
@@ -1710,33 +1539,6 @@ public class ItemManager implements Listener {
                  "S  ");
         sr.setIngredient('N', new RecipeChoice.ExactChoice(enetherite));
         sr.setIngredient('S', Material.STICK);
-        Bukkit.getServer().addRecipe(sr);
-    }
-
-    //This is Test Shortbow
-    private static void create_test_shortbow() {
-        ItemStack item = new ItemStack(Material.BOW, 1);
-        ItemMeta meta = item.getItemMeta();
-        meta.setUnbreakable(true);
-        meta.setDisplayName("§cTest Shortbow");
-        List<String> lore = new ArrayList<>();
-        lore.add(" ");
-        lore.add("§c§lSPECIAL BOW");
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Damage"), PersistentDataType.DOUBLE, 666.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "bow");
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Test Shortbow");
-
-        meta.setLore(lore);
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        item.setItemMeta(meta);
-        test_shortbow = item;
-
-        //Shaped recipe for Test Shortbow
-        ShapedRecipe sr = new ShapedRecipe(NamespacedKey.minecraft("test_bow_s"), item);
-        sr.shape("  S",
-                 " S ",
-                 "S  ");
-        sr.setIngredient('S', Material.STRING);
         Bukkit.getServer().addRecipe(sr);
     }
 //------------------------------------------ARMOR SECTION c:armor-------------------------------------------------------
