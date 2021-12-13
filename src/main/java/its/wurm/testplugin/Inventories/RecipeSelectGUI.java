@@ -1,22 +1,26 @@
 package its.wurm.testplugin.Inventories;
 
-import its.wurm.testplugin.Items.ItemManager;
+import its.wurm.testplugin.Items.Items;
+import its.wurm.testplugin.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class RecipeSelectGUI implements InventoryHolder {
 
     private Inventory main;
 
-    public RecipeSelectGUI() {
+    static Plugin plugin;
+
+    public RecipeSelectGUI(Plugin plugin) {
+        this.plugin = plugin;
         main = Bukkit.createInventory(this, 45, "Recipe categories");
         init();
     }
@@ -26,7 +30,7 @@ public class RecipeSelectGUI implements InventoryHolder {
         ItemStack item;
         //Setting in menu glass (filler) for first half of the GUI
         for (int i = 0; i < 20; i++) {
-            main.setItem(i, ItemManager.menu_glass);
+            main.setItem(i, Items.MENU_GLASS.getItem(plugin));
         }
 
         //Setting all the categories (with lore and stuff) in the center
@@ -79,7 +83,7 @@ public class RecipeSelectGUI implements InventoryHolder {
 
         //Setting in menu glass (filler) for last half of the GUI
         for (int i = 24; i < 45; i++) {
-            main.setItem(i, ItemManager.menu_glass);
+            main.setItem(i, Items.MENU_GLASS.getItem(plugin));
         }
     }
 

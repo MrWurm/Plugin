@@ -9,7 +9,6 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -17,10 +16,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.util.Vector;
+import org.bukkit.projectiles.ProjectileSource;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 public class StatEvents implements Listener {
@@ -68,10 +65,11 @@ public class StatEvents implements Listener {
                 PersistentDataType.INTEGER) == 8) {
             return;
         }
-        org.bukkit.entity.Damageable victim = (Damageable) event.getEntity();
         if (!(event.getEntity() instanceof Damageable)) {
             return;
         }
+
+        org.bukkit.entity.Damageable victim = (Damageable) event.getEntity();
 
         org.bukkit.entity.LivingEntity living = (LivingEntity) victim;
         living.setNoDamageTicks(1);
@@ -91,6 +89,8 @@ public class StatEvents implements Listener {
                     PersistentDataType.DOUBLE) / AfterDamage;
             Health = victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
                     PersistentDataType.DOUBLE) - AfterDamage;
+
+            Attacks.createDamageIndicator(victim.getLocation(), false, AfterDamage);
         }
         if (attacker instanceof Player) {
             boolean iscrit = false;
@@ -162,7 +162,7 @@ public class StatEvents implements Listener {
                     int choice = ran.nextInt(3) + 1;
                     if (choice == 3) {
                         for (int i = 0; i < 2; ++i) {
-                            attacker.getWorld().spawnParticle(Particle.SWEEP_ATTACK, attacker.getLocation(), 100);
+                            attacker.getWorld().spawnParticle(Particle.SWEEP_ATTACK, victim.getLocation(), 100);
                             attacker.getWorld().playSound(attacker.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 120, 2);
                         }
 
@@ -177,8 +177,26 @@ public class StatEvents implements Listener {
                         }
                     }
                     break;
-                default:
+                case 9:
+                    if (victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+                            PersistentDataType.DOUBLE) < 1) {
+                        org.bukkit.entity.Arrow arrow = (Arrow) event.getDamager();
+                        ProjectileSource source = arrow.getShooter();
+                        org.bukkit.entity.Player player = (Player) source;
+                        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "SpeedBase"),
+                                PersistentDataType.DOUBLE, player.getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedBase"),
+                                PersistentDataType.DOUBLE) + 8);
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                            public void run() {
+                                player.getPersistentDataContainer().set(new NamespacedKey(plugin, "SpeedBase"),
+                                        PersistentDataType.DOUBLE, (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedBase"),
+                                        PersistentDataType.DOUBLE) - 8));
+                            }
+                        }, 200);
+                    }
                     break;
+                default:
+                    return;
             }
         }
 
@@ -217,10 +235,11 @@ public class StatEvents implements Listener {
                                             PersistentDataType.DOUBLE) - 5));
                         }
                     }, 110);
-
                 default:
                     return;
             }
         }
     }
 }
+
+//int, strength, defense, health, crit/chance

@@ -3,18 +3,12 @@ package its.wurm.testplugin.statFunctions;
 import its.wurm.testplugin.Main;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.*;
-import org.bukkit.event.Listener;
-import org.bukkit.persistence.PersistentDataAdapterContext;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.projectiles.ProjectileSource;
 
 public class StatFunctions {
 

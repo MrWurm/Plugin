@@ -2,24 +2,14 @@ package its.wurm.testplugin.Events;
 
 import its.wurm.testplugin.Main;
 import its.wurm.testplugin.statFunctions.StatFunctions;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
-import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.SmallFireball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChangedMainHandEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerToggleSneakEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
-
-import java.util.UUID;
 
 public class PlayerStatEvents implements Listener {
     static Main plugin;
@@ -112,6 +102,22 @@ public class PlayerStatEvents implements Listener {
                 PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "ExcFModifier"),
                 PersistentDataType.DOUBLE, 0.0);
+
+        //Define soup and food limits
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "StrengthSoup"),
+                PersistentDataType.INTEGER, 0);
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CritSoup"),
+                PersistentDataType.INTEGER, 0);
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "HealthSoup"),
+                PersistentDataType.INTEGER, 0);
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DefenseSoup"),
+                PersistentDataType.INTEGER, 0);
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "IntSoup"),
+                PersistentDataType.INTEGER, 0);
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "FoodMax"),
+                PersistentDataType.INTEGER, 10);
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Food"),
+                PersistentDataType.INTEGER, 0);
     }
 
 
@@ -153,7 +159,7 @@ public static void updateStats(Player player, Main plugin) {
             player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
                     PersistentDataType.DOUBLE) != null &&
             player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Dual"),
-                    PersistentDataType.STRING) != null) {
+                    PersistentDataType.INTEGER) != null) {
 
         damageMod = damageMod + player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
                 PersistentDataType.DOUBLE);
@@ -230,7 +236,7 @@ public static void updateStats(Player player, Main plugin) {
             player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
             PersistentDataType.DOUBLE) != null &&
             player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Dual"),
-            PersistentDataType.STRING) != null) {
+            PersistentDataType.INTEGER) != null) {
 
         health = health + player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
                 PersistentDataType.DOUBLE);
@@ -302,7 +308,7 @@ public static void updateStats(Player player, Main plugin) {
             player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "HealthModifier"),
                     PersistentDataType.DOUBLE) != null &&
             player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Dual"),
-                    PersistentDataType.STRING) != null) {
+                    PersistentDataType.INTEGER) != null) {
 
         healthMod = healthMod + player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "HealthModifier"),
                 PersistentDataType.DOUBLE);
@@ -378,7 +384,7 @@ public static void updateStats(Player player, Main plugin) {
             player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Defense"),
                     PersistentDataType.DOUBLE) != null &&
             player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Dual"),
-                    PersistentDataType.STRING) != null) {
+                    PersistentDataType.INTEGER) != null) {
 
         defense = defense + player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Defense"),
                 PersistentDataType.DOUBLE);
@@ -450,7 +456,7 @@ public static void updateStats(Player player, Main plugin) {
         player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DefenseModifier"),
                 PersistentDataType.DOUBLE) != null &&
         player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Dual"),
-                PersistentDataType.STRING) != null) {
+                PersistentDataType.INTEGER) != null) {
 
         defenseMod = defenseMod + player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DefenseModifier"),
                 PersistentDataType.DOUBLE);
@@ -525,7 +531,7 @@ public static void updateStats(Player player, Main plugin) {
         player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Strength"),
                 PersistentDataType.DOUBLE) != null &&
         player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Dual"),
-                PersistentDataType.STRING) != null) {
+                PersistentDataType.INTEGER) != null) {
 
         defense = defense + player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Strength"),
                 PersistentDataType.DOUBLE);
@@ -597,7 +603,7 @@ public static void updateStats(Player player, Main plugin) {
         player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "StrengthModifier"),
                 PersistentDataType.DOUBLE) != null &&
         player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Dual"),
-                PersistentDataType.STRING) != null) {
+                PersistentDataType.INTEGER) != null) {
 
         strengthMod = strengthMod + player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "StrengthModifier"),
                 PersistentDataType.DOUBLE);
@@ -673,7 +679,7 @@ public static void updateStats(Player player, Main plugin) {
         player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CC"),
                 PersistentDataType.DOUBLE) != null &&
         player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Dual"),
-                PersistentDataType.STRING) != null) {
+                PersistentDataType.INTEGER) != null) {
 
         critChance = critChance + player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CC"),
                 PersistentDataType.DOUBLE);
@@ -745,7 +751,7 @@ public static void updateStats(Player player, Main plugin) {
         player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CCModifier"),
                 PersistentDataType.DOUBLE) != null &&
         player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Dual"),
-                PersistentDataType.STRING) != null) {
+                PersistentDataType.INTEGER) != null) {
 
         critChanceMod = critChanceMod + player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CCModifier"),
                 PersistentDataType.DOUBLE);
@@ -821,7 +827,7 @@ public static void updateStats(Player player, Main plugin) {
         player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Crit"),
                 PersistentDataType.DOUBLE) != null &&
         player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Dual"),
-                PersistentDataType.STRING) != null) {
+                PersistentDataType.INTEGER) != null) {
 
         crit = crit + player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Crit"),
                 PersistentDataType.DOUBLE);
@@ -893,7 +899,7 @@ if (player.getInventory().getHelmet() != null &&
         player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CritModifier"),
                 PersistentDataType.DOUBLE) != null &&
         player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Dual"),
-                PersistentDataType.STRING) != null) {
+                PersistentDataType.INTEGER) != null) {
 
         critMod = critMod + player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CritModifier"),
                 PersistentDataType.DOUBLE);
@@ -969,7 +975,7 @@ if (player.getInventory().getHelmet() != null &&
         player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
                 PersistentDataType.DOUBLE) != null &&
         player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Dual"),
-                PersistentDataType.STRING) != null) {
+                PersistentDataType.INTEGER) != null) {
 
         speed = speed + player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
                 PersistentDataType.DOUBLE);
@@ -1041,7 +1047,7 @@ if (player.getInventory().getHelmet() != null &&
         player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
                 PersistentDataType.DOUBLE) != null &&
         player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Dual"),
-                PersistentDataType.STRING) != null) {
+                PersistentDataType.INTEGER) != null) {
 
         speedMod = speedMod + player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
                 PersistentDataType.DOUBLE);

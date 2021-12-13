@@ -1,29 +1,17 @@
 package its.wurm.testplugin.Mobs;
 
-import com.sun.javafx.tk.Toolkit;
 import dev.dbassett.skullcreator.SkullCreator;
 import its.wurm.testplugin.Main;
 import org.bukkit.*;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
-import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class Mobs implements Listener {
@@ -486,6 +474,62 @@ public class Mobs implements Listener {
                 PersistentDataType.DOUBLE);
 
         skeleton.setCustomName(ChatColor.GOLD + "" + Name + "" + ChatColor.RED + " ❤" +
+                Health + "/" + MaxHealth);
+    }
+
+    public static void createRelentless(Location location) {
+        Husk zombie = location.getWorld().spawn(location, Husk.class);
+        zombie.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,
+                9999999, 5, true, false));
+
+        //Equip the zombie
+        ItemStack helmet = SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTllNjk1MThjYzFhMzM0NGI2OTc3M2EwOWEyMzdjNjYzODFiODUyNzkxN2Y0YTM4NTBlZThhY2Y0ZWY0MjAzYiJ9fX0=");
+        ItemStack chestplate = new ItemStack(Material.LEATHER_CHESTPLATE, 1);
+        LeatherArmorMeta chestMeta = (LeatherArmorMeta) chestplate.getItemMeta();
+        chestMeta.setColor(Color.fromBGR(33, 125, 158));
+        chestplate.setItemMeta(chestMeta);
+        ItemStack leggings = new ItemStack(Material.LEATHER_LEGGINGS, 1);
+        LeatherArmorMeta legMeta = (LeatherArmorMeta) leggings.getItemMeta();
+        legMeta.setColor(Color.fromBGR(49, 143, 176));
+        leggings.setItemMeta(legMeta);
+        ItemStack boots = new ItemStack(Material.LEATHER_BOOTS, 1);
+        LeatherArmorMeta bootMeta = (LeatherArmorMeta) boots.getItemMeta();
+        bootMeta.setColor(Color.fromBGR(49, 143, 176));
+        boots.setItemMeta(bootMeta);
+        ItemStack main = new ItemStack(Material.TOTEM_OF_UNDYING, 1);
+
+        zombie.getEquipment().setHelmet(helmet);
+        zombie.getEquipment().setChestplate(chestplate);
+        zombie.getEquipment().setLeggings(leggings);
+        zombie.getEquipment().setBoots(boots);
+        zombie.getEquipment().setItemInMainHand(main);
+
+
+        zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "MaxHealth"),
+                PersistentDataType.DOUBLE, 270.0);
+        zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
+                PersistentDataType.DOUBLE, 270.0);
+        zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "Damage"),
+                PersistentDataType.DOUBLE, 30.0);
+        zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "Defense"),
+                PersistentDataType.DOUBLE, 0.0);
+        zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "HealMod"),
+                PersistentDataType.DOUBLE, 0.0);
+        zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "Name"),
+                PersistentDataType.STRING, "Relentless");
+        zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "Class"),
+                PersistentDataType.STRING, "Mob");
+        zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"),
+                PersistentDataType.INTEGER, 10);
+
+        String Name = zombie.getPersistentDataContainer().get(new NamespacedKey(plugin, "Name"),
+                PersistentDataType.STRING);
+        Double Health = zombie.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+                PersistentDataType.DOUBLE);
+        Double MaxHealth = zombie.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
+                PersistentDataType.DOUBLE);
+
+        zombie.setCustomName(ChatColor.GOLD + "" + Name + "" + ChatColor.RED + " ❤" +
                 Health + "/" + MaxHealth);
     }
 }

@@ -1,6 +1,5 @@
 package its.wurm.testplugin.Events;
 
-import com.sun.prism.paint.Color;
 import its.wurm.testplugin.Main;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -8,22 +7,19 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
-import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.UUID;
 
 public class SkillEvents implements Listener {
@@ -48,6 +44,7 @@ public class SkillEvents implements Listener {
         SkillData farming = new SkillData();
         SkillData foraging = new SkillData();
         SkillData excavating = new SkillData();
+        SkillData combat = new SkillData();
 
     }
 
@@ -90,6 +87,886 @@ public class SkillEvents implements Listener {
         catch(ClassNotFoundException ex)
         {
             System.out.println("What are you asking for again?");
+        }
+    }
+
+    public void checkCombat(Player player) {
+        //Combat
+        PlayerSkillData csd = skills.get(player.getUniqueId());
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 0) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 1;
+            csd.combat.xpNext = 50;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e0" + "§f ➡ " + "§e1");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 1) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 2;
+            csd.combat.xpNext = 80;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e1" + "§f ➡ " + "§e2");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 2) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 3;
+            csd.combat.xpNext = 120;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e2" + "§f ➡ " + "§e3");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 3) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 4;
+            csd.combat.xpNext = 250;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e3" + "§f ➡ " + "§e4");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 4) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 5;
+            csd.combat.xpNext = 500;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e4" + "§f ➡ " + "§e5");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 5) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 6;
+            csd.combat.xpNext = 1200;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e5" + "§f ➡ " + "§e6");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 6) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 7;
+            csd.combat.xpNext = 2000;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e6" + "§f ➡ " + "§e7");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 7) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 8;
+            csd.combat.xpNext = 3000;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e7" + "§f ➡ " + "§e8");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 8) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 9;
+            csd.combat.xpNext = 5000;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e8" + "§f ➡ " + "§e9");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 9) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 10;
+            csd.combat.xpNext = 6500;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e9" + "§f ➡ " + "§e10");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 10) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 11;
+            csd.combat.xpNext = 8200;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e10" + "§f ➡ " + "§e11");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 11) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 12;
+            csd.combat.xpNext = 10000;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e11" + "§f ➡ " + "§e12");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 12) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 13;
+            csd.combat.xpNext = 12500;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e12" + "§f ➡ " + "§e13");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 13) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 14;
+            csd.combat.xpNext = 14000;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e13" + "§f ➡ " + "§e14");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 14) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 15;
+            csd.combat.xpNext = 17000;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e14" + "§f ➡ " + "§e15");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 15) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 16;
+            csd.combat.xpNext = 20500;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e15" + "§f ➡ " + "§e16");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 16) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 17;
+            csd.combat.xpNext = 23000;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e16" + "§f ➡ " + "§e17");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 17) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 18;
+            csd.combat.xpNext = 25000;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e17" + "§f ➡ " + "§e18");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 18) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 19;
+            csd.combat.xpNext = 28000;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e18" + "§f ➡ " + "§e19");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 19) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 20;
+            csd.combat.xpNext = 32000;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e19" + "§f ➡ " + "§e20");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 20) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 21;
+            csd.combat.xpNext = 36800;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e20" + "§f ➡ " + "§e21");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 21) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 22;
+            csd.combat.xpNext = 41000;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e21" + "§f ➡ " + "§e22");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 22) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 23;
+            csd.combat.xpNext = 50000;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e22" + "§f ➡ " + "§e23");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 23) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 24;
+            csd.combat.xpNext = 60000;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e23" + "§f ➡ " + "§e24");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 24) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 25;
+            csd.combat.xpNext = 75000;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e24" + "§f ➡ " + "§e25");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 25) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 26;
+            csd.combat.xpNext = 90000;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e25" + "§f ➡ " + "§e26");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 26) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 27;
+            csd.combat.xpNext = 115000;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e22" + "§f ➡ " + "§e23");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "More than halfway there, you can do it!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 27) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 28;
+            csd.combat.xpNext = 145000;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e27" + "§f ➡ " + "§e28");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 28) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 29;
+            csd.combat.xpNext = 200000;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.DARK_RED + "Combat " + "§e28" + "§f ➡ " + "§e29");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.BLUE + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
+        }
+
+        if (skills.get(player.getUniqueId()).combat.xp >= skills.get(player.getUniqueId()).combat.xpNext &&
+                skills.get(player.getUniqueId()).combat.level == 29) {
+
+            Double stat1 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE) + 1.0;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBase"),
+                    PersistentDataType.DOUBLE, stat1);
+            Double stat2 = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE) + 0.04;
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE, stat2);
+            csd.combat.level = 30;
+            csd.combat.xpNext = 0;
+            csd.combat.xp = 0;
+            player.playSound(player.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 60, 1);
+            skills.put(player.getUniqueId(), csd);
+            player.sendMessage(ChatColor.GOLD + "-----------------------------------");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD + "§lSkill Level Up!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD + "Combat " + "§e29" + "§f ➡ " + "§e30");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD + "+1 ☣ Crit Chance");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD + "Deal 4% more damage");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD + "Great job on combat 30! You must have");
+            player.sendMessage(ChatColor.GOLD + "driven at least 7 species to extintion");
+            player.sendMessage(ChatColor.GOLD + "getting this");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD+ "-----------------------------------");
         }
     }
 
@@ -988,7 +1865,7 @@ public class SkillEvents implements Listener {
             player.sendMessage(" ");
             player.sendMessage(ChatColor.GREEN + "§lSkill Level Up!");
             player.sendMessage(" ");
-            player.sendMessage(ChatColor.BLUE + "Excavating " + "§e4" + "§f ➡ " + "§e5");
+            player.sendMessage(ChatColor.BLUE + "Mining " + "§e4" + "§f ➡ " + "§e5");
             player.sendMessage(" ");
             player.sendMessage(ChatColor.GOLD + "+4 ⛏ Mining Fortune");
             player.sendMessage(" ");
@@ -3298,6 +4175,10 @@ public class SkillEvents implements Listener {
         }
     }
 
+
+
+
+
     @EventHandler
     public void setSkill(PlayerJoinEvent event) {
         Player player = event.getPlayer();
@@ -3857,6 +4738,57 @@ public class SkillEvents implements Listener {
                 player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 20, 2);
                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
             }
+        }
+    }
+
+    @EventHandler
+    public void combatXP(EntityDamageByEntityEvent event) {
+        if (event.getDamager() instanceof Player && event.getEntity().isDead()) {
+
+            Player player = (Player) event.getDamager();
+            PlayerSkillData csd = skills.get(player.getUniqueId());
+            if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                    PersistentDataType.INTEGER) != null) {
+                switch (event.getEntity().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                        PersistentDataType.INTEGER)) {
+                    case 1:
+                        csd.combat.xp += 7.0;
+                        break;
+                    case 2:
+                    case 8:
+                        csd.combat.xp += 9.0;
+                        break;
+                    case 3:
+                        csd.combat.xp += 6.0;
+                        break;
+                    case 4:
+                        csd.combat.xp += 8.0;
+                        break;
+                    case 5:
+                        csd.combat.xp += 0.0;
+                        break;
+                    case 6:
+                        csd.combat.xp += 300.0;
+                        break;
+                    case 7:
+                        csd.combat.xp += 12.0;
+                        break;
+                    default:
+                        csd.combat.xp += 0.8;
+                        break;
+                }
+            }
+            skills.put(player.getUniqueId(), csd);
+
+            String message = String.format(
+                    "§3+%.1f/%.0f Combat XP",
+                    skills.get(player.getUniqueId()).combat.xp,
+                    skills.get(player.getUniqueId()).combat.xpNext
+            );
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CoolDown"),
+                    PersistentDataType.DOUBLE, 5.0);
+            checkCombat(player);
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
         }
     }
 }

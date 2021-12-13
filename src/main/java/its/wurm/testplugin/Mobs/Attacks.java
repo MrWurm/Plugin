@@ -1,19 +1,12 @@
 package its.wurm.testplugin.Mobs;
 
-import dev.dbassett.skullcreator.SkullCreator;
 import its.wurm.testplugin.Main;
 import org.bukkit.*;
 import org.bukkit.entity.*;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.Potion;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
 
 public class Attacks implements Listener {
@@ -51,9 +44,61 @@ public class Attacks implements Listener {
         }, 8);
     }
 
-    public static void createTnt(Location location, Double damage, int fuse, Entity source, int blast) {
+    public static void createTnt(Location location, Double damage, int fuse, Entity source, org.bukkit.util.Vector velocity) {
         TNTPrimed tnt = location.getWorld().spawn(location, TNTPrimed.class);
         tnt.setFuseTicks(fuse);
         tnt.setSource(source);
+        tnt.setVelocity(velocity);
+        tnt.getPersistentDataContainer().set(new NamespacedKey(plugin, "Damage"),
+                PersistentDataType.DOUBLE, damage);
+        tnt.getPersistentDataContainer().set(new NamespacedKey(plugin, "Defense"),
+                PersistentDataType.DOUBLE, 999999999.0);
+        tnt.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
+                PersistentDataType.DOUBLE, 999999999.0);
     }
+
+    public static void createPuffer(Location location, Double damage, Entity source, org.bukkit.util.Vector velocity) {
+        PufferFish pufferFish = location.getWorld().spawn(location, PufferFish.class);
+        pufferFish.setInvulnerable(true);
+        pufferFish.setVelocity(velocity);
+        pufferFish.getPersistentDataContainer().set(new NamespacedKey(plugin, "Damage"),
+                PersistentDataType.DOUBLE, damage);
+        pufferFish.setPuffState(0);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            public void run() {
+                pufferFish.setPuffState(2);
+            }
+        }, 1L);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            public void run() {
+                pufferFish.remove();
+            }
+        }, 80L);
+    }
+
+    public static void createArrow(Location location, Double damage, ProjectileSource source, org.bukkit.util.Vector velocity, Integer id, Integer pierce) {
+        Arrow arrow = location.getWorld().spawn(location, Arrow.class);
+        arrow.setShooter(source);
+        arrow.setVelocity(velocity);
+        arrow.setPierceLevel(pierce);
+        arrow.getPersistentDataContainer().set(new NamespacedKey(plugin, "Damage"),
+                PersistentDataType.DOUBLE, damage);
+        arrow.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"),
+                PersistentDataType.INTEGER, id);
+    }
+
+    public static void createItem(Location location, int time, Material type, boolean pick) {
+        Item item = location.getWorld().spawn(location, Item.class);
+        ItemStack itemStack = new ItemStack(type, 1);
+        if (pick == true) {
+            item.setPickupDelay(32000);
+        }
+        item.setItemStack(itemStack);
+        item.setTicksLived(time);
+        item.getPersistentDataContainer().set(new NamespacedKey(plugin, "Defense"),
+                PersistentDataType.DOUBLE, 999999999.0);
+        item.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
+                PersistentDataType.DOUBLE, 999999999.0);
+    }
+
 }
