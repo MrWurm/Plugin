@@ -34,6 +34,7 @@ public class MiscSelectGUI implements InventoryHolder {
         //Adding in all instances of the armor
         main.setItem(0, Items.FEATHER_CHARM.getItem(plugin));
         main.setItem(1, Items.MEATY_STEW.getItem(plugin));
+        main.setItem(2, Items.MAGIC_STEW.getItem(plugin));
 
         //Bottom Row with options to change pages and a go back button
         for (int i = 45; i < 54; i++) {

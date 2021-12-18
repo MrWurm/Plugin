@@ -1081,9 +1081,19 @@ public class FormatRecipesGUI implements InventoryHolder {
     public static FormatRecipesGUI newMeatyStewGUI(Plugin plugin) {
         ItemStack bowl = new ItemStack(Material.BOWL, 1);
 
-        return new FormatRecipesGUI(plugin, new MiscSelectGUI(plugin), Items.MEAT_CLEAVER.getItem(plugin),
+        return new FormatRecipesGUI(plugin, new MiscSelectGUI(plugin), Items.MEATY_STEW.getItem(plugin),
                 1, Items.ENCHANTED_COOKED_COD.getItem(plugin), 2, Items.ENCHANTED_COOKED_SALMON.getItem(plugin), 3, Items.ENCHANTED_CHICKEN.getItem(plugin),
                 4, Items.ENCHANTED_BEEF.getItem(plugin), 5, Items.ENCHANTED_RABBIT.getItem(plugin), 6, Items.ENCHANTED_MUTTON.getItem(plugin),
+                8, bowl);
+    }
+
+    // Magic Stew GUI
+    public static FormatRecipesGUI newMagicStewGUI(Plugin plugin) {
+        ItemStack bowl = new ItemStack(Material.BOWL, 1);
+
+        return new FormatRecipesGUI(plugin, new MiscSelectGUI(plugin), Items.MAGIC_STEW.getItem(plugin),
+                1, Items.ENCHANTED_SPIDER_EYE.getItem(plugin), 2, Items.ENCHANTED_POPPED_CHORUS_FRUIT.getItem(plugin), 3, Items.ENCHANTED_QUARTZ_SCULPTURE.getItem(plugin),
+                4, Items.ENCHANTED_ENDER_EYE.getItem(plugin), 5, Items.ENCHANTED_GLOW_SAC.getItem(plugin), 6, Items.ENCHANTED_POWDER_BALL.getItem(plugin),
                 8, bowl);
     }
 }

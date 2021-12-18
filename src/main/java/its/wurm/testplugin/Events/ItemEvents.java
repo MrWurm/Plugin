@@ -8,12 +8,17 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.EntityResurrectEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryEvent;
+import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -42,12 +47,57 @@ public class ItemEvents implements Listener{
     }
 
     public void tntWand(Player player) {
-        Attacks.createTnt(player.getEyeLocation(), 100.0, 70, player, player.getLocation().getDirection().multiply(2));
+        double mana = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Mana"),
+                PersistentDataType.DOUBLE);
+        if (mana < 50) {
+            player.sendMessage(ChatColor.RED + "You need more mana to use this ability");
+            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 40, 0);
+            return;
+        }
+
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Mana"),
+                PersistentDataType.DOUBLE, mana - 50);
+
+        double mod = ((player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+                PersistentDataType.DOUBLE) * 0.2) + 1) * 20;
+        Attacks.createTnt(player.getEyeLocation(), mod, 70, player, player.getLocation().getDirection().multiply(2));
         player.sendMessage(ChatColor.GREEN + "Used Tnt Hurl");
     }
 
+    public void boneNeedle(Player player) {
+        double health = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+                PersistentDataType.DOUBLE);
+        if (health <= 20) {
+            player.sendMessage(ChatColor.RED + "You do not have enough health to use this ability");
+            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 40, 0);
+            return;
+        }
+
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Mana"),
+                PersistentDataType.DOUBLE, player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Mana"),
+                        PersistentDataType.DOUBLE) + 12);
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
+                PersistentDataType.DOUBLE, health - 20);
+        player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_DRINK, 40, 1);
+        player.sendMessage(ChatColor.GREEN + "Used Blood Sacrifice");
+    }
+
     public void pufferCanon(Player player) {
-        Attacks.createPuffer(player.getEyeLocation(), 100.0, player, player.getLocation().getDirection().multiply(3));
+        double mana = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Mana"),
+                PersistentDataType.DOUBLE);
+        if (mana < 25) {
+            player.sendMessage(ChatColor.RED + "You need more mana to use this ability");
+            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 40, 0);
+            return;
+        }
+
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Mana"),
+                PersistentDataType.DOUBLE, mana - 25);
+
+        double mod = ((player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+                PersistentDataType.DOUBLE) * 0.12) + 1) * 25;
+
+        Attacks.createPuffer(player.getEyeLocation(), mod, player, player.getLocation().getDirection().multiply(3));
         player.sendMessage(ChatColor.GREEN + "Used Puffer Projectile");
     }
 
@@ -85,13 +135,25 @@ public class ItemEvents implements Listener{
             if (cooldown_heal.get(player.getName()) > System.currentTimeMillis()) {
                 long timeleft = (cooldown_heal.get(player.getName()) - System.currentTimeMillis()) / 1000;
                 player.sendMessage(ChatColor.RED + "This Ability is on cooldown for " + timeleft + " seconds.");
+                player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 40, 0);
                 return;
             }
         }
 
+        double mana = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Mana"),
+                PersistentDataType.DOUBLE);
+        if (mana < 20) {
+            player.sendMessage(ChatColor.RED + "You need more mana to use this ability");
+            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 40, 0);
+            return;
+        }
+
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Mana"),
+                PersistentDataType.DOUBLE, mana - 20);
+
         cooldown_heal.put(player.getName(), System.currentTimeMillis() + (8 * 1000));
         double hp = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
-                PersistentDataType.DOUBLE) + 50;
+                PersistentDataType.DOUBLE) + 40;
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
                 PersistentDataType.DOUBLE, hp);
         player.sendMessage(ChatColor.GREEN + "Used Minor Heal");
@@ -102,12 +164,14 @@ public class ItemEvents implements Listener{
             if (cooldown_echo.get(player.getName()) > System.currentTimeMillis()) {
                 long timeleft = (cooldown_echo.get(player.getName()) - System.currentTimeMillis()) / 1000;
                 player.sendMessage(ChatColor.RED + "This Ability is on cooldown for " + timeleft + " seconds.");
+                player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 40, 0);
                 return;
             }
         }
 
         if (player.getLocation().distanceSquared(echo_ward.get(player.getName())) > 120 * 120) {
             player.sendMessage(ChatColor.RED + "Your ward is too far away to teleport to!");
+            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 40, 0);
             return;
         }
 
@@ -120,6 +184,18 @@ public class ItemEvents implements Listener{
     }
 
     public void aote(Player player) {
+
+        double mana = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Mana"),
+                PersistentDataType.DOUBLE);
+        if (mana < 40) {
+            player.sendMessage(ChatColor.RED + "You need more mana to use this ability");
+            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 40, 0);
+            return;
+        }
+
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Mana"),
+                PersistentDataType.DOUBLE, mana - 40);
+
         int distance = 7;
 
         BlockIterator blocksToAdd = new BlockIterator(player.getLocation(), 1, distance);
@@ -151,6 +227,7 @@ public class ItemEvents implements Listener{
                 PersistentDataType.INTEGER);
         if (soup == 3) {
             player.sendMessage(ChatColor.RED + "You have already eaten enough Meaty Stew!");
+            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 40, 0);
             return;
         }
         player.sendMessage(ChatColor.GREEN + "Yum! You ate the Meaty Stew and gained +5 Strength");
@@ -158,6 +235,26 @@ public class ItemEvents implements Listener{
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "StrengthBase"),
                 PersistentDataType.DOUBLE, strength + 5.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "StrengthSoup"),
+                PersistentDataType.INTEGER, soup + 1);
+        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_BURP, 70, 2);
+        item.setAmount(0);
+    }
+
+    public void eatMagicStew(Player player, ItemStack item) {
+        double intelligence = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "IntBase"),
+                PersistentDataType.DOUBLE);
+        int soup = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "IntSoup"),
+                PersistentDataType.INTEGER);
+        if (soup == 3) {
+            player.sendMessage(ChatColor.RED + "You have already eaten enough Magic Stew!");
+            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 40, 0);
+            return;
+        }
+        player.sendMessage(ChatColor.GREEN + "Yum! You ate the Magic Stew and gained +15 Intelligence");
+
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "IntBase"),
+                PersistentDataType.DOUBLE, intelligence + 15.0);
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "IntSoup"),
                 PersistentDataType.INTEGER, soup + 1);
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_BURP, 70, 2);
         item.setAmount(0);
@@ -256,6 +353,12 @@ public class ItemEvents implements Listener{
                         case "Meaty Stew":
                             eatMeatStew(player, event.getItem());
                             break;
+                        case "Magic Stew":
+                            eatMagicStew(player, event.getItem());
+                            break;
+                        case "Bone Needle":
+                            boneNeedle(player);
+                            break;
                         default:
                             return;
                     }
@@ -306,6 +409,12 @@ public class ItemEvents implements Listener{
                         case "Meaty Stew":
                             eatMeatStew(player, event.getItem());
                             break;
+                        case "Magic Stew":
+                            eatMagicStew(player, event.getItem());
+                            break;
+                        case "Bone Needle":
+                            boneNeedle(player);
+                            break;
                         default:
                             return;
                     }
@@ -338,6 +447,7 @@ public class ItemEvents implements Listener{
                             ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,
                                     40, 6));
                         }
+                        break;
                     case "Meat Cleaver":
                         Random random = new Random();
                         int choice = random.nextInt(5);
@@ -362,7 +472,113 @@ public class ItemEvents implements Listener{
                         event.getEntity().getWorld().spawnParticle(Particle.ITEM_CRACK, event.getEntity().getLocation(), 2, block);
                         break;
                     default:
-                        return;
+                        break;
+                }
+            }
+        }
+
+        if (event.getEntity() instanceof Player) {
+            Player victim = (Player) event.getEntity();
+            if (victim.isBlocking() &&
+                victim.getCooldown(Material.SHIELD) == 0 &&
+                victim.getStatistic(Statistic.DAMAGE_BLOCKED_BY_SHIELD) > 0) {
+
+
+                if (victim.getInventory().getItemInMainHand() != null &&
+                    victim.getInventory().getItemInMainHand().getType() == Material.SHIELD &&
+                    victim.getInventory().getItemInMainHand().getItemMeta() != null &&
+                    victim.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() != null &&
+                    victim.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                            PersistentDataType.STRING) != null) {
+                    switch (victim.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                            PersistentDataType.STRING)) {
+                        case "Cactus Shield":
+                            double damage = (victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "Crit"),
+                                    PersistentDataType.DOUBLE) * 2);
+                            if (event.getDamager().getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+                                    PersistentDataType.DOUBLE) != null) {
+                                double health = event.getDamager().getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+                                        PersistentDataType.DOUBLE);
+                                event.getDamager().getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
+                                        PersistentDataType.DOUBLE, health - damage);
+                                LivingEntity attacker = (LivingEntity) event.getDamager();
+                                attacker.damage(1);
+                            }
+                            break;
+                        case "Sparkling Shield":
+                            if (event.getDamager() instanceof LivingEntity) {
+                                LivingEntity attacker = ((LivingEntity) event.getDamager());
+                                double time = victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "Mana"),
+                                        PersistentDataType.DOUBLE) / 25;
+                                int timeint = (int)time;
+                                attacker.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,
+                                        timeint, 5, true, false));
+                                double attack = attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "Damage"),
+                                        PersistentDataType.DOUBLE) / 25;
+                                attacker.getPersistentDataContainer().set(new NamespacedKey(plugin, "Damage"),
+                                        PersistentDataType.DOUBLE, attack * 24);
+                                attacker.getWorld().playSound(attacker.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_BREAK, 120, 0);
+                                Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                    public void run() {
+                                        attacker.getPersistentDataContainer().set(new NamespacedKey(plugin, "Damage"),
+                                                PersistentDataType.DOUBLE, attack + attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "Damage"),
+                                                        PersistentDataType.DOUBLE));
+                                    }
+                                }, timeint);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                if (victim.getInventory().getItemInOffHand() != null &&
+                    victim.getInventory().getItemInMainHand().getType() != Material.SHIELD &&
+                    victim.getInventory().getItemInOffHand().getType() == Material.SHIELD &&
+                    victim.getInventory().getItemInOffHand().getItemMeta() != null &&
+                    victim.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer() != null &&
+                    victim.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                            PersistentDataType.STRING) != null) {
+                    switch (victim.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                            PersistentDataType.STRING)) {
+                        case "Cactus Shield":
+                            double damage = (victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "Crit"),
+                                    PersistentDataType.DOUBLE) * 2);
+                            if (event.getDamager().getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+                                    PersistentDataType.DOUBLE) != null) {
+                                double health = event.getDamager().getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+                                        PersistentDataType.DOUBLE);
+                                event.getDamager().getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
+                                        PersistentDataType.DOUBLE, health - damage);
+                                LivingEntity attacker = (LivingEntity) event.getDamager();
+                                attacker.damage(1);
+                            }
+                            break;
+                        case "Sparkling Shield":
+                            if (event.getDamager() instanceof LivingEntity) {
+                                LivingEntity attacker = ((LivingEntity) event.getDamager());
+                                double time = victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "Mana"),
+                                        PersistentDataType.DOUBLE) / 5;
+                                int timeint = (int)time;
+                                attacker.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,
+                                        timeint, 5, true, false));
+                                double attack = attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "Damage"),
+                                        PersistentDataType.DOUBLE) / 25;
+                                attacker.getPersistentDataContainer().set(new NamespacedKey(plugin, "Damage"),
+                                        PersistentDataType.DOUBLE, attack * 24);
+                                attacker.getWorld().playSound(attacker.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_BREAK, 120, 0);
+                                Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                    public void run() {
+                                        attacker.getPersistentDataContainer().set(new NamespacedKey(plugin, "Damage"),
+                                                PersistentDataType.DOUBLE, attack + attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "Damage"),
+                                                        PersistentDataType.DOUBLE));
+                                    }
+                                }, timeint);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }
@@ -379,9 +595,9 @@ public class ItemEvents implements Listener{
         }
         //Drip and Supreme Drip particles
         if (player.getInventory().getBoots() != null &&
-                player.getInventory().getBoots().getItemMeta() != null &&
-                player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
-                        PersistentDataType.STRING) != null) {
+            player.getInventory().getBoots().getItemMeta() != null &&
+            player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                    PersistentDataType.STRING) != null) {
             switch (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
                     PersistentDataType.STRING)) {
                 case "The Drip":
@@ -416,6 +632,7 @@ public class ItemEvents implements Listener{
     public void onRes(EntityResurrectEvent event) {
         event.setCancelled(true);
     }
+
     @EventHandler
     public void onPortal(PlayerPortalEvent event) {
         Player player = event.getPlayer();

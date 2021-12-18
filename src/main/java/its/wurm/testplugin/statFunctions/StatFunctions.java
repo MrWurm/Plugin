@@ -68,13 +68,32 @@ public class StatFunctions {
                         PersistentDataType.DOUBLE)
 
         );
-        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
+
+        String message2 = String.format(
+                "§b %.1f/%.1f ✎",
+
+                player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Mana"),
+                        PersistentDataType.DOUBLE),
+                player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxMana"),
+                        PersistentDataType.DOUBLE)
+
+        );
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message + "  " + message2));
         if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
                 PersistentDataType.DOUBLE) > player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
                 PersistentDataType.DOUBLE)) {
 
             player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
                     PersistentDataType.DOUBLE, player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
+                            PersistentDataType.DOUBLE));
+        }
+
+        if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Mana"),
+                PersistentDataType.DOUBLE) > player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxMana"),
+                PersistentDataType.DOUBLE)) {
+
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Mana"),
+                    PersistentDataType.DOUBLE, player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxMana"),
                             PersistentDataType.DOUBLE));
         }
     }

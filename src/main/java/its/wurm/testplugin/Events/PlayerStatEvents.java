@@ -118,6 +118,12 @@ public class PlayerStatEvents implements Listener {
                 PersistentDataType.INTEGER, 10);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Food"),
                 PersistentDataType.INTEGER, 0);
+
+        //set current health and mana
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
+                PersistentDataType.DOUBLE, 100.0);
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Mana"),
+                PersistentDataType.DOUBLE, 100.0);
     }
 
 
@@ -957,7 +963,7 @@ if (player.getInventory().getHelmet() != null &&
     double speed = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedBase"),
             PersistentDataType.DOUBLE);
 
-    //Check player's main hand item for attack speed and apply it to attack speed
+    //Check player's main hand item for speed and apply it to speed
     if (player.getInventory().getItemInMainHand() != null &&
         player.getInventory().getItemInMainHand().getItemMeta() != null &&
         player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() != null &&
@@ -968,7 +974,7 @@ if (player.getInventory().getHelmet() != null &&
                 PersistentDataType.DOUBLE);
     }
 
-    //Check player's off hand item for speed and apply it to attack speed
+    //Check player's off hand item for speed and apply it to speed
     if (player.getInventory().getItemInOffHand() != null &&
         player.getInventory().getItemInOffHand().getItemMeta() != null &&
         player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer() != null &&
@@ -981,7 +987,7 @@ if (player.getInventory().getHelmet() != null &&
                 PersistentDataType.DOUBLE);
     }
 
-    //Check player's helmet for speed and apply it to attack speed
+    //Check player's helmet for speed and apply it to speed
     if (player.getInventory().getHelmet() != null &&
         player.getInventory().getHelmet().getItemMeta() != null &&
         player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer() != null &&
@@ -992,7 +998,7 @@ if (player.getInventory().getHelmet() != null &&
                 PersistentDataType.DOUBLE);
     }
 
-    //Check player's chest for speed and apply it to attack speed
+    //Check player's chest for speed and apply it to speed
     if (player.getInventory().getChestplate() != null &&
         player.getInventory().getChestplate().getItemMeta() != null &&
         player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer() != null &&
@@ -1003,7 +1009,7 @@ if (player.getInventory().getHelmet() != null &&
                 PersistentDataType.DOUBLE);
     }
 
-    //Check player's legs for speed and apply it to attack speed
+    //Check player's legs for speed and apply it to speed
     if (player.getInventory().getLeggings() != null &&
         player.getInventory().getLeggings().getItemMeta() != null &&
         player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer() != null &&
@@ -1014,7 +1020,7 @@ if (player.getInventory().getHelmet() != null &&
                 PersistentDataType.DOUBLE);
     }
 
-    //Check player's boots for speed and apply it to attack speed
+    //Check player's boots for speed and apply it to speed
     if (player.getInventory().getBoots() != null &&
         player.getInventory().getBoots().getItemMeta() != null &&
         player.getInventory().getBoots().getItemMeta().getPersistentDataContainer() != null &&
@@ -1029,7 +1035,7 @@ if (player.getInventory().getHelmet() != null &&
     double speedMod = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
             PersistentDataType.DOUBLE);
 
-    //Check player's main hand item for speed modifier and apply it to Speed modifier
+    //Check player's main hand item for speed modifier and apply it to speed modifier
     if (player.getInventory().getItemInMainHand() != null &&
         player.getInventory().getItemInMainHand().getItemMeta() != null &&
         player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() != null &&
@@ -1099,6 +1105,233 @@ if (player.getInventory().getHelmet() != null &&
 
     player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Speed"),
             PersistentDataType.DOUBLE, (1 + speedMod) * speed);
+
+    //take base intelligence
+    double intelligence = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "IntBase"),
+            PersistentDataType.DOUBLE);
+
+    //Check player's main hand item for intelligence and apply it to intelligence
+    if (player.getInventory().getItemInMainHand() != null &&
+        player.getInventory().getItemInMainHand().getItemMeta() != null &&
+        player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() != null &&
+        player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+                PersistentDataType.DOUBLE) != null) {
+
+        intelligence = intelligence + player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+                PersistentDataType.DOUBLE);
+    }
+
+    //Check player's off hand item for intelligence and apply it to intelligence
+    if (player.getInventory().getItemInOffHand() != null &&
+        player.getInventory().getItemInOffHand().getItemMeta() != null &&
+        player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer() != null &&
+        player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+                PersistentDataType.DOUBLE) != null &&
+        player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Dual"),
+                PersistentDataType.INTEGER) != null) {
+
+        intelligence = intelligence + player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+                PersistentDataType.DOUBLE);
+    }
+
+    //Check player's helmet for intelligence and apply it to intelligence
+    if (player.getInventory().getHelmet() != null &&
+        player.getInventory().getHelmet().getItemMeta() != null &&
+        player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer() != null &&
+        player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+                PersistentDataType.DOUBLE) != null) {
+
+        intelligence = intelligence + player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+                PersistentDataType.DOUBLE);
+    }
+
+    //Check player's chest for intelligence and apply it to intelligence
+    if (player.getInventory().getChestplate() != null &&
+        player.getInventory().getChestplate().getItemMeta() != null &&
+        player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer() != null &&
+        player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+                PersistentDataType.DOUBLE) != null) {
+
+        intelligence = intelligence + player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+                PersistentDataType.DOUBLE);
+    }
+
+    //Check player's legs for intelligence and apply it to intelligence
+    if (player.getInventory().getLeggings() != null &&
+        player.getInventory().getLeggings().getItemMeta() != null &&
+        player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer() != null &&
+        player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+                PersistentDataType.DOUBLE) != null) {
+
+        intelligence = intelligence + player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+                PersistentDataType.DOUBLE);
+    }
+
+    //Check player's boots for intelligence and apply it to intelligence
+    if (player.getInventory().getBoots() != null &&
+        player.getInventory().getBoots().getItemMeta() != null &&
+        player.getInventory().getBoots().getItemMeta().getPersistentDataContainer() != null &&
+        player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+                PersistentDataType.DOUBLE) != null) {
+
+        intelligence = intelligence + player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+                PersistentDataType.DOUBLE);
+    }
+
+    //take base intelligence modifier
+    double intMod = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
+            PersistentDataType.DOUBLE);
+
+    //Check player's main hand item for intelligence modifier and apply it to intelligence modifier
+    if (player.getInventory().getItemInMainHand() != null &&
+        player.getInventory().getItemInMainHand().getItemMeta() != null &&
+        player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() != null &&
+        player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
+                PersistentDataType.DOUBLE) != null) {
+
+        intMod = intMod + player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
+                PersistentDataType.DOUBLE);
+    }
+
+    //Check player's off hand item for intelligence modifier and apply it to intelligence modifier
+    if (player.getInventory().getItemInOffHand() != null &&
+        player.getInventory().getItemInOffHand().getItemMeta() != null &&
+        player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer() != null &&
+        player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
+                PersistentDataType.DOUBLE) != null &&
+        player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Dual"),
+                PersistentDataType.INTEGER) != null) {
+
+        intMod = intMod + player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
+                PersistentDataType.DOUBLE);
+    }
+
+    //Check player's helmet for intelligence modifier and apply it to intelligence modifier
+    if (player.getInventory().getHelmet() != null &&
+        player.getInventory().getHelmet().getItemMeta() != null &&
+        player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer() != null &&
+        player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
+                PersistentDataType.DOUBLE) != null) {
+
+        intMod = intMod + player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
+                PersistentDataType.DOUBLE);
+    }
+
+    //Check player's chest for intelligence modifier and apply it to intelligence modifier
+    if (player.getInventory().getChestplate() != null &&
+        player.getInventory().getChestplate().getItemMeta() != null &&
+        player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer() != null &&
+        player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
+                PersistentDataType.DOUBLE) != null) {
+
+        intMod = intMod + player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
+                PersistentDataType.DOUBLE);
+    }
+
+    //Check player's legs for intelligence mod and apply it to intelligence mod
+    if (player.getInventory().getLeggings() != null &&
+        player.getInventory().getLeggings().getItemMeta() != null &&
+        player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer() != null &&
+        player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
+                PersistentDataType.DOUBLE) != null) {
+
+        intMod = intMod + player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
+                PersistentDataType.DOUBLE);
+    }
+
+    //Check player's boots for intelligence mod and apply it to intelligence mod
+    if (player.getInventory().getBoots() != null &&
+        player.getInventory().getBoots().getItemMeta() != null &&
+        player.getInventory().getBoots().getItemMeta().getPersistentDataContainer() != null &&
+        player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
+                PersistentDataType.DOUBLE) != null) {
+
+        intMod = intMod + player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
+                PersistentDataType.DOUBLE);
+    }
+
+    player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Intelligence"),
+            PersistentDataType.DOUBLE, (1 + intMod) * intelligence);
+
+    //take base mana
+    double mana = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "ManaBase"),
+            PersistentDataType.DOUBLE);
+
+    //take base mana modifier
+    double manaMod = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
+            PersistentDataType.DOUBLE);
+
+    //Check player's main hand item for mana modifier and apply it to mana modifier
+    if (player.getInventory().getItemInMainHand() != null &&
+        player.getInventory().getItemInMainHand().getItemMeta() != null &&
+        player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() != null &&
+        player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
+                PersistentDataType.DOUBLE) != null) {
+
+        manaMod = manaMod + player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
+                PersistentDataType.DOUBLE);
+    }
+
+    //Check player's off hand item for mana modifier and apply it to mana modifier
+    if (player.getInventory().getItemInOffHand() != null &&
+            player.getInventory().getItemInOffHand().getItemMeta() != null &&
+            player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer() != null &&
+            player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
+                    PersistentDataType.DOUBLE) != null &&
+            player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Dual"),
+                    PersistentDataType.INTEGER) != null) {
+
+        manaMod = manaMod + player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
+                PersistentDataType.DOUBLE);
+    }
+
+    //Check player's helmet for mana modifier and apply it to mana modifier
+    if (player.getInventory().getHelmet() != null &&
+        player.getInventory().getHelmet().getItemMeta() != null &&
+        player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer() != null &&
+        player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
+                PersistentDataType.DOUBLE) != null) {
+
+        manaMod = manaMod + player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
+                PersistentDataType.DOUBLE);
+    }
+
+    //Check player's chest for mana modifier and apply it to mana modifier
+    if (player.getInventory().getChestplate() != null &&
+        player.getInventory().getChestplate().getItemMeta() != null &&
+        player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer() != null &&
+        player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
+                PersistentDataType.DOUBLE) != null) {
+
+        manaMod = manaMod + player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
+                PersistentDataType.DOUBLE);
+    }
+
+    //Check player's legs for mana mod and apply it to mana mod
+    if (player.getInventory().getLeggings() != null &&
+        player.getInventory().getLeggings().getItemMeta() != null &&
+        player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer() != null &&
+        player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
+                PersistentDataType.DOUBLE) != null) {
+
+        manaMod = manaMod + player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
+                PersistentDataType.DOUBLE);
+    }
+
+    //Check player's boots for mana mod and apply it to mana mod
+    if (player.getInventory().getBoots() != null &&
+        player.getInventory().getBoots().getItemMeta() != null &&
+        player.getInventory().getBoots().getItemMeta().getPersistentDataContainer() != null &&
+        player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
+                PersistentDataType.DOUBLE) != null) {
+
+        manaMod = manaMod + player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
+                PersistentDataType.DOUBLE);
+    }
+
+    player.getPersistentDataContainer().set(new NamespacedKey(plugin, "MaxMana"),
+            PersistentDataType.DOUBLE, (1 + manaMod) * (mana + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+                    PersistentDataType.DOUBLE)));
 }
 
     @EventHandler
@@ -1149,6 +1382,25 @@ if (player.getInventory().getHelmet() != null &&
                         PersistentDataType.DOUBLE)) {
                     player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
                             PersistentDataType.DOUBLE, player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
+                                    PersistentDataType.DOUBLE));
+                }
+
+                if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxMana"),
+                        PersistentDataType.DOUBLE) > player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Mana"),
+                        PersistentDataType.DOUBLE)) {
+                    Double mana = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxMana"),
+                            PersistentDataType.DOUBLE)/100;
+                    mana = mana * 2;
+                    player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Mana"),
+                            PersistentDataType.DOUBLE, player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Mana"),
+                                    PersistentDataType.DOUBLE) + mana);
+
+                }
+                if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxMana"),
+                        PersistentDataType.DOUBLE) < player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Mana"),
+                        PersistentDataType.DOUBLE)) {
+                    player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Mana"),
+                            PersistentDataType.DOUBLE, player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxMana"),
                                     PersistentDataType.DOUBLE));
                 }
             }

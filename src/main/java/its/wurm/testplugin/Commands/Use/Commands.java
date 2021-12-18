@@ -1,6 +1,6 @@
 package its.wurm.testplugin.Commands.Use;
 
-import its.wurm.testplugin.Inventories.RecipeSelectGUI;
+import its.wurm.testplugin.Inventories.MainGUI;
 import its.wurm.testplugin.Items.Items;
 import its.wurm.testplugin.Main;
 import its.wurm.testplugin.Mobs.Attacks;
@@ -32,13 +32,12 @@ public class Commands implements CommandExecutor {
             player.getInventory().addItem(Items.DEV_HAMMER.getItem(plugin));
             player.getInventory().addItem(Items.MOON_GLOVE.getItem(plugin));
             player.getInventory().addItem(Items.ECHO_STONE.getItem(plugin));
-            player.getInventory().addItem(Items.SWOERS_WILL.getItem(plugin));
+            player.getInventory().addItem(Items.ALLMIGHTY.getItem(plugin));
         }
 
         if (cmd.getName().equalsIgnoreCase("testgui")) {
-            RecipeSelectGUI gui = new RecipeSelectGUI(plugin);
+            MainGUI gui = new MainGUI(plugin);
             player.openInventory(gui.getInventory());
-            player.sendMessage("Opened Menu");
         }
 
         if (cmd.getName().equalsIgnoreCase("customsummon/dummy")) {

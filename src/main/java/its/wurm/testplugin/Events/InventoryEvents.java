@@ -17,8 +17,34 @@ public class InventoryEvents implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent e) {
+
         if (e.getClickedInventory() == null) {
             return;
+        }
+
+        //Main GUI
+        if (e.getClickedInventory().getHolder() instanceof MainGUI) {
+            e.setCancelled(true);
+            Player player = (Player) e.getWhoClicked();
+            if (e.getCurrentItem() == null) {
+                return;
+            }
+            if (e.getSlot() == 25) {
+                //open Ender Chest gui
+                player.openInventory(player.getEnderChest());
+            }
+
+            if (e.getSlot() == 30) {
+                //open Recipes gui
+                RecipeSelectGUI gui = new RecipeSelectGUI(plugin);
+                player.openInventory(gui.getInventory());
+            }
+
+
+            //close the gui
+            if (e.getSlot() == 49) {
+                player.closeInventory();
+            }
         }
         if (e.getClickedInventory().getHolder() instanceof RecipeSelectGUI) {
             e.setCancelled(true);
@@ -162,6 +188,12 @@ public class InventoryEvents implements Listener {
                 //open Meaty Stew recipe gui
                 player.openInventory(FormatRecipesGUI.newMeatyStewGUI(plugin).getInventory());
             }
+
+            if (e.getSlot() == 2) {
+                //open Magic Stew recipe gui
+                player.openInventory(FormatRecipesGUI.newMagicStewGUI(plugin).getInventory());
+            }
+
 
             if (e.getSlot() == 49) {
                 //go back
