@@ -2006,19 +2006,21 @@ public enum Items implements ItemLike {
         }
     },
 
-    NUTRI_BAR {
+    POCKET_WORKBENCH {
         @Override
         public ItemStack getItem(Plugin plugin) {
-            ItemStack item = new ItemStack(Material.BRICK, 1);
+            ItemStack item = SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmNkYzBmZWI3MDAxZTJjMTBmZDUwNjZlNTAxYjg3ZTNkNjQ3OTMwOTJiODVhNTBjODU2ZDk2MmY4YmU5MmM3OCJ9fX0");
             ItemMeta meta = item.getItemMeta();
-            meta.setDisplayName(ChatColor.BLUE + "Nutri Bar");
+            meta.setDisplayName(ChatColor.GREEN + "Pocket Crafting Table");
             List<String> lore = new ArrayList<>();
-            lore.add(ChatColor.GRAY + "Can be eaten to get a good");
-            lore.add(ChatColor.GRAY + "saturation boost for a minute");
-            lore.add(ChatColor.GRAY + "or two.");
             lore.add(" ");
-            lore.add(ChatColor.BLUE + "§lRARE");
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Nutri Bar");
+            lore.add(ChatColor.GOLD + "Item Ability: Access Workbench " + ChatColor.YELLOW + "§lRIGHT-CLICK");
+            lore.add(ChatColor.GRAY + "Open a crafting table GUI");
+            lore.add(" ");
+            lore.add(ChatColor.GREEN + "§lUNCOMMON");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Pocket Crafting Table");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "UNCOMMON");
+
             meta.setLore(lore);
             item.setItemMeta(meta);
 
@@ -2141,6 +2143,78 @@ public enum Items implements ItemLike {
         }
     },
 
+    OVERWORLD_SCROLL {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.FILLED_MAP, 1);
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(ChatColor.BLUE + "Travel Scroll to The Overworld");
+            List<String> lore = new ArrayList<>();
+            lore.add(" ");
+            lore.add(ChatColor.GOLD + "Item Ability: Warp " + ChatColor.YELLOW + "§lRIGHT-CLICK");
+            lore.add(ChatColor.GRAY + "Teleport to the overworld (you must be at");
+            lore.add(ChatColor.GRAY + "full " + ChatColor.RED + "❤ Health " + ChatColor.GRAY + "to");
+            lore.add(ChatColor.GRAY + "do it)");
+            lore.add(" ");
+            lore.add(ChatColor.BLUE + "§lRARE");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Travel Scroll to The Overworld");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
+            meta.setLore(lore);
+
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    NETHER_SCROLL {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.FILLED_MAP, 1);
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(ChatColor.DARK_PURPLE + "Travel Scroll to The Nether");
+            List<String> lore = new ArrayList<>();
+            lore.add(" ");
+            lore.add(ChatColor.GOLD + "Item Ability: Warp " + ChatColor.YELLOW + "§lRIGHT-CLICK");
+            lore.add(ChatColor.GRAY + "Teleport to the nether (you must be at");
+            lore.add(ChatColor.GRAY + "full " + ChatColor.RED + "❤ Health " + ChatColor.GRAY + "to");
+            lore.add(ChatColor.GRAY + "do it)");
+            lore.add(" ");
+            lore.add(ChatColor.DARK_PURPLE + "§lRARE");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Travel Scroll to The Nether");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
+                    meta.setLore(lore);
+
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    END_SCROLL {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.FILLED_MAP, 1);
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(ChatColor.DARK_PURPLE + "Travel Scroll to The End");
+            List<String> lore = new ArrayList<>();
+            lore.add(" ");
+            lore.add(ChatColor.GOLD + "Item Ability: Warp " + ChatColor.YELLOW + "§lRIGHT-CLICK");
+            lore.add(ChatColor.GRAY + "Teleport to the end (you must be at");
+            lore.add(ChatColor.GRAY + "full " + ChatColor.RED + "❤ Health " + ChatColor.GRAY + "to");
+            lore.add(ChatColor.GRAY + "do it)");
+            lore.add(" ");
+            lore.add(ChatColor.DARK_PURPLE + "§lEPIC");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Travel Scroll to The End");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "EPIC");
+            meta.setLore(lore);
+
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
 //----------------------------------------WEAPONS SECTION c:weapons-----------------------------------------------------
 
     MOON_GLOVE {
@@ -2150,6 +2224,7 @@ public enum Items implements ItemLike {
             ItemMeta meta = item.getItemMeta();
             meta.setDisplayName(ChatColor.DARK_PURPLE + "Moon Glove");
             List<String> lore = new ArrayList<>();
+            lore.add(" ");
             lore.add(ChatColor.GRAY + "This glove can manipulate gravity");
             lore.add(ChatColor.GRAY + "and send enemies you strike flying.");
             lore.add(" ");
@@ -2174,6 +2249,9 @@ public enum Items implements ItemLike {
             meta.setDisplayName(ChatColor.BLUE + "Aspect of The End");
             meta.setUnbreakable(true);
             List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.GRAY + "Damage: " + ChatColor.RED + "+80");
+            lore.add(ChatColor.GRAY + "Strength: " + ChatColor.RED + "+30");
+            lore.add(" ");
             lore.add(ChatColor.GOLD + "Item Ability: Instant Transmission" + ChatColor.YELLOW + " §l§lRIGHT-CLICK");
             lore.add(ChatColor.GRAY + "Teleport forward 8 blocks.");
             lore.add(ChatColor.DARK_GRAY + "Mana Cost: " + ChatColor.AQUA + "40");
@@ -2201,12 +2279,15 @@ public enum Items implements ItemLike {
             meta.setDisplayName(ChatColor.BLUE + "Pufferfish Canon");
             meta.setUnbreakable(true);
             List<String> lore = new ArrayList<>();
+            lore.add(" ");
             lore.add(ChatColor.GOLD + "Item Ability: Puffy Projectile" + ChatColor.YELLOW +  " §lRIGHT-CLICK");
             lore.add(ChatColor.GRAY + "Launch a pufferfish to attack");
             lore.add(ChatColor.GRAY + "your enemies.");
             lore.add(ChatColor.DARK_GRAY + "Mana Cost:" + ChatColor.AQUA + " 30");
             lore.add(" ");
             lore.add(ChatColor.BLUE + "§lRARE WAND");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
+
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Pufferfish Canon");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "wand");
             meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
@@ -2224,12 +2305,14 @@ public enum Items implements ItemLike {
             ItemMeta meta = item.getItemMeta();
             meta.setDisplayName(ChatColor.GREEN + "Lesser Wand of Healing");
             List<String> lore = new ArrayList<>();
+            lore.add(" ");
             lore.add(ChatColor.YELLOW + "Item Ability: Minor Heal " + ChatColor.GOLD + "§lRIGHT-CLICK");
             lore.add(ChatColor.GRAY + "Heal for" + ChatColor.RED + " ❤ 40");
             lore.add(ChatColor.DARK_GRAY + "Cooldown: " + ChatColor.GREEN + "8s");
             lore.add(ChatColor.DARK_GRAY + "Mana Cost: " + ChatColor.AQUA + "20");
             lore.add(" ");
             lore.add(ChatColor.GREEN + "§lUNCOMMON WAND");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Lesser Wand of Healing");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "wand");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "UNCOMMON");
@@ -2249,12 +2332,14 @@ public enum Items implements ItemLike {
             ItemMeta meta = item.getItemMeta();
             meta.setDisplayName(ChatColor.BLUE + "Wand of Healing");
             List<String> lore = new ArrayList<>();
+            lore.add(" ");
             lore.add(ChatColor.YELLOW + "Item Ability: Heal " + ChatColor.GOLD + "§lRIGHT-CLICK");
             lore.add(ChatColor.GRAY + "Heal for" + ChatColor.RED + " ❤ 75");
             lore.add(ChatColor.DARK_GRAY + "Cooldown: " + ChatColor.GREEN + "7s");
             lore.add(ChatColor.DARK_GRAY + "Mana Cost: " + ChatColor.AQUA + "35");
             lore.add(" ");
             lore.add(ChatColor.BLUE + "§lRARE WAND");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Wand of Healing");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "wand");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
@@ -2274,12 +2359,14 @@ public enum Items implements ItemLike {
             ItemMeta meta = item.getItemMeta();
             meta.setDisplayName(ChatColor.DARK_PURPLE + "Chain Heal Wand");
             List<String> lore = new ArrayList<>();
+            lore.add(" ");
             lore.add(ChatColor.YELLOW + "Item Ability: Hasty Heal " + ChatColor.GOLD + "§lRIGHT-CLICK");
             lore.add(ChatColor.GRAY + "Heal for" + ChatColor.RED + " ❤ 40");
             lore.add(ChatColor.DARK_GRAY + "Cooldown: " + ChatColor.GREEN + "2s");
             lore.add(ChatColor.DARK_GRAY + "Mana Cost: " + ChatColor.AQUA + "25");
             lore.add(" ");
             lore.add(ChatColor.DARK_PURPLE + "§lEPIC WAND");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Chain Heal Wand");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "wand");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "EPIC");
@@ -2299,12 +2386,14 @@ public enum Items implements ItemLike {
             ItemMeta meta = item.getItemMeta();
             meta.setDisplayName(ChatColor.DARK_PURPLE + "Greater Heal Wand");
             List<String> lore = new ArrayList<>();
+            lore.add(" ");
             lore.add(ChatColor.YELLOW + "Item Ability: Major Heal " + ChatColor.GOLD + "§lRIGHT-CLICK");
             lore.add(ChatColor.GRAY + "Heal for" + ChatColor.RED + " ❤ 100");
             lore.add(ChatColor.DARK_GRAY + "Cooldown: " + ChatColor.GREEN + "7s");
             lore.add(ChatColor.DARK_GRAY + "Mana Cost: " + ChatColor.AQUA + "40");
             lore.add(" ");
             lore.add(ChatColor.DARK_PURPLE + "§lEPIC WAND");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Greater Wand of Healing");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "wand");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "EPIC");
@@ -2457,15 +2546,46 @@ public enum Items implements ItemLike {
             ItemMeta meta = item.getItemMeta();
             meta.setDisplayName(ChatColor.BLUE + "Tnt Wand");
             List<String> lore = new ArrayList<>();
+            lore.add(" ");
             lore.add(ChatColor.YELLOW + "Item Ability: Hurl Tnt " + ChatColor.GOLD + "§lRIGHT-CLICK");
             lore.add(ChatColor.GRAY + "Launch a tnt forward dealing");
             lore.add(ChatColor.RED + "100 " + ChatColor.GRAY + "magic damage");
             lore.add(ChatColor.DARK_GRAY + "Mana Cost: " + ChatColor.AQUA + "35");
             lore.add(" ");
             lore.add(ChatColor.BLUE + "§lRARE WAND");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Tnt Wand");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "wand");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
+            meta.setLore(lore);
+            meta.addEnchant(Enchantment.LUCK, 1, false);
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    LIGHTNING_WAND {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.LIGHTNING_ROD, 1);
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(ChatColor.DARK_PURPLE + "Lightning Wand");
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.GRAY + "Intelligence: " + ChatColor.RED + "+45");
+            lore.add(" ");
+            lore.add(ChatColor.YELLOW + "Item Ability: Lightning Strike " + ChatColor.GOLD + "§lRIGHT-CLICK");
+            lore.add(ChatColor.GRAY + "Strike the ground in front");
+            lore.add(ChatColor.GRAY + "of you dealing heavy damage");
+            lore.add(ChatColor.DARK_GRAY + "Mana Cost: " + ChatColor.AQUA + "45");
+            lore.add(" ");
+            lore.add(ChatColor.DARK_PURPLE + "§lEPIC WAND");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Intelligence"), PersistentDataType.DOUBLE, 45.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Lightning Wand");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "wand");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "EPIC");
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -2625,6 +2745,231 @@ public enum Items implements ItemLike {
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "shield");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Sparkling Shield");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
+
+            meta.setLore(lore);
+            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            meta.setBlockState(banner);
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    COPPER_SHIELD {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.SHIELD, 1);
+            BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
+            meta.setUnbreakable(true);
+            meta.setDisplayName(ChatColor.BLUE + "Copper Shield");
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.GRAY + "Defense: " + ChatColor.GREEN + "+25");
+            lore.add(ChatColor.GRAY + "Speed: " + ChatColor.GREEN + "+10");
+            lore.add(" ");
+            lore.add(ChatColor.BLUE + "§lRARE SHIELD");
+            Banner banner = (Banner) meta.getBlockState();
+            banner.setBaseColor(DyeColor.ORANGE);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Integrity"), PersistentDataType.DOUBLE, 2.5);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 25.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Speed"), PersistentDataType.DOUBLE, 10.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "shield");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Copper Shield");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
+
+            meta.setLore(lore);
+            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            meta.setBlockState(banner);
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    IRON_SHIELD {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.SHIELD, 1);
+            BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
+            meta.setUnbreakable(true);
+            meta.setDisplayName(ChatColor.BLUE + "Iron Shield");
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.GRAY + "Defense: " + ChatColor.GREEN + "+30");
+            lore.add(ChatColor.GRAY + "Strength: " + ChatColor.GREEN + "+10");
+            lore.add(" ");
+            lore.add(ChatColor.BLUE + "§lRARE SHIELD");
+            Banner banner = (Banner) meta.getBlockState();
+            banner.setBaseColor(DyeColor.LIGHT_GRAY);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Integrity"), PersistentDataType.DOUBLE, 4.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 30.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Strength"), PersistentDataType.DOUBLE, 10.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "shield");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Iron Shield");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
+
+            meta.setLore(lore);
+            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            meta.setBlockState(banner);
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    LAPIS_SHIELD {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.SHIELD, 1);
+            BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
+            meta.setUnbreakable(true);
+            meta.setDisplayName(ChatColor.BLUE + "Lapis Shield");
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.GRAY + "Defense: " + ChatColor.GREEN + "+15");
+            lore.add(ChatColor.GRAY + "Intelligence: " + ChatColor.GREEN + "+40");
+            lore.add(ChatColor.GRAY + "Crit Damage: " + ChatColor.GREEN + "+10");
+            lore.add(" ");
+            lore.add(ChatColor.BLUE + "§lRARE SHIELD");
+            Banner banner = (Banner) meta.getBlockState();
+            banner.setBaseColor(DyeColor.BLUE);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Integrity"), PersistentDataType.DOUBLE, 2.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 15.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Intelligence"), PersistentDataType.DOUBLE, 40.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Crit"), PersistentDataType.DOUBLE, 10.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "shield");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Lapis Shield");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
+
+            meta.setLore(lore);
+            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            meta.setBlockState(banner);
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    REDSTONE_SHIELD {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.SHIELD, 1);
+            BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
+            meta.setUnbreakable(true);
+            meta.setDisplayName(ChatColor.BLUE + "Redstone Shield");
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.GRAY + "Defense: " + ChatColor.GREEN + "+20");
+            lore.add(ChatColor.GRAY + "Strength: " + ChatColor.GREEN + "+15");
+            lore.add(ChatColor.GRAY + "Crit Damage: " + ChatColor.GREEN + "+20");
+            lore.add(" ");
+            lore.add(ChatColor.BLUE + "§lRARE SHIELD");
+            Banner banner = (Banner) meta.getBlockState();
+            banner.setBaseColor(DyeColor.RED);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Integrity"), PersistentDataType.DOUBLE, 2.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 20.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Strength"), PersistentDataType.DOUBLE, 15.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Crit"), PersistentDataType.DOUBLE, 20.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "shield");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Redstone Shield");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
+
+            meta.setLore(lore);
+            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            meta.setBlockState(banner);
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    DIAMOND_SHIELD {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.SHIELD, 1);
+            BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
+            meta.setUnbreakable(true);
+            meta.setDisplayName(ChatColor.BLUE + "Diamond Shield");
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.GRAY + "Defense: " + ChatColor.GREEN + "+40");
+            lore.add(ChatColor.GRAY + "Crit Chance: " + ChatColor.GREEN + "+5");
+            lore.add(ChatColor.GRAY + "Crit Damage: " + ChatColor.GREEN + "+10");
+            lore.add(" ");
+            lore.add(ChatColor.BLUE + "§lRARE SHIELD");
+            Banner banner = (Banner) meta.getBlockState();
+            banner.setBaseColor(DyeColor.LIGHT_BLUE);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Integrity"), PersistentDataType.DOUBLE, 3.5);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 40.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"CC"), PersistentDataType.DOUBLE, 5.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Crit"), PersistentDataType.DOUBLE, 10.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "shield");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Diamond Shield");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
+
+            meta.setLore(lore);
+            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            meta.setBlockState(banner);
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    EMERALD_SHIELD {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.SHIELD, 1);
+            BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
+            meta.setUnbreakable(true);
+            meta.setDisplayName(ChatColor.BLUE + "Emerald Shield");
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.GRAY + "Defense: " + ChatColor.GREEN + "+25");
+            lore.add(ChatColor.GRAY + "Speed: " + ChatColor.GREEN + "+5");
+            lore.add(" ");
+            lore.add(ChatColor.BLUE + "§lRARE SHIELD");
+            Banner banner = (Banner) meta.getBlockState();
+            banner.setBaseColor(DyeColor.LIME);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Integrity"), PersistentDataType.DOUBLE, 6.5);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 25.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Speed"), PersistentDataType.DOUBLE, 5.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "shield");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Emerald Shield");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
+
+            meta.setLore(lore);
+            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            meta.setBlockState(banner);
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    NETHERITE_SHIELD {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.SHIELD, 1);
+            BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
+            meta.setUnbreakable(true);
+            meta.setDisplayName(ChatColor.BLUE + "Netherite Shield");
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.GRAY + "Defense: " + ChatColor.GREEN + "+55");
+            lore.add(ChatColor.GRAY + "Strength: " + ChatColor.GREEN + "+30");
+            lore.add(ChatColor.GRAY + "Speed: " + ChatColor.GREEN + "-10");
+            lore.add(" ");
+            lore.add(ChatColor.BLUE + "§lRARE SHIELD");
+            Banner banner = (Banner) meta.getBlockState();
+            banner.setBaseColor(DyeColor.BLACK);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Integrity"), PersistentDataType.DOUBLE, 8.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 55.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Strength"), PersistentDataType.DOUBLE, 30.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Speed"), PersistentDataType.DOUBLE, -10.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "shield");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Netherite Shield");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
 
             meta.setLore(lore);
@@ -3770,6 +4115,98 @@ public enum Items implements ItemLike {
         sr.setIngredient('S', new RecipeChoice.ExactChoice(Items.SIMPLE_SHIELD_BASE.getItem(plugin)));
         sr.setIngredient('G', new RecipeChoice.ExactChoice(Items.ENCHANTED_GLOWSTONE.getItem(plugin)));
         sr.setIngredient('A', new RecipeChoice.ExactChoice(Items.ENCHANTED_AMETHYST_BLOCK.getItem(plugin)));
+
+        Bukkit.getServer().addRecipe(sr);
+
+        //Shaped recipe for Pocket Workbench
+        sr = new ShapedRecipe(NamespacedKey.minecraft("porcket_workbench_s"), Items.POCKET_WORKBENCH.getItem(plugin));
+        sr.shape("AS ",
+                 "BO ",
+                 "   ");
+        sr.setIngredient('A', new RecipeChoice.ExactChoice(Items.ENCHANTED_ACACIA_WOOD.getItem(plugin)));
+        sr.setIngredient('S', new RecipeChoice.ExactChoice(Items.ENCHANTED_SPRUCE_WOOD.getItem(plugin)));
+        sr.setIngredient('B', new RecipeChoice.ExactChoice(Items.ENCHANTED_BIRCH_WOOD.getItem(plugin)));
+        sr.setIngredient('O', new RecipeChoice.ExactChoice(Items.ENCHANTED_OAK_WOOD.getItem(plugin)));
+
+        Bukkit.getServer().addRecipe(sr);
+
+        //Shaped recipe for Copper Shield
+        sr = new ShapedRecipe(NamespacedKey.minecraft("copper_shield_s"), Items.COPPER_SHIELD.getItem(plugin));
+        sr.shape("CCC",
+                 "CSC",
+                 "CCC");
+        sr.setIngredient('C', new RecipeChoice.ExactChoice(Items.ENCHANTED_COPPER.getItem(plugin)));
+        sr.setIngredient('S', new RecipeChoice.ExactChoice(Items.SIMPLE_SHIELD_BASE.getItem(plugin)));
+
+        Bukkit.getServer().addRecipe(sr);
+
+        //Shaped recipe for Iron Shield
+        sr = new ShapedRecipe(NamespacedKey.minecraft("iron_shield_s"), Items.IRON_SHIELD.getItem(plugin));
+        sr.shape("III",
+                 "ISI",
+                 "III");
+        sr.setIngredient('I', new RecipeChoice.ExactChoice(Items.ENCHANTED_IRON.getItem(plugin)));
+        sr.setIngredient('S', new RecipeChoice.ExactChoice(Items.SIMPLE_SHIELD_BASE.getItem(plugin)));
+
+        Bukkit.getServer().addRecipe(sr);
+
+        //Shaped recipe for Lapis Shield
+        sr = new ShapedRecipe(NamespacedKey.minecraft("lapis_shield_s"), Items.LAPIS_SHIELD.getItem(plugin));
+        sr.shape("LLL",
+                 "LSL",
+                 "LLL");
+        sr.setIngredient('L', new RecipeChoice.ExactChoice(Items.ENCHANTED_LAPIS.getItem(plugin)));
+        sr.setIngredient('S', new RecipeChoice.ExactChoice(Items.SIMPLE_SHIELD_BASE.getItem(plugin)));
+
+        Bukkit.getServer().addRecipe(sr);
+
+        //Shaped recipe for Redstone Shield
+        sr = new ShapedRecipe(NamespacedKey.minecraft("redstone_shield_s"), Items.REDSTONE_SHIELD.getItem(plugin));
+        sr.shape("RRR",
+                 "RSR",
+                 "RRR");
+        sr.setIngredient('R', new RecipeChoice.ExactChoice(Items.ENCHANTED_REDSTONE.getItem(plugin)));
+        sr.setIngredient('S', new RecipeChoice.ExactChoice(Items.SIMPLE_SHIELD_BASE.getItem(plugin)));
+
+        Bukkit.getServer().addRecipe(sr);
+
+        //Shaped recipe for Diamond Shield
+        sr = new ShapedRecipe(NamespacedKey.minecraft("diamond_shield_s"), Items.DIAMOND_SHIELD.getItem(plugin));
+        sr.shape("DDD",
+                 "DSD",
+                 "DDD");
+        sr.setIngredient('D', new RecipeChoice.ExactChoice(Items.ENCHANTED_DIAMOND.getItem(plugin)));
+        sr.setIngredient('S', new RecipeChoice.ExactChoice(Items.SIMPLE_SHIELD_BASE.getItem(plugin)));
+
+        Bukkit.getServer().addRecipe(sr);
+
+        //Shaped recipe for Emerald Shield
+        sr = new ShapedRecipe(NamespacedKey.minecraft("emerald_shield_s"), Items.EMERALD_SHIELD.getItem(plugin));
+        sr.shape("EEE",
+                 "ESE",
+                 "EEE");
+        sr.setIngredient('E', new RecipeChoice.ExactChoice(Items.ENCHANTED_EMERALD.getItem(plugin)));
+        sr.setIngredient('S', new RecipeChoice.ExactChoice(Items.SIMPLE_SHIELD_BASE.getItem(plugin)));
+
+        Bukkit.getServer().addRecipe(sr);
+
+        //Shaped recipe for Netherite Shield
+        sr = new ShapedRecipe(NamespacedKey.minecraft("netherite_shield_s"), Items.NETHERITE_SHIELD.getItem(plugin));
+        sr.shape("NNN",
+                 "NSN",
+                 "NNN");
+        sr.setIngredient('N', new RecipeChoice.ExactChoice(Items.ENCHANTED_NETHERITE.getItem(plugin)));
+        sr.setIngredient('S', new RecipeChoice.ExactChoice(Items.SIMPLE_SHIELD_BASE.getItem(plugin)));
+
+        Bukkit.getServer().addRecipe(sr);
+
+        //Shaped recipe for Lightning Rod
+        sr = new ShapedRecipe(NamespacedKey.minecraft("lightning_wand_s"), Items.LIGHTNING_WAND.getItem(plugin));
+        sr.shape(" R ",
+                 " C ",
+                 " C ");
+        sr.setIngredient('R', new RecipeChoice.ExactChoice(Items.ENCHANTED_REDSTONE_BLOCK.getItem(plugin)));
+        sr.setIngredient('C', new RecipeChoice.ExactChoice(Items.ENCHANTED_CUT_COPPER.getItem(plugin)));
 
         Bukkit.getServer().addRecipe(sr);
     }

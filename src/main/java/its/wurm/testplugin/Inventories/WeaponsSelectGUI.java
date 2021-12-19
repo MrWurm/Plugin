@@ -40,6 +40,15 @@ public class WeaponsSelectGUI implements InventoryHolder {
         main.setItem(6, Items.PUFFERFISH_CANON.getItem(plugin));
         main.setItem(7, Items.ASPECT_OF_THE_END.getItem(plugin));
         main.setItem(8, Items.MEAT_CLEAVER.getItem(plugin));
+        main.setItem(14, Items.CACTUS_SHIELD.getItem(plugin));
+        main.setItem(15, Items.SPARKLING_SHIELD.getItem(plugin));
+        main.setItem(16, Items.COPPER_SHIELD.getItem(plugin));
+        main.setItem(17, Items.IRON_SHIELD.getItem(plugin));
+        main.setItem(23, Items.LAPIS_SHIELD.getItem(plugin));
+        main.setItem(24, Items.REDSTONE_SHIELD.getItem(plugin));
+        main.setItem(25, Items.DIAMOND_SHIELD.getItem(plugin));
+        main.setItem(26, Items.EMERALD_SHIELD.getItem(plugin));
+        main.setItem(32, Items.NETHERITE_SHIELD.getItem(plugin));
 
         //Bottom Row with options to change pages and a go back button
         for (int i = 45; i < 54; i++) {

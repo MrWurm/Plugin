@@ -33,6 +33,7 @@ public class Commands implements CommandExecutor {
             player.getInventory().addItem(Items.MOON_GLOVE.getItem(plugin));
             player.getInventory().addItem(Items.ECHO_STONE.getItem(plugin));
             player.getInventory().addItem(Items.ALLMIGHTY.getItem(plugin));
+            player.getInventory().addItem(Items.OVERWORLD_SCROLL.getItem(plugin));
         }
 
         if (cmd.getName().equalsIgnoreCase("testgui")) {

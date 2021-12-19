@@ -142,6 +142,51 @@ public class InventoryEvents implements Listener {
                 player.openInventory(FormatRecipesGUI.newMeatCleaverGUI(plugin).getInventory());
             }
 
+            if (e.getSlot() == 14) {
+                //open Cactus Shield recipe gui
+                player.openInventory(FormatRecipesGUI.newCactusShieldGUI(plugin).getInventory());
+            }
+
+            if (e.getSlot() == 15) {
+                //open Sparkling Shield recipe gui
+                player.openInventory(FormatRecipesGUI.newSparkleShieldGUI(plugin).getInventory());
+            }
+
+            if (e.getSlot() == 16) {
+                //open Copper Shield recipe gui
+                player.openInventory(FormatRecipesGUI.newCopperShieldGUI(plugin).getInventory());
+            }
+
+            if (e.getSlot() == 17) {
+                //open Iron Shield recipe gui
+                player.openInventory(FormatRecipesGUI.newIronShieldGUI(plugin).getInventory());
+            }
+
+            if (e.getSlot() == 23) {
+                //open Lapis Shield recipe gui
+                player.openInventory(FormatRecipesGUI.newLapisShieldGUI(plugin).getInventory());
+            }
+
+            if (e.getSlot() == 24) {
+                //open Redstone Shield recipe gui
+                player.openInventory(FormatRecipesGUI.newRedstoneShieldGUI(plugin).getInventory());
+            }
+
+            if (e.getSlot() == 25) {
+                //open Diamond Shield recipe gui
+                player.openInventory(FormatRecipesGUI.newDiamondShieldGUI(plugin).getInventory());
+            }
+
+            if (e.getSlot() == 26) {
+                //open Emerald Shield recipe gui
+                player.openInventory(FormatRecipesGUI.newEmeraldShieldGUI(plugin).getInventory());
+            }
+
+            if (e.getSlot() == 32) {
+                //open Netherite Shield recipe gui
+                player.openInventory(FormatRecipesGUI.newNetheriteShieldGUI(plugin).getInventory());
+            }
+
             if (e.getSlot() == 49) {
                 //go back
                 RecipeSelectGUI gui0 = new RecipeSelectGUI(plugin);
@@ -781,6 +826,11 @@ public class InventoryEvents implements Listener {
             if (e.getSlot() == 14) {
                 //open Enchanted Rotten Flesh recipe gui
                 player.openInventory(FormatRecipesGUI.newEnchantedFleshGUI(plugin).getInventory());
+            }
+
+            if (e.getSlot() == 15) {
+                //open Simple Shield Base recipe gui
+                player.openInventory(FormatRecipesGUI.newSimpleShieldGUI(plugin).getInventory());
             }
 
             if (e.getSlot() == 49) {

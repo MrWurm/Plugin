@@ -15,21 +15,21 @@ public class StatFunctions {
     public static void CheckHealth(Entity entity, Main plugin) {
 
         //Check if the entity is a creature (you are not giving health to things like arrows for example
-        if (entity instanceof Creature) {
+        if (entity instanceof LivingEntity) {
 
             //Check that they do not have a container for health
             if (entity.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
                     PersistentDataType.DOUBLE) == null) {
 
-                org.bukkit.entity.Creature creature = (Creature) entity;
+                org.bukkit.entity.LivingEntity creature = (LivingEntity) entity;
 
                 creature.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,
                         9999999, 5, true, false));
 
                 entity.getPersistentDataContainer().set(new NamespacedKey(plugin, "MaxHealth"),
-                        PersistentDataType.DOUBLE, ((Creature) entity).getHealth());
+                        PersistentDataType.DOUBLE, ((LivingEntity) entity).getHealth());
                 entity.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
-                        PersistentDataType.DOUBLE, ((Creature) entity).getHealth());
+                        PersistentDataType.DOUBLE, ((LivingEntity) entity).getHealth());
                 entity.getPersistentDataContainer().set(new NamespacedKey(plugin, "Defense"),
                         PersistentDataType.DOUBLE, 0.0);
                 entity.getPersistentDataContainer().set(new NamespacedKey(plugin, "HealMod"),
@@ -93,8 +93,8 @@ public class StatFunctions {
                 PersistentDataType.DOUBLE)) {
 
             player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Mana"),
-                    PersistentDataType.DOUBLE, player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxMana"),
-                            PersistentDataType.DOUBLE));
+                PersistentDataType.DOUBLE, player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxMana"),
+                        PersistentDataType.DOUBLE));
         }
     }
 

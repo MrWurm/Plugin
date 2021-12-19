@@ -25,6 +25,8 @@ public final class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new ItemEvents(this), this);
         getServer().getPluginManager().registerEvents(new InventoryEvents(this), this);
         getServer().getPluginManager().registerEvents(new StatEvents(this), this);
+        getServer().getPluginManager().registerEvents(new SkillEvents(this), this);
+
         getServer().getPluginManager().registerEvents(se, this);
         getCommand("giveall").setExecutor(commands);
         getCommand("testgui").setExecutor(commands);

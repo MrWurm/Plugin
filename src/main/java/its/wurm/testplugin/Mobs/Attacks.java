@@ -76,6 +76,12 @@ public class Attacks implements Listener {
         }, 80L);
     }
 
+    public static void createLightning(Location location, Double damage) {
+        LightningStrike lightning = location.getWorld().spawn(location, LightningStrike.class);
+        lightning.getPersistentDataContainer().set(new NamespacedKey(plugin, "Damage"),
+                PersistentDataType.DOUBLE, damage);
+    }
+
     public static void createArrow(Location location, Double damage, ProjectileSource source, org.bukkit.util.Vector velocity, Integer id, Integer pierce) {
         Arrow arrow = location.getWorld().spawn(location, Arrow.class);
         arrow.setShooter(source);

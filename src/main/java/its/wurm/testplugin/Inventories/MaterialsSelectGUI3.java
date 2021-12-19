@@ -45,6 +45,7 @@ public class MaterialsSelectGUI3 implements InventoryHolder {
         main.setItem(12, Items.ENCHANTED_CRIMSON_STEM.getItem(plugin));
         main.setItem(13, Items.ENCHANTED_ENDSTONE.getItem(plugin));
         main.setItem(14, Items.ENCHANTED_ROTTEN_FLESH.getItem(plugin));
+        main.setItem(15, Items.SIMPLE_SHIELD_BASE.getItem(plugin));
 
 
         //Bottom Row with options to change pages and a go back and next page button

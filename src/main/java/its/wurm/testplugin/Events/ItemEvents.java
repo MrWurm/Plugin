@@ -8,17 +8,12 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.EntityResurrectEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryEvent;
-import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -44,6 +39,53 @@ public class ItemEvents implements Listener{
     public void testFireBall(Player player) {
         player.getWorld().spawnParticle(Particle.FLAME, player.getLocation(), 40);
         player.sendMessage("§cTest Ability Activate!");
+    }
+
+    public void workBenchGUI(Player player) {
+        player.openWorkbench(null, true);
+
+    }
+
+    public void warpWorld(Player player) {
+        if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+                PersistentDataType.DOUBLE) > player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
+                PersistentDataType.DOUBLE)) {
+            player.sendMessage(ChatColor.RED + "You cannot fast travel while injured");
+        }
+
+        Location location = new Location(Bukkit.getWorld("world"), 0, 70, 0);
+        if (player.getBedSpawnLocation() != null) {
+            location = player.getBedSpawnLocation();
+        }
+
+        player.teleport(location);
+        echo_ward.put(player.getName(), location);
+    }
+
+    public void warpNether(Player player) {
+        if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+                PersistentDataType.DOUBLE) > player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
+                PersistentDataType.DOUBLE)) {
+            player.sendMessage(ChatColor.RED + "You cannot fast travel while injured");
+        }
+
+        Location location = new Location(Bukkit.getWorld("world_the_nether"), 0, 100, 0);
+
+        player.teleport(location);
+        echo_ward.put(player.getName(), location);
+    }
+
+    public void warpEnd(Player player) {
+        if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+                PersistentDataType.DOUBLE) > player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
+                PersistentDataType.DOUBLE)) {
+            player.sendMessage(ChatColor.RED + "You cannot fast travel while injured");
+        }
+
+        Location location = new Location(Bukkit.getWorld("world_the_end"), 0.5, 65, 0.5);
+
+        player.teleport(location);
+        echo_ward.put(player.getName(), location);
     }
 
     public void tntWand(Player player) {
@@ -95,7 +137,7 @@ public class ItemEvents implements Listener{
                 PersistentDataType.DOUBLE, mana - 25);
 
         double mod = ((player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
-                PersistentDataType.DOUBLE) * 0.12) + 1) * 25;
+                PersistentDataType.DOUBLE) * 0.06) + 1) * 25;
 
         Attacks.createPuffer(player.getEyeLocation(), mod, player, player.getLocation().getDirection().multiply(3));
         player.sendMessage(ChatColor.GREEN + "Used Puffer Projectile");
@@ -218,6 +260,46 @@ public class ItemEvents implements Listener{
         loc.setYaw(yaw);
         loc.setPitch(pitch);
         player.teleport(loc);
+        player.sendMessage(ChatColor.GREEN + "Used Instant Transmission");
+
+    }
+
+    public void lightningWand(Player player) {
+
+        double mana = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Mana"),
+                PersistentDataType.DOUBLE);
+        if (mana < 45) {
+            player.sendMessage(ChatColor.RED + "You need more mana to use this ability");
+            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 40, 0);
+            return;
+        }
+
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Mana"),
+                PersistentDataType.DOUBLE, mana - 45);
+
+        int distance = 60;
+
+        BlockIterator blocksToAdd = new BlockIterator(player.getLocation(), 1, distance);
+
+        Location loc = player.getLocation();
+        float pitch = player.getLocation().getPitch();
+        float yaw = player.getLocation().getYaw();
+
+        double mod = ((player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+                PersistentDataType.DOUBLE) * 0.045) + 1) * 60;
+
+        while (blocksToAdd.hasNext()) {
+            loc = blocksToAdd.next().getLocation();
+            if (loc.getBlock().getType().isSolid()) {
+                Attacks.createLightning(loc, mod);
+                player.sendMessage(ChatColor.GREEN + "Used Lightning Strike");
+                return;
+            }
+        }
+        Attacks.createLightning(loc, mod);
+        player.sendMessage(ChatColor.GREEN + "Used Lightning Strike");
+        return;
+
     }
 
     public void eatMeatStew(Player player, ItemStack item) {
@@ -333,6 +415,7 @@ public class ItemEvents implements Listener{
                             echoStone(player);
                             break;
                         case "Test Shortbow":
+                            event.setCancelled(true);
                             player.launchProjectile(Arrow.class, player.getLocation().getDirection());
                             break;
                         case "Aspect of The End":
@@ -345,19 +428,38 @@ public class ItemEvents implements Listener{
                             pufferCanon(player);
                             break;
                         case "Bamboo Shortbow":
+                            event.setCancelled(true);
                             if (event.getItem().equals(player.getInventory().getItemInOffHand())) {
                                 break;
                             }
                             shortArrow(player, 2.4, 9, 0, 270l);
                             break;
                         case "Meaty Stew":
+                            event.setCancelled(true);
                             eatMeatStew(player, event.getItem());
                             break;
                         case "Magic Stew":
+                            event.setCancelled(true);
                             eatMagicStew(player, event.getItem());
                             break;
                         case "Bone Needle":
                             boneNeedle(player);
+                            break;
+                        case "Pocket Crafting Table":
+                            event.setCancelled(true);
+                            workBenchGUI(player);
+                            break;
+                        case "Travel Scroll to The End":
+                            warpEnd(player);
+                            break;
+                        case "Travel Scroll to The Nether":
+                            warpNether(player);
+                            break;
+                        case "Travel Scroll to The Overworld":
+                            warpWorld(player);
+                            break;
+                        case "Lightning Wand":
+                            lightningWand(player);
                             break;
                         default:
                             return;
@@ -380,6 +482,7 @@ public class ItemEvents implements Listener{
                     switch (event.getItem().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
                             PersistentDataType.STRING)) {
                         case "Test Fireball":
+                            event.setCancelled(true);
                             testFireBall(player);
                             break;
                         case "Lesser Wand of Healing":
@@ -389,6 +492,7 @@ public class ItemEvents implements Listener{
                             echoStone(player);
                             break;
                         case "Test Shortbow":
+                            event.setCancelled(true);
                             player.launchProjectile(Arrow.class, player.getLocation().getDirection());
                             break;
                         case "Aspect of The End":
@@ -401,19 +505,39 @@ public class ItemEvents implements Listener{
                             pufferCanon(player);
                             break;
                         case "Bamboo Shortbow":
+                            event.setCancelled(true);
                             if (event.getItem().equals(player.getInventory().getItemInOffHand())) {
                                 break;
                             }
                             shortArrow(player, 2.4, 9, 0, 270l);
                             break;
                         case "Meaty Stew":
+                            event.setCancelled(true);
                             eatMeatStew(player, event.getItem());
                             break;
                         case "Magic Stew":
+                            event.setCancelled(true);
                             eatMagicStew(player, event.getItem());
                             break;
                         case "Bone Needle":
                             boneNeedle(player);
+                            break;
+                        case "Pocket Crafting Table":
+                            event.setCancelled(true);
+                            workBenchGUI(player);
+                            break;
+                        case "Travel Scroll to The End":
+                            warpEnd(player);
+                            break;
+                        case "Travel Scroll to The Nether":
+                            warpNether(player);
+                            break;
+                        case "Travel Scroll to The Overworld":
+                            warpWorld(player);
+                            break;
+                        case "Lightning Wand":
+                            lightningWand(player);
+                            event.setCancelled(true);
                             break;
                         default:
                             return;

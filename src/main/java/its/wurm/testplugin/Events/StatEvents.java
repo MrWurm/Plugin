@@ -7,7 +7,6 @@ import its.wurm.testplugin.statFunctions.StatFunctions;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -40,8 +39,13 @@ public class StatEvents implements Listener {
     public void onRespawn(PlayerRespawnEvent event) {
         Double MaxHealth = event.getPlayer().getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
                 PersistentDataType.DOUBLE);
+        Double MaxMana = event.getPlayer().getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxMana"),
+                PersistentDataType.DOUBLE);
         event.getPlayer().getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
                 PersistentDataType.DOUBLE, MaxHealth);
+        event.getPlayer().getPersistentDataContainer().set(new NamespacedKey(plugin, "Mana"),
+                PersistentDataType.DOUBLE, MaxMana);
+        event.getPlayer().setCooldown(Material.SHIELD, 0);
         Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             public void run() {
                 event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,
@@ -62,11 +66,6 @@ public class StatEvents implements Listener {
 
     @EventHandler
     public void onDamage(EntityDamageByEntityEvent event) {
-        if (event.getEntityType() == EntityType.ARMOR_STAND && event.getEntity().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
-                PersistentDataType.INTEGER) != null && event.getEntity().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
-                PersistentDataType.INTEGER) == 8) {
-            return;
-        }
         if (!(event.getEntity() instanceof Damageable)) {
             return;
         }
@@ -90,16 +89,31 @@ public class StatEvents implements Listener {
                     player.setStatistic(Statistic.DAMAGE_BLOCKED_BY_SHIELD, 0);
                     Double cd = 120.0;
 
+                    double mod = 1.0;
                     if (player.getInventory().getItemInOffHand().getType() == Material.SHIELD) {
-                        cd = attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "Damage"),
-                                PersistentDataType.DOUBLE) / player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Integrity"),
+                        cd = 0.0;
+                        mod = 1.0;
+                        double damage = attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "Damage"),
                                 PersistentDataType.DOUBLE);
+                        while (damage > 0) {
+                            damage -= player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Integrity"),
+                                    PersistentDataType.DOUBLE);
+                            cd += mod;
+                            mod *= 1.2;
+                        }
                     }
 
                     if (player.getInventory().getItemInMainHand().getType() == Material.SHIELD) {
-                        cd = attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "Damage"),
-                                PersistentDataType.DOUBLE) / player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Integrity"),
+                        cd = 0.0;
+                        mod = 1.0;
+                        double damage = attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "Damage"),
                                 PersistentDataType.DOUBLE);
+                        while (damage > 0) {
+                            damage -= player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Integrity"),
+                                    PersistentDataType.DOUBLE);
+                            cd += mod;
+                            mod *= 1.2;
+                        }
                     }
 
 
@@ -135,16 +149,31 @@ public class StatEvents implements Listener {
                     player.setStatistic(Statistic.DAMAGE_BLOCKED_BY_SHIELD, 0);
                     Double cd = 120.0;
 
+                    double mod = 1.0;
                     if (player.getInventory().getItemInOffHand().getType() == Material.SHIELD) {
-                        cd = attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "Damage"),
-                            PersistentDataType.DOUBLE) / player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Integrity"),
-                            PersistentDataType.DOUBLE);
+                        cd = 0.0;
+                        mod = 1.0;
+                        double damage = attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "Damage"),
+                                PersistentDataType.DOUBLE);
+                        while (damage > 0) {
+                            damage -= player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Integrity"),
+                                    PersistentDataType.DOUBLE);
+                            cd += mod;
+                            mod *= 1.2;
+                        }
                     }
 
                     if (player.getInventory().getItemInMainHand().getType() == Material.SHIELD) {
-                        cd = attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "Damage"),
-                            PersistentDataType.DOUBLE) / player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Integrity"),
-                            PersistentDataType.DOUBLE);
+                        cd = 0.0;
+                        mod = 1.0;
+                        double damage = attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "Damage"),
+                                PersistentDataType.DOUBLE);
+                        while (damage > 0) {
+                            damage -= player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Integrity"),
+                                    PersistentDataType.DOUBLE);
+                            cd += mod;
+                            mod *= 1.2;
+                        }
                     }
 
 
@@ -296,6 +325,10 @@ public class StatEvents implements Listener {
 
     @EventHandler
     public void onOtherDamage(EntityDamageEvent event) {
+        if (!(event.getEntity() instanceof Damageable)) {
+            return;
+        }
+
         org.bukkit.entity.Damageable victim = (Damageable) event.getEntity();
 
         Double MaxHealth = victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),

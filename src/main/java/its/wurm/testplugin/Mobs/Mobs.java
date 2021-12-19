@@ -110,7 +110,7 @@ public class Mobs implements Listener {
         zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
                 PersistentDataType.DOUBLE, 180.0);
         zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "Damage"),
-                PersistentDataType.DOUBLE, 30.0);
+                PersistentDataType.DOUBLE, 50.0);
         zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "Defense"),
                 PersistentDataType.DOUBLE, 0.0);
         zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "HealMod"),
@@ -166,7 +166,7 @@ public class Mobs implements Listener {
         zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
                 PersistentDataType.DOUBLE, 250.0);
         zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "Damage"),
-                PersistentDataType.DOUBLE, 50.0);
+                PersistentDataType.DOUBLE, 80.0);
         zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "Defense"),
                 PersistentDataType.DOUBLE, 0.0);
         zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "HealMod"),
@@ -213,7 +213,7 @@ public class Mobs implements Listener {
         zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
                 PersistentDataType.DOUBLE, 230.0);
         zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "Damage"),
-                PersistentDataType.DOUBLE, 25.0);
+                PersistentDataType.DOUBLE, 35.0);
         zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "Defense"),
                 PersistentDataType.DOUBLE, 80.0);
         zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "HealMod"),
@@ -306,7 +306,7 @@ public class Mobs implements Listener {
         zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
                 PersistentDataType.DOUBLE, 70.0);
         zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "Damage"),
-                PersistentDataType.DOUBLE, 25.0);
+                PersistentDataType.DOUBLE, 40.0);
         zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "Defense"),
                 PersistentDataType.DOUBLE, 0.0);
         zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "HealMod"),
@@ -413,7 +413,7 @@ public class Mobs implements Listener {
         zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
                 PersistentDataType.DOUBLE, 400.0);
         zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "Damage"),
-                PersistentDataType.DOUBLE, 35.0);
+                PersistentDataType.DOUBLE, 45.0);
         zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "Defense"),
                 PersistentDataType.DOUBLE, -10.0);
         zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "HealMod"),
@@ -454,7 +454,7 @@ public class Mobs implements Listener {
         skeleton.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
                 PersistentDataType.DOUBLE, 130.0);
         skeleton.getPersistentDataContainer().set(new NamespacedKey(plugin, "Damage"),
-                PersistentDataType.DOUBLE, 30.0);
+                PersistentDataType.DOUBLE, 55.0);
         skeleton.getPersistentDataContainer().set(new NamespacedKey(plugin, "Defense"),
                 PersistentDataType.DOUBLE, 0.0);
         skeleton.getPersistentDataContainer().set(new NamespacedKey(plugin, "HealMod"),
@@ -510,7 +510,7 @@ public class Mobs implements Listener {
         zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
                 PersistentDataType.DOUBLE, 270.0);
         zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "Damage"),
-                PersistentDataType.DOUBLE, 30.0);
+                PersistentDataType.DOUBLE, 45.0);
         zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "Defense"),
                 PersistentDataType.DOUBLE, 0.0);
         zombie.getPersistentDataContainer().set(new NamespacedKey(plugin, "HealMod"),

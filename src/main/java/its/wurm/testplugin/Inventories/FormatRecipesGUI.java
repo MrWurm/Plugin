@@ -362,7 +362,7 @@ public class FormatRecipesGUI implements InventoryHolder {
     public static FormatRecipesGUI newAlloyGUI(Plugin plugin) {
         return new FormatRecipesGUI(plugin, new MaterialsSelectGUI(plugin), Items.ALLOY.getItem(plugin),
                 1, Items.ENCHANTED_IRON.getItem(plugin), 2, Items.ENCHANTED_COPPER.getItem(plugin), 3, Items.ENCHANTED_IRON.getItem(plugin),
-                4, Items.ENCHANTED_COPPER.getItem(plugin), 5, Items.ENCHANTED_COPPER.getItem(plugin), 6, Items.ENCHANTED_COPPER.getItem(plugin),
+                4, Items.ENCHANTED_COPPER.getItem(plugin), 5, Items.ENCHANTED_IRON.getItem(plugin), 6, Items.ENCHANTED_COPPER.getItem(plugin),
                 7, Items.ENCHANTED_IRON.getItem(plugin), 8, Items.ENCHANTED_COPPER.getItem(plugin), 9, Items.ENCHANTED_IRON.getItem(plugin));
     }
 
@@ -1039,32 +1039,32 @@ public class FormatRecipesGUI implements InventoryHolder {
     public static FormatRecipesGUI newEnchantedEndStoneGUI(Plugin plugin) {
         ItemStack end = new ItemStack(Material.END_STONE, 1);
         return new FormatRecipesGUI(plugin, new MaterialsSelectGUI3(plugin), Items.ENCHANTED_ENDSTONE.getItem(plugin),
-                1, end, 2, end, 3, end,
-                4, end, 5, end, 6, end,
-                7, end, 8, end, 9, end);
+            1, end, 2, end, 3, end,
+            4, end, 5, end, 6, end,
+            7, end, 8, end, 9, end);
     }
 
     // Aspect of The End GUI
     public static FormatRecipesGUI newAspectofTheEndGUI(Plugin plugin) {
-        return new FormatRecipesGUI(plugin, new MaterialsSelectGUI2(plugin), Items.ASPECT_OF_THE_END.getItem(plugin),
-                2, Items.ENCHANTED_ENDER_EYE.getItem(plugin),
-                 5, Items.ENCHANTED_ENDER_EYE.getItem(plugin),
-                 8, Items.ENCHANTED_DIAMOND.getItem(plugin));
+        return new FormatRecipesGUI(plugin, new WeaponsSelectGUI(plugin), Items.ASPECT_OF_THE_END.getItem(plugin),
+            2, Items.ENCHANTED_ENDER_EYE.getItem(plugin),
+             5, Items.ENCHANTED_ENDER_EYE.getItem(plugin),
+             8, Items.ENCHANTED_DIAMOND.getItem(plugin));
     }
 
     // Pufferfish Canon GUI
     public static FormatRecipesGUI newPuferFishCanonGUI(Plugin plugin) {
         return new FormatRecipesGUI(plugin, new WeaponsSelectGUI(plugin), Items.PUFFERFISH_CANON.getItem(plugin),
-                4, Items.ENCHANTED_IRON_BLOCK.getItem(plugin), 5, Items.ENCHANTED_PUFFERFISH.getItem(plugin), 6, Items.ENCHANTED_PUFFERFISH.getItem(plugin),
-                7, Items.ALLOY.getItem(plugin), 8, Items.ALLOY.getItem(plugin), 9, Items.ENCHANTED_REDSTONE_BLOCK.getItem(plugin));
+            4, Items.ENCHANTED_IRON_BLOCK.getItem(plugin), 5, Items.ENCHANTED_PUFFERFISH.getItem(plugin), 6, Items.ENCHANTED_PUFFERFISH.getItem(plugin),
+            7, Items.ALLOY.getItem(plugin), 8, Items.ALLOY.getItem(plugin), 9, Items.ENCHANTED_REDSTONE_BLOCK.getItem(plugin));
     }
 
     // Tnt Wand GUI
     public static FormatRecipesGUI newTntWandGUI(Plugin plugin) {
         return new FormatRecipesGUI(plugin, new WeaponsSelectGUI(plugin), Items.TNT_WAND.getItem(plugin),
-                3, Items.ENCHANTED_TNT.getItem(plugin),
-                5, Items.ALLOY.getItem(plugin),
-                7, Items.ALLOY.getItem(plugin));
+            3, Items.ENCHANTED_TNT.getItem(plugin),
+            5, Items.ALLOY.getItem(plugin),
+            7, Items.ALLOY.getItem(plugin));
     }
 
     // Meat Cleaver GUI
@@ -1072,9 +1072,9 @@ public class FormatRecipesGUI implements InventoryHolder {
         ItemStack stick = new ItemStack(Material.STICK, 1);
 
         return new FormatRecipesGUI(plugin, new WeaponsSelectGUI(plugin), Items.MEAT_CLEAVER.getItem(plugin),
-                2, Items.ENCHANTED_IRON.getItem(plugin), 3, Items.ENCHANTED_IRON.getItem(plugin),
-                5, Items.ENCHANTED_IRON.getItem(plugin), 6, Items.ENCHANTED_IRON.getItem(plugin),
-                8, stick);
+            2, Items.ENCHANTED_IRON.getItem(plugin), 3, Items.ENCHANTED_IRON.getItem(plugin),
+            5, Items.ENCHANTED_IRON.getItem(plugin), 6, Items.ENCHANTED_IRON.getItem(plugin),
+            8, stick);
     }
 
     // Meaty Stew GUI
@@ -1082,9 +1082,9 @@ public class FormatRecipesGUI implements InventoryHolder {
         ItemStack bowl = new ItemStack(Material.BOWL, 1);
 
         return new FormatRecipesGUI(plugin, new MiscSelectGUI(plugin), Items.MEATY_STEW.getItem(plugin),
-                1, Items.ENCHANTED_COOKED_COD.getItem(plugin), 2, Items.ENCHANTED_COOKED_SALMON.getItem(plugin), 3, Items.ENCHANTED_CHICKEN.getItem(plugin),
-                4, Items.ENCHANTED_BEEF.getItem(plugin), 5, Items.ENCHANTED_RABBIT.getItem(plugin), 6, Items.ENCHANTED_MUTTON.getItem(plugin),
-                8, bowl);
+            1, Items.ENCHANTED_COOKED_COD.getItem(plugin), 2, Items.ENCHANTED_COOKED_SALMON.getItem(plugin), 3, Items.ENCHANTED_CHICKEN.getItem(plugin),
+            4, Items.ENCHANTED_BEEF.getItem(plugin), 5, Items.ENCHANTED_RABBIT.getItem(plugin), 6, Items.ENCHANTED_MUTTON.getItem(plugin),
+            8, bowl);
     }
 
     // Magic Stew GUI
@@ -1092,8 +1092,98 @@ public class FormatRecipesGUI implements InventoryHolder {
         ItemStack bowl = new ItemStack(Material.BOWL, 1);
 
         return new FormatRecipesGUI(plugin, new MiscSelectGUI(plugin), Items.MAGIC_STEW.getItem(plugin),
-                1, Items.ENCHANTED_SPIDER_EYE.getItem(plugin), 2, Items.ENCHANTED_POPPED_CHORUS_FRUIT.getItem(plugin), 3, Items.ENCHANTED_QUARTZ_SCULPTURE.getItem(plugin),
-                4, Items.ENCHANTED_ENDER_EYE.getItem(plugin), 5, Items.ENCHANTED_GLOW_SAC.getItem(plugin), 6, Items.ENCHANTED_POWDER_BALL.getItem(plugin),
-                8, bowl);
+            1, Items.ENCHANTED_SPIDER_EYE.getItem(plugin), 2, Items.ENCHANTED_POPPED_CHORUS_FRUIT.getItem(plugin), 3, Items.ENCHANTED_QUARTZ_SCULPTURE.getItem(plugin),
+            4, Items.ENCHANTED_ENDER_EYE.getItem(plugin), 5, Items.ENCHANTED_GLOW_SAC.getItem(plugin), 6, Items.ENCHANTED_POWDER_BALL.getItem(plugin),
+            8, bowl);
+    }
+
+    // Simple Shield Base GUI
+    public static FormatRecipesGUI newSimpleShieldGUI(Plugin plugin) {
+
+        return new FormatRecipesGUI(plugin, new MaterialsSelectGUI3(plugin), Items.SIMPLE_SHIELD_BASE.getItem(plugin),
+            1, Items.ENCHANTED_DARK_OAK_WOOD.getItem(plugin), 2, Items.ENCHANTED_OAK_WOOD.getItem(plugin), 3, Items.ENCHANTED_DARK_OAK_WOOD.getItem(plugin),
+            4, Items.ENCHANTED_DARK_OAK_WOOD.getItem(plugin), 5, Items.ENCHANTED_WOOL.getItem(plugin), 6, Items.ENCHANTED_DARK_OAK_WOOD.getItem(plugin),
+            8, Items.ENCHANTED_IRON.getItem(plugin));
+    }
+
+    // Cactus Shield GUI
+    public static FormatRecipesGUI newCactusShieldGUI(Plugin plugin) {
+
+        return new FormatRecipesGUI(plugin, new WeaponsSelectGUI(plugin), Items.CACTUS_SHIELD.getItem(plugin),
+            1, Items.ENCHANTED_CACTUS.getItem(plugin), 2, Items.ENCHANTED_CACTUS.getItem(plugin), 3, Items.ENCHANTED_CACTUS.getItem(plugin),
+            4, Items.ENCHANTED_CACTUS.getItem(plugin), 5, Items.SIMPLE_SHIELD_BASE.getItem(plugin), 6, Items.ENCHANTED_CACTUS.getItem(plugin),
+            7, Items.ENCHANTED_CACTUS.getItem(plugin), 8, Items.ENCHANTED_CACTUS.getItem(plugin), 9, Items.ENCHANTED_CACTUS.getItem(plugin));
+    }
+
+    // Sparkling Shield GUI
+    public static FormatRecipesGUI newSparkleShieldGUI(Plugin plugin) {
+
+        return new FormatRecipesGUI(plugin, new WeaponsSelectGUI(plugin), Items.SPARKLING_SHIELD.getItem(plugin),
+            1, Items.ENCHANTED_GLOW_SAC.getItem(plugin), 2, Items.ENCHANTED_GLOW_SAC.getItem(plugin), 3, Items.ENCHANTED_GLOW_SAC.getItem(plugin),
+            4, Items.ENCHANTED_AMETHYST_BLOCK.getItem(plugin), 5, Items.SIMPLE_SHIELD_BASE.getItem(plugin), 6, Items.ENCHANTED_AMETHYST_BLOCK.getItem(plugin),
+            7, Items.ENCHANTED_GLOWSTONE.getItem(plugin), 8, Items.ENCHANTED_GLOW_SAC.getItem(plugin), 9, Items.ENCHANTED_GLOWSTONE.getItem(plugin));
+    }
+
+    // Copper Shield GUI
+    public static FormatRecipesGUI newCopperShieldGUI(Plugin plugin) {
+
+        return new FormatRecipesGUI(plugin, new WeaponsSelectGUI(plugin), Items.COPPER_SHIELD.getItem(plugin),
+                1, Items.ENCHANTED_COPPER.getItem(plugin), 2, Items.ENCHANTED_COPPER.getItem(plugin), 3, Items.ENCHANTED_COPPER.getItem(plugin),
+                4, Items.ENCHANTED_COPPER.getItem(plugin), 5, Items.SIMPLE_SHIELD_BASE.getItem(plugin), 6, Items.ENCHANTED_COPPER.getItem(plugin),
+                7, Items.ENCHANTED_COPPER.getItem(plugin), 8, Items.ENCHANTED_COPPER.getItem(plugin), 9, Items.ENCHANTED_COPPER.getItem(plugin));
+    }
+
+    // Iron Shield GUI
+    public static FormatRecipesGUI newIronShieldGUI(Plugin plugin) {
+
+        return new FormatRecipesGUI(plugin, new WeaponsSelectGUI(plugin), Items.IRON_SHIELD.getItem(plugin),
+                1, Items.ENCHANTED_IRON.getItem(plugin), 2, Items.ENCHANTED_IRON.getItem(plugin), 3, Items.ENCHANTED_IRON.getItem(plugin),
+                4, Items.ENCHANTED_IRON.getItem(plugin), 5, Items.SIMPLE_SHIELD_BASE.getItem(plugin), 6, Items.ENCHANTED_IRON.getItem(plugin),
+                7, Items.ENCHANTED_IRON.getItem(plugin), 8, Items.ENCHANTED_IRON.getItem(plugin), 9, Items.ENCHANTED_IRON.getItem(plugin));
+    }
+
+    // Lapis Shield GUI
+    public static FormatRecipesGUI newLapisShieldGUI(Plugin plugin) {
+
+        return new FormatRecipesGUI(plugin, new WeaponsSelectGUI(plugin), Items.LAPIS_SHIELD.getItem(plugin),
+                1, Items.ENCHANTED_LAPIS.getItem(plugin), 2, Items.ENCHANTED_LAPIS.getItem(plugin), 3, Items.ENCHANTED_LAPIS.getItem(plugin),
+                4, Items.ENCHANTED_LAPIS.getItem(plugin), 5, Items.SIMPLE_SHIELD_BASE.getItem(plugin), 6, Items.ENCHANTED_LAPIS.getItem(plugin),
+                7, Items.ENCHANTED_LAPIS.getItem(plugin), 8, Items.ENCHANTED_LAPIS.getItem(plugin), 9, Items.ENCHANTED_LAPIS.getItem(plugin));
+    }
+
+    // Redstone Shield GUI
+    public static FormatRecipesGUI newRedstoneShieldGUI(Plugin plugin) {
+
+        return new FormatRecipesGUI(plugin, new WeaponsSelectGUI(plugin), Items.REDSTONE_SHIELD.getItem(plugin),
+                1, Items.ENCHANTED_REDSTONE.getItem(plugin), 2, Items.ENCHANTED_REDSTONE.getItem(plugin), 3, Items.ENCHANTED_REDSTONE.getItem(plugin),
+                4, Items.ENCHANTED_REDSTONE.getItem(plugin), 5, Items.SIMPLE_SHIELD_BASE.getItem(plugin), 6, Items.ENCHANTED_REDSTONE.getItem(plugin),
+                7, Items.ENCHANTED_REDSTONE.getItem(plugin), 8, Items.ENCHANTED_REDSTONE.getItem(plugin), 9, Items.ENCHANTED_REDSTONE.getItem(plugin));
+    }
+
+    // Diamond Shield GUI
+    public static FormatRecipesGUI newDiamondShieldGUI(Plugin plugin) {
+
+        return new FormatRecipesGUI(plugin, new WeaponsSelectGUI(plugin), Items.DIAMOND_SHIELD.getItem(plugin),
+                1, Items.ENCHANTED_DIAMOND.getItem(plugin), 2, Items.ENCHANTED_DIAMOND.getItem(plugin), 3, Items.ENCHANTED_DIAMOND.getItem(plugin),
+                4, Items.ENCHANTED_DIAMOND.getItem(plugin), 5, Items.SIMPLE_SHIELD_BASE.getItem(plugin), 6, Items.ENCHANTED_DIAMOND.getItem(plugin),
+                7, Items.ENCHANTED_DIAMOND.getItem(plugin), 8, Items.ENCHANTED_DIAMOND.getItem(plugin), 9, Items.ENCHANTED_DIAMOND.getItem(plugin));
+    }
+
+    // Emerald Shield GUI
+    public static FormatRecipesGUI newEmeraldShieldGUI(Plugin plugin) {
+
+        return new FormatRecipesGUI(plugin, new WeaponsSelectGUI(plugin), Items.EMERALD_SHIELD.getItem(plugin),
+                1, Items.ENCHANTED_EMERALD.getItem(plugin), 2, Items.ENCHANTED_EMERALD.getItem(plugin), 3, Items.ENCHANTED_EMERALD.getItem(plugin),
+                4, Items.ENCHANTED_EMERALD.getItem(plugin), 5, Items.SIMPLE_SHIELD_BASE.getItem(plugin), 6, Items.ENCHANTED_EMERALD.getItem(plugin),
+                7, Items.ENCHANTED_EMERALD.getItem(plugin), 8, Items.ENCHANTED_EMERALD.getItem(plugin), 9, Items.ENCHANTED_EMERALD.getItem(plugin));
+    }
+
+    // Netherite Shield GUI
+    public static FormatRecipesGUI newNetheriteShieldGUI(Plugin plugin) {
+
+        return new FormatRecipesGUI(plugin, new WeaponsSelectGUI(plugin), Items.NETHERITE_SHIELD.getItem(plugin),
+                1, Items.ENCHANTED_NETHERITE.getItem(plugin), 2, Items.ENCHANTED_NETHERITE.getItem(plugin), 3, Items.ENCHANTED_NETHERITE.getItem(plugin),
+                4, Items.ENCHANTED_NETHERITE.getItem(plugin), 5, Items.SIMPLE_SHIELD_BASE.getItem(plugin), 6, Items.ENCHANTED_NETHERITE.getItem(plugin),
+                7, Items.ENCHANTED_NETHERITE.getItem(plugin), 8, Items.ENCHANTED_NETHERITE.getItem(plugin), 9, Items.ENCHANTED_NETHERITE.getItem(plugin));
     }
 }

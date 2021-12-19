@@ -14,6 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -4742,16 +4743,19 @@ public class SkillEvents implements Listener {
     }
 
     @EventHandler
-    public void combatXP(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player && event.getEntity().isDead()) {
+    public void combatXP(EntityDeathEvent event) {
+        if (event.getEntity().getKiller() instanceof Player) {
 
-            Player player = (Player) event.getDamager();
+            Player player = event.getEntity().getKiller();
             PlayerSkillData csd = skills.get(player.getUniqueId());
-            if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+            player.sendMessage("Player Killed Mob");
+            if (event.getEntity().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
                     PersistentDataType.INTEGER) != null) {
+                player.sendMessage("Custom Mob Killed");
                 switch (event.getEntity().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
                         PersistentDataType.INTEGER)) {
                     case 1:
+                        player.sendMessage("Registered Kill");
                         csd.combat.xp += 7.0;
                         break;
                     case 2:
