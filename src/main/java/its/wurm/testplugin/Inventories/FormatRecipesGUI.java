@@ -1186,4 +1186,97 @@ public class FormatRecipesGUI implements InventoryHolder {
                 4, Items.ENCHANTED_NETHERITE.getItem(plugin), 5, Items.SIMPLE_SHIELD_BASE.getItem(plugin), 6, Items.ENCHANTED_NETHERITE.getItem(plugin),
                 7, Items.ENCHANTED_NETHERITE.getItem(plugin), 8, Items.ENCHANTED_NETHERITE.getItem(plugin), 9, Items.ENCHANTED_NETHERITE.getItem(plugin));
     }
+
+    // Lightning Wand GUI
+    public static FormatRecipesGUI newLightningWandGUI(Plugin plugin) {
+
+        return new FormatRecipesGUI(plugin, new WeaponsSelectGUI(plugin), Items.LIGHTNING_WAND.getItem(plugin),
+                2, Items.ENCHANTED_REDSTONE_BLOCK.getItem(plugin),
+                5, Items.ENCHANTED_CUT_COPPER.getItem(plugin),
+                8, Items.ENCHANTED_CUT_COPPER.getItem(plugin));
+    }
+
+    // Enchanted Ghast Tear GUI
+    public static FormatRecipesGUI newEnchantedGhastTearGUI(Plugin plugin) {
+        ItemStack tear = new ItemStack(Material.GHAST_TEAR, 1);
+        return new FormatRecipesGUI(plugin, new MaterialsSelectGUI3(plugin), Items.ENCHANTED_GHAST_TEAR.getItem(plugin),
+                2, tear,
+                4, tear, 5, tear, 6, tear,
+                8, tear);
+    }
+
+    // Hardwood Handle GUI
+    public static FormatRecipesGUI newHardwoodHandleGUI(Plugin plugin) {
+
+        return new FormatRecipesGUI(plugin, new MaterialsSelectGUI3(plugin), Items.HARDWOOD_HANDLE.getItem(plugin),
+                3, Items.ENCHANTED_OAK_WOOD.getItem(plugin),
+                5, Items.ENCHANTED_OAK_WOOD.getItem(plugin),
+                7, Items.ENCHANTED_OAK_WOOD.getItem(plugin));
+    }
+
+    // Gyroscope GUI
+    public static FormatRecipesGUI newGyroscopeGUI(Plugin plugin) {
+
+        return new FormatRecipesGUI(plugin, new MaterialsSelectGUI3(plugin), Items.GYROSCOPE.getItem(plugin),
+                2, Items.ENCHANTED_IRON.getItem(plugin),
+                4, Items.ENCHANTED_IRON.getItem(plugin), 5, Items.ENCHANTED_REDSTONE.getItem(plugin), 6, Items.ENCHANTED_IRON.getItem(plugin),
+                8, Items.ENCHANTED_IRON.getItem(plugin));
+    }
+
+    // Kinetic Rod GUI
+    public static FormatRecipesGUI newKineticRodGUI(Plugin plugin) {
+
+        return new FormatRecipesGUI(plugin, new MiscSelectGUI(plugin), Items.KINETIC_ROD.getItem(plugin),
+                3, Items.GYROSCOPE.getItem(plugin),
+                5, Items.HARDWOOD_HANDLE.getItem(plugin), 6, Items.ENCHANTED_STRING.getItem(plugin),
+                7, Items.HARDWOOD_HANDLE.getItem(plugin), 9, Items.ENCHANTED_STRING.getItem(plugin));
+    }
+
+    // Grappling Hook GUI
+    public static FormatRecipesGUI newGrapplerGUI(Plugin plugin) {
+        ItemStack stick = new ItemStack(Material.STICK, 1);
+
+        return new FormatRecipesGUI(plugin, new MiscSelectGUI(plugin), Items.GRAPPLING_HOOK.getItem(plugin),
+                3, stick,
+                5, stick, 6, Items.ENCHANTED_STRING.getItem(plugin),
+                7, stick, 9, Items.ENCHANTED_STRING.getItem(plugin));
+    }
+
+    // Wand of Maggots GUI
+    public static FormatRecipesGUI newMaggotWandGUI(Plugin plugin) {
+        return new FormatRecipesGUI(plugin, new WeaponsSelectGUI(plugin), Items.WAND_OF_MAGGOTS.getItem(plugin),
+                2, Items.SILVERFISH_SCALE.getItem(plugin), 3, Items.SILVERFISH_SCALE.getItem(plugin),
+                5, Items.HARDWOOD_HANDLE.getItem(plugin), 6, Items.SILVERFISH_SCALE.getItem(plugin),
+                7, Items.HARDWOOD_HANDLE.getItem(plugin));
+    }
+
+    // Alloy Helmet GUI
+    public static FormatRecipesGUI newAlloyHelmetGUI(Plugin plugin) {
+        return new FormatRecipesGUI(plugin, new ArmorSelectGUI(plugin), Items.ALLOY_HELMET.getItem(plugin),
+                1, Items.ALLOY.getItem(plugin), 2, Items.ALLOY.getItem(plugin), 3, Items.ALLOY.getItem(plugin),
+                4, Items.ALLOY.getItem(plugin), 6, Items.ALLOY.getItem(plugin));
+    }
+
+    // Alloy Chestplate GUI
+    public static FormatRecipesGUI newAlloyChestplateGUI(Plugin plugin) {
+        return new FormatRecipesGUI(plugin, new ArmorSelectGUI(plugin), Items.ALLOY_CHESTPLATE.getItem(plugin),
+                1, Items.ALLOY.getItem(plugin),  3, Items.ALLOY.getItem(plugin),
+                4, Items.ALLOY.getItem(plugin), 5, Items.ALLOY.getItem(plugin), 6, Items.ALLOY.getItem(plugin),
+                7, Items.ALLOY.getItem(plugin),8, Items.ALLOY.getItem(plugin),9, Items.ALLOY.getItem(plugin));
+    }
+
+    // Alloy Leggings GUI
+    public static FormatRecipesGUI newAlloyLegsGUI(Plugin plugin) {
+        return new FormatRecipesGUI(plugin, new ArmorSelectGUI(plugin), Items.ALLOY_LEGGINGS.getItem(plugin),
+                1, Items.ALLOY.getItem(plugin), 2, Items.ALLOY.getItem(plugin), 3, Items.ALLOY.getItem(plugin),
+                4, Items.ALLOY.getItem(plugin), 6, Items.ALLOY.getItem(plugin),
+                7, Items.ALLOY.getItem(plugin), 9, Items.ALLOY.getItem(plugin));
+    }
+
+    // Alloy Boots GUI
+    public static FormatRecipesGUI newAlloyBootsGUI(Plugin plugin) {
+        return new FormatRecipesGUI(plugin, new ArmorSelectGUI(plugin), Items.ALLOY_BOOTS.getItem(plugin),
+                4, Items.ALLOY.getItem(plugin), 6, Items.ALLOY.getItem(plugin),
+                7, Items.ALLOY.getItem(plugin), 9   , Items.ALLOY.getItem(plugin));
+    }
 }

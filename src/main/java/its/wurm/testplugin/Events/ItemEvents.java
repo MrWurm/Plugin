@@ -13,6 +13,7 @@ import org.bukkit.event.block.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.EntityResurrectEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
@@ -34,6 +35,7 @@ public class ItemEvents implements Listener{
     Map<String, Long> cooldown_shortbow = new HashMap<String, Long>();
     Map<String, Long> cooldown_heal = new HashMap<String, Long>();
     Map<String, Long> cooldown_echo = new HashMap<String, Long>();
+    Map<String, Long> cooldown_grapple = new HashMap<String, Long>();
     Map<String, Location> echo_ward = new HashMap<String, Location>();
 
     public void testFireBall(Player player) {
@@ -47,7 +49,7 @@ public class ItemEvents implements Listener{
     }
 
     public void warpWorld(Player player) {
-        if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+            if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
                 PersistentDataType.DOUBLE) > player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
                 PersistentDataType.DOUBLE)) {
             player.sendMessage(ChatColor.RED + "You cannot fast travel while injured");
@@ -104,6 +106,40 @@ public class ItemEvents implements Listener{
                 PersistentDataType.DOUBLE) * 0.2) + 1) * 20;
         Attacks.createTnt(player.getEyeLocation(), mod, 70, player, player.getLocation().getDirection().multiply(2));
         player.sendMessage(ChatColor.GREEN + "Used Tnt Hurl");
+    }
+
+    public void miteWand (Player player) {
+        double mana = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Mana"),
+                PersistentDataType.DOUBLE);
+        if (mana < 80) {
+            player.sendMessage(ChatColor.RED + "You need more mana to use this ability");
+            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 40, 0);
+            return;
+        }
+
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Mana"),
+                PersistentDataType.DOUBLE, mana - 80);
+
+        mite(player, 5, 3);
+    }
+    public void mite(Player player, int power, int amount) {
+
+        double health = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
+                PersistentDataType.DOUBLE)/power;
+        double defense = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Defense"),
+                PersistentDataType.DOUBLE)/power;
+        double damage = (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Strength"),
+                PersistentDataType.DOUBLE)/20) + 5 + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Damage"),
+                PersistentDataType.DOUBLE);
+        damage = ((player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Strength"),
+                PersistentDataType.DOUBLE)/100) + 1) * damage;
+        damage = (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+                PersistentDataType.DOUBLE) + 1) * damage;
+
+        for (int i = 0; i < amount; i++) {
+            Silverfish summon = player.getLocation().getWorld().spawn(player.getLocation(), Silverfish.class);
+            Attacks.createSummon(player.getLocation(), 400, player, summon, damage, health, defense, "Wood Mite");
+        }
     }
 
     public void boneNeedle(Player player) {
@@ -201,6 +237,21 @@ public class ItemEvents implements Listener{
         player.sendMessage(ChatColor.GREEN + "Used Minor Heal");
     }
 
+    public void grapple(Player player) {
+        if (cooldown_grapple.containsKey(player.getName())) {
+            if (cooldown_grapple.get(player.getName()) > System.currentTimeMillis()) {
+                long timeleft = (cooldown_grapple.get(player.getName()) - System.currentTimeMillis()) / 1000;
+                player.sendMessage(ChatColor.RED + "This Ability is on cooldown for " + timeleft + " seconds.");
+                player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 40, 0);
+                return;
+            }
+        }
+
+        cooldown_grapple.put(player.getName(), System.currentTimeMillis() + (2 * 1000));
+        player.setVelocity(player.getLocation().getDirection().multiply(3));
+        player.sendMessage(ChatColor.GREEN + "Used Grapple");
+    }
+
     public void echoStone(Player player) {
         if (cooldown_echo.containsKey(player.getName())) {
             if (cooldown_echo.get(player.getName()) > System.currentTimeMillis()) {
@@ -264,6 +315,135 @@ public class ItemEvents implements Listener{
 
     }
 
+    public void drill(Player player) {
+
+        int distance = 11;
+        ItemStack tool = new ItemStack(Material.DIAMOND_PICKAXE);
+        BlockIterator blocksToAdd = new BlockIterator(player.getLocation(), 1, distance);
+
+        Location loc = player.getLocation();
+
+        while (blocksToAdd.hasNext()) {
+            loc = blocksToAdd.next().getLocation();
+            if (loc.getBlock().getType().isSolid()) {
+                if (loc.getBlock().getType() != Material.BEDROCK &&
+                    loc.getBlock().getType() != Material.COMMAND_BLOCK &&
+                    loc.getBlock().getType() != Material.REPEATING_COMMAND_BLOCK &&
+                    loc.getBlock().getType() != Material.CHAIN_COMMAND_BLOCK &&
+                    loc.getBlock().getType() != Material.END_PORTAL_FRAME &&
+                    loc.getBlock().getType() != Material.END_PORTAL &&
+                    loc.getBlock().getType() != Material.BARRIER &&
+                    loc.getBlock().getType() != Material.NETHER_PORTAL) {
+
+                    loc.getBlock().breakNaturally(tool);
+                }
+                return;
+            }
+            else {
+                Particle.DustOptions dust = new Particle.DustOptions(Color.RED, 0.3f);
+                loc.getWorld().spawnParticle(Particle.REDSTONE, loc, 1, 0, 0,0, dust);
+            }
+        }
+    }
+
+    public void superPick(Player player, Block block) {
+        ItemStack tool = new ItemStack(Material.IRON_PICKAXE);
+        Location loc = block.getLocation();
+        switch (player.getFacing()) {
+            case UP:
+                for (int i = 0; i < 5; ++i) {
+                    if (loc.getBlock().getType() != Material.BEDROCK &&
+                            loc.getBlock().getType() != Material.COMMAND_BLOCK &&
+                            loc.getBlock().getType() != Material.REPEATING_COMMAND_BLOCK &&
+                            loc.getBlock().getType() != Material.CHAIN_COMMAND_BLOCK &&
+                            loc.getBlock().getType() != Material.END_PORTAL_FRAME &&
+                            loc.getBlock().getType() != Material.END_PORTAL &&
+                            loc.getBlock().getType() != Material.BARRIER &&
+                            loc.getBlock().getType() != Material.NETHER_PORTAL) {
+                        loc.getBlock().breakNaturally(tool);
+                    }
+                    loc = new Location(Bukkit.getWorld("world"), loc.getX(),loc.getY() + 1, loc.getZ());
+                }
+                break;
+            case DOWN:
+                for (int i = 0; i < 5; ++i) {
+                    if (loc.getBlock().getType() != Material.BEDROCK &&
+                            loc.getBlock().getType() != Material.COMMAND_BLOCK &&
+                            loc.getBlock().getType() != Material.REPEATING_COMMAND_BLOCK &&
+                            loc.getBlock().getType() != Material.CHAIN_COMMAND_BLOCK &&
+                            loc.getBlock().getType() != Material.END_PORTAL_FRAME &&
+                            loc.getBlock().getType() != Material.END_PORTAL &&
+                            loc.getBlock().getType() != Material.BARRIER &&
+                            loc.getBlock().getType() != Material.NETHER_PORTAL) {
+                        loc.getBlock().breakNaturally(tool);
+                    }
+                    loc = new Location(Bukkit.getWorld("world"), loc.getX(),loc.getY() - 1, loc.getZ());
+                }
+                break;
+            case NORTH:
+                for (int i = 0; i < 5; ++i) {
+                    if (loc.getBlock().getType() != Material.BEDROCK &&
+                            loc.getBlock().getType() != Material.COMMAND_BLOCK &&
+                            loc.getBlock().getType() != Material.REPEATING_COMMAND_BLOCK &&
+                            loc.getBlock().getType() != Material.CHAIN_COMMAND_BLOCK &&
+                            loc.getBlock().getType() != Material.END_PORTAL_FRAME &&
+                            loc.getBlock().getType() != Material.END_PORTAL &&
+                            loc.getBlock().getType() != Material.BARRIER &&
+                            loc.getBlock().getType() != Material.NETHER_PORTAL) {
+                        loc.getBlock().breakNaturally(tool);
+                    }
+                    loc = new Location(Bukkit.getWorld("world"), loc.getX(),loc.getY(), loc.getZ() - 1);
+                }
+                break;
+            case SOUTH:
+                for (int i = 0; i < 5; ++i) {
+                    if (loc.getBlock().getType() != Material.BEDROCK &&
+                            loc.getBlock().getType() != Material.COMMAND_BLOCK &&
+                            loc.getBlock().getType() != Material.REPEATING_COMMAND_BLOCK &&
+                            loc.getBlock().getType() != Material.CHAIN_COMMAND_BLOCK &&
+                            loc.getBlock().getType() != Material.END_PORTAL_FRAME &&
+                            loc.getBlock().getType() != Material.END_PORTAL &&
+                            loc.getBlock().getType() != Material.BARRIER &&
+                            loc.getBlock().getType() != Material.NETHER_PORTAL) {
+                        loc.getBlock().breakNaturally(tool);
+                    }
+                    loc = new Location(Bukkit.getWorld("world"), loc.getX(),loc.getY(), loc.getZ() + 1);
+                }
+                break;
+            case EAST:
+                for (int i = 0; i < 5; ++i) {
+                    if (loc.getBlock().getType() != Material.BEDROCK &&
+                            loc.getBlock().getType() != Material.COMMAND_BLOCK &&
+                            loc.getBlock().getType() != Material.REPEATING_COMMAND_BLOCK &&
+                            loc.getBlock().getType() != Material.CHAIN_COMMAND_BLOCK &&
+                            loc.getBlock().getType() != Material.END_PORTAL_FRAME &&
+                            loc.getBlock().getType() != Material.END_PORTAL &&
+                            loc.getBlock().getType() != Material.BARRIER &&
+                            loc.getBlock().getType() != Material.NETHER_PORTAL) {
+                        loc.getBlock().breakNaturally(tool);
+                    }
+                    loc = new Location(Bukkit.getWorld("world"), loc.getX() + 1,loc.getY(), loc.getZ());
+                }
+                break;
+            case WEST:
+            default:
+                for (int i = 0; i < 5; ++i) {
+                    if (loc.getBlock().getType() != Material.BEDROCK &&
+                            loc.getBlock().getType() != Material.COMMAND_BLOCK &&
+                            loc.getBlock().getType() != Material.REPEATING_COMMAND_BLOCK &&
+                            loc.getBlock().getType() != Material.CHAIN_COMMAND_BLOCK &&
+                            loc.getBlock().getType() != Material.END_PORTAL_FRAME &&
+                            loc.getBlock().getType() != Material.END_PORTAL &&
+                            loc.getBlock().getType() != Material.BARRIER &&
+                            loc.getBlock().getType() != Material.NETHER_PORTAL) {
+                        loc.getBlock().breakNaturally(tool);
+                    }
+                    loc = new Location(Bukkit.getWorld("world"), loc.getX() - 1 ,loc.getY(), loc.getZ());
+                }
+                break;
+        }
+    }
+
     public void lightningWand(Player player) {
 
         double mana = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Mana"),
@@ -282,11 +462,9 @@ public class ItemEvents implements Listener{
         BlockIterator blocksToAdd = new BlockIterator(player.getLocation(), 1, distance);
 
         Location loc = player.getLocation();
-        float pitch = player.getLocation().getPitch();
-        float yaw = player.getLocation().getYaw();
 
         double mod = ((player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
-                PersistentDataType.DOUBLE) * 0.045) + 1) * 60;
+                PersistentDataType.DOUBLE) * 0.0024) + 1) * 3;
 
         while (blocksToAdd.hasNext()) {
             loc = blocksToAdd.next().getLocation();
@@ -346,6 +524,7 @@ public class ItemEvents implements Listener{
     public void setCooldown(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         cooldown_heal.put(player.getName(), System.currentTimeMillis() + (8 * 1000));
+        cooldown_grapple.put(player.getName(), System.currentTimeMillis() + (5 * 500));
         cooldown_echo.put(player.getName(), System.currentTimeMillis() + (3 * 1000));
         cooldown_shortbow.put(player.getName(), System.currentTimeMillis() + (400));
         echo_ward.put(player.getName(), player.getLocation());
@@ -461,6 +640,13 @@ public class ItemEvents implements Listener{
                         case "Lightning Wand":
                             lightningWand(player);
                             break;
+                        case "Grappling Hook":
+                            grapple(player);
+                            event.setCancelled(true);
+                            break;
+                        case "Wand of Maggots":
+                            miteWand(player);
+                            break;
                         default:
                             return;
                     }
@@ -539,12 +725,46 @@ public class ItemEvents implements Listener{
                             lightningWand(player);
                             event.setCancelled(true);
                             break;
+                        case "Grappling Hook":
+                            grapple(player);
+                            event.setCancelled(true);
+                            break;
+                        case "Wand of Maggots":
+                            mite(player, 4, 3);
+                            event.setCancelled(true);
+                            break;
                         default:
                             return;
                     }
                 }
             }
         }
+    }
+
+    @EventHandler
+    public void onDeath(PlayerDeathEvent event) {
+        Random ran = new Random();
+        int choice = ran.nextInt(50 ) + 1;
+        Player player = event.getEntity();
+        if (choice == 1 && player.getInventory().contains(Items.DEATH_CHARM.getItem(plugin))) {
+            player.setHealth(20);
+
+            player.sendMessage(ChatColor.GREEN + "You charm brought you back from the brink of death");
+            player.playSound(player.getLocation(), Sound.ITEM_TOTEM_USE, 80, 0);
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
+            PersistentDataType.DOUBLE, player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
+                        PersistentDataType.DOUBLE)/5);
+            player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,
+                    9999999, 5, true, false));
+            player.setInvulnerable(true);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                public void run() {
+                    player.setInvulnerable(false);
+                }
+            }, 60l);
+
+        }
+
     }
 
     @EventHandler
@@ -705,6 +925,103 @@ public class ItemEvents implements Listener{
                     }
                 }
             }
+            if (victim.getInventory().getHelmet() != null &&
+                victim.getInventory().getHelmet().getItemMeta() != null &&
+                victim.getInventory().getHelmet().getItemMeta().getPersistentDataContainer() != null &&
+                victim.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                        PersistentDataType.STRING) != null) {
+                switch (victim.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                        PersistentDataType.STRING)) {
+                    case "Silverfish Helmet":
+                        Random helmRandom = new Random();
+                        int helmChoice = helmRandom.nextInt(21);
+                        if (helmChoice == 20) {
+                            mite(victim, 10, 1);
+                        }
+                        return;
+                    default:
+                        return;
+                }
+            }
+
+            if (victim.getInventory().getChestplate() != null &&
+                victim.getInventory().getChestplate().getItemMeta() != null &&
+                victim.getInventory().getChestplate().getItemMeta().getPersistentDataContainer() != null &&
+                victim.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                        PersistentDataType.STRING) != null) {
+                switch (victim.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                        PersistentDataType.STRING)) {
+                    case "Silverfish Chestplate":
+                        Random helmRandom = new Random();
+                        int helmChoice = helmRandom.nextInt(21);
+                        if (helmChoice == 20) {
+                            mite(victim, 10, 1);
+                        }
+                        return;
+                    default:
+                        return;
+                }
+            }
+
+            if (victim.getInventory().getLeggings() != null &&
+                victim.getInventory().getLeggings().getItemMeta() != null &&
+                victim.getInventory().getLeggings().getItemMeta().getPersistentDataContainer() != null &&
+                victim.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                        PersistentDataType.STRING) != null) {
+                switch (victim.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                        PersistentDataType.STRING)) {
+                    case "Silverfish Leggings":
+                        Random helmRandom = new Random();
+                        int helmChoice = helmRandom.nextInt(21);
+                        if (helmChoice == 20) {
+                            mite(victim, 10, 1);
+                        }
+                        return;
+                    default:
+                        return;
+                }
+            }
+
+            if (victim.getInventory().getBoots() != null &&
+                victim.getInventory().getBoots().getItemMeta() != null &&
+                victim.getInventory().getBoots().getItemMeta().getPersistentDataContainer() != null &&
+                victim.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                        PersistentDataType.STRING) != null) {
+                switch (victim.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                        PersistentDataType.STRING)) {
+                    case "Silverfish Boots":
+                        Random helmRandom = new Random();
+                        int helmChoice = helmRandom.nextInt(21);
+                        if (helmChoice == 20) {
+                            mite(victim, 10, 1);
+                        }
+                        return;
+                    default:
+                        return;
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onLeftClickAir(PlayerInteractEvent event) {
+        if (event.getAction() == Action.LEFT_CLICK_AIR) {
+            if (event.getItem() != null) {
+                Player player = event.getPlayer();
+                if (event.getItem() != null &&
+                        event.getItem().getItemMeta() != null &&
+                        event.getItem().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                                PersistentDataType.STRING) != null) {
+                    switch (event.getItem().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                            PersistentDataType.STRING)) {
+                        case "Laser Drill X2085":
+                            drill(player);
+                            break;
+                        default:
+                            return;
+                    }
+                }
+            }
         }
     }
 
@@ -753,6 +1070,61 @@ public class ItemEvents implements Listener{
     }
 
     @EventHandler
+    public void onFish(PlayerFishEvent event) {
+        Player player = event.getPlayer();
+        if (event.getState() == PlayerFishEvent.State.CAUGHT_ENTITY) {
+            if (player.getInventory().getItemInMainHand() != null &&
+                player.getInventory().getItemInMainHand().getType() == Material.FISHING_ROD &&
+                player.getInventory().getItemInMainHand().getItemMeta() != null &&
+                player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                        PersistentDataType.STRING) != null) {
+                switch (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                        PersistentDataType.STRING)) {
+                    case "Kinetic Rod":
+                        event.getCaught().setVelocity(player.getLocation().getDirection().multiply(4));
+                        break;
+                    case "Dimensional Rod":
+                        Location loc1 = event.getCaught().getLocation();
+                        Location loc2 = player.getLocation();
+                        event.getCaught().getWorld().spawnParticle(Particle.PORTAL, player.getLocation(), 6);
+                        player.spawnParticle(Particle.PORTAL, player.getLocation(), 6);
+                        player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 100, 2);
+
+                        event.getCaught().teleport(loc2);
+                        player.teleport(loc1);
+                        break;
+                    default:
+                        return;
+                }
+            }
+
+            if (player.getInventory().getItemInOffHand() != null &&
+                player.getInventory().getItemInOffHand().getType() == Material.FISHING_ROD &&
+                player.getInventory().getItemInMainHand().getType() != Material.FISHING_ROD &&
+                player.getInventory().getItemInOffHand().getItemMeta() != null &&
+                player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                        PersistentDataType.STRING) != null) {
+
+                switch (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                        PersistentDataType.STRING)) {
+                    case "Kinetic Rod":
+                        event.getCaught().setVelocity(player.getLocation().getDirection().multiply(4));
+                        break;
+                    case "Dimensional Rod":
+                        Location loc1 = event.getCaught().getLocation();
+                        Location loc2 = player.getLocation();
+
+                        event.getCaught().teleport(loc2);
+                        player.teleport(loc1);
+                        break;
+                    default:
+                        return;
+                }
+            }
+        }
+    }
+
+    @EventHandler
     public void onRes(EntityResurrectEvent event) {
         event.setCancelled(true);
     }
@@ -779,7 +1151,7 @@ public class ItemEvents implements Listener{
     }
 
     @EventHandler
-    public void onDeath(PlayerRespawnEvent event) {
+    public void onRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
         echo_ward.put(player.getName(), player.getLocation());
     }
@@ -789,6 +1161,22 @@ public class ItemEvents implements Listener{
         Player player = event.getPlayer();
         Block block = event.getBlock();
         Random ran = new Random();
+
+        if (player.getInventory().getItemInMainHand() != null) {
+            if (player.getInventory().getItemInMainHand() != null &&
+                    player.getInventory().getItemInMainHand().getItemMeta() != null &&
+                    player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                            PersistentDataType.STRING) != null) {
+                switch (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                        PersistentDataType.STRING)) {
+                    case "Chain Pickaxe":
+                        superPick(player, block);
+                        break;
+                    default:
+                        return;
+                }
+            }
+        }
 
         if (block != null) {
             if (block.getBlockData() instanceof Ageable) {
@@ -823,7 +1211,7 @@ public class ItemEvents implements Listener{
                 }
 
                 if (age.getAge() == age.getMaximumAge() && player.getInventory().contains(mat) &&
-                        player.getInventory().contains(Items.SWOERS_WILL.getItem(plugin))) {
+                        player.getInventory().contains(Items.SOWERS_WILL.getItem(plugin))) {
                     Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                         public void run() {
                             int slot = 0;

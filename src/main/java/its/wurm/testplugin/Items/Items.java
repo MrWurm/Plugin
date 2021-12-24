@@ -129,7 +129,7 @@ public enum Items implements ItemLike {
             lore.add(" ");
             lore.add(ChatColor.RED + "§lSPECIAL BOW");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "Damage"), PersistentDataType.DOUBLE, 666.0);
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "Type"), PersistentDataType.STRING, "bow");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "type"), PersistentDataType.STRING, "bow");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Test Shortbow");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "SPECIAL");
 
@@ -175,6 +175,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Deepslate");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -192,6 +194,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Polished Deepslate");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
 
             return item;
@@ -209,6 +213,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Deepslate Tiles");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "EPIC");
             item.setItemMeta(meta);
 
             return item;
@@ -226,6 +232,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Dripstone Block");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
             return item;
         }
@@ -242,6 +250,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Iron");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -259,6 +269,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Iron Block");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
 
             return item;
@@ -276,6 +288,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Coal");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -292,6 +306,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Coal Block");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
 
             return item;
@@ -309,6 +325,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Bamboo");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -324,6 +342,8 @@ public enum Items implements ItemLike {
             List<String> lore = new ArrayList<>();
             lore.add(ChatColor.BLUE + "§lRARE");
             meta.setLore(lore);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Bamboo Bundle");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
 
             return item;
@@ -341,6 +361,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Feather");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -358,6 +380,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Phantom Membrane");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -375,6 +399,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Gold");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -392,6 +418,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Gold Block");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE ");
             item.setItemMeta(meta);
 
             return item;
@@ -409,6 +437,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Sand");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -426,6 +456,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Compacted Sand");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
 
             return item;
@@ -443,6 +475,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Sandstone");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "EPIC");
             item.setItemMeta(meta);
 
             return item;
@@ -460,6 +494,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Copper");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -477,6 +513,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Copper Block");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
 
             return item;
@@ -494,6 +532,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Cut Copper");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "EPIC");
             item.setItemMeta(meta);
 
             return item;
@@ -511,6 +551,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Quartz");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -528,6 +570,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Quartz Block");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
 
             return item;
@@ -545,6 +589,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Quartz Sculpture");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "EPIC");
             item.setItemMeta(meta);
 
             return item;
@@ -560,6 +606,8 @@ public enum Items implements ItemLike {
             List<String> lore = new ArrayList<>();
             lore.add(ChatColor.GREEN + "§lUNCOMMON");
             meta.setLore(lore);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Alloy");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -577,6 +625,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Cobblestone");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -594,6 +644,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Diamond");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -611,6 +663,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Emerald");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -628,6 +682,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Wool");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -645,6 +701,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Mutton");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -662,6 +720,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Chicken");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -679,6 +739,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Beef");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -696,6 +758,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Leather");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -713,6 +777,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Pork");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -730,6 +796,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Rabbit");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -747,6 +815,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Clownfish");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -764,6 +834,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Pufferfish");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -781,6 +853,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Cod");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -798,6 +872,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Cooked Cod");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
 
             return item;
@@ -815,6 +891,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Salmon");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -832,6 +910,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Cooked Salmon");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
 
             return item;
@@ -849,6 +929,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Kelp");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -866,6 +948,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Dried Kelp");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
 
             return item;
@@ -883,6 +967,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Kelp Block");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "EPIC");
             item.setItemMeta(meta);
 
             return item;
@@ -900,6 +986,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Lapis");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -917,6 +1005,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Lapis Block");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
 
             return item;
@@ -934,6 +1024,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Redstone");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -951,6 +1043,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Redstone Block");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
 
             return item;
@@ -968,6 +1062,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Netherite");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -985,6 +1081,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Netherite Ingot");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
 
             return item;
@@ -1002,6 +1100,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Netherite Block");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "EPIC");
             item.setItemMeta(meta);
 
             return item;
@@ -1019,6 +1119,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Rotten Flesh");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -1036,6 +1138,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Bone");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -1053,6 +1157,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Bone Block");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
 
             return item;
@@ -1070,6 +1176,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted String");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -1087,6 +1195,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Web");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
 
             return item;
@@ -1104,6 +1214,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Spider Eye");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -1121,6 +1233,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Amethyst   ");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -1138,6 +1252,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Amethyst Block");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
 
             return item;
@@ -1155,6 +1271,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Ink Sack");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -1172,6 +1290,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Glow Ink Sack");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
 
             return item;
@@ -1189,6 +1309,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Coco Beans");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -1206,6 +1328,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Snowball");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
             return item;
@@ -1223,6 +1347,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Snow");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
             return item;
         }
@@ -1239,6 +1365,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Snow Mound");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "EPIC ");
             item.setItemMeta(meta);
             return item;
         }
@@ -1255,6 +1383,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Gunpowder");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1271,6 +1401,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Powder Ball");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
             return item;
         }
@@ -1287,6 +1419,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Tnt");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "EPIC");
             item.setItemMeta(meta);
             return item;
         }
@@ -1303,6 +1437,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Clay");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1319,6 +1455,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Clay Block");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
             return item;
         }
@@ -1335,6 +1473,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Glowstone Dust");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1351,6 +1491,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Glowstone");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
             return item;
         }
@@ -1367,6 +1509,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Blaze Powder");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1383,6 +1527,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Blaze Rod");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
             return item;
         }
@@ -1399,6 +1545,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Ender Pearl");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1415,6 +1563,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Eye of Ender");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
             return item;
         }
@@ -1431,6 +1581,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Nether Wart");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1446,6 +1598,8 @@ public enum Items implements ItemLike {
             lore.add(ChatColor.GREEN + "§lUNCOMMON");
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Sweet Berries");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             item.setItemMeta(meta);
             return item;
@@ -1463,6 +1617,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Sugar Cane");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1479,6 +1635,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Sugar");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
             return item;
         }
@@ -1495,6 +1653,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Chorus Fruit");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1511,6 +1671,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Popped Chorus Fruit");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
             return item;
         }
@@ -1527,6 +1689,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Carrot");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1543,6 +1707,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Golden Carrot");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
             return item;
         }
@@ -1559,6 +1725,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Potato");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1575,6 +1743,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Baked Potato");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
             return item;
         }
@@ -1591,6 +1761,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Beetroot");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1607,6 +1779,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Beetroot Sou[");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
             return item;
         }
@@ -1623,6 +1797,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Melon Slice");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1639,6 +1815,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Melon");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
             item.setItemMeta(meta);
             return item;
         }
@@ -1655,6 +1833,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Brown Mushroom");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1671,6 +1851,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Red Mushroom");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1687,6 +1869,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Flint");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1703,6 +1887,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Pumpkin");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1719,6 +1905,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Cactus");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1735,6 +1923,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Soul Sand");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1751,6 +1941,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Soul Soil");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1767,6 +1959,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Oak Wood");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1783,6 +1977,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Spruce Wood");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1798,6 +1994,8 @@ public enum Items implements ItemLike {
             lore.add(ChatColor.GREEN + "§lUNCOMMON");
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Acacia Wood");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             item.setItemMeta(meta);
             return item;
@@ -1815,6 +2013,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Birch Wood");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1831,6 +2031,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Jungle Wood");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1847,6 +2049,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Dark Oak Wood");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1863,6 +2067,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Warped Stem");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1879,6 +2085,8 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Crimson Stem");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1895,6 +2103,26 @@ public enum Items implements ItemLike {
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted End Stone");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
+            item.setItemMeta(meta);
+            return item;
+        }
+    },
+
+    ENCHANTED_GHAST_TEAR {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.GHAST_TEAR, 1);
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(ChatColor.GREEN + "Enchanted Ghast Tear");
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.GREEN + "§lUNCOMMON");
+            meta.setLore(lore);
+            meta.addEnchant(Enchantment.LUCK, 1, false);
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Enchanted Ghast Tear");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
             return item;
         }
@@ -1907,10 +2135,74 @@ public enum Items implements ItemLike {
             ItemMeta meta = item.getItemMeta();
             meta.setDisplayName(ChatColor.GREEN + "Pulsing Tumor");
             List<String> lore = new ArrayList<>();
-            lore.add(ChatColor.GREEN + "§lUNCOMMON+");
+            lore.add(ChatColor.GREEN + "§lUNCOMMON");
             meta.setLore(lore);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Pulsing Tumor");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
             item.setItemMeta(meta);
 
+            return item;
+        }
+    },
+
+    SIMPLE_SHIELD_BASE {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.SHIELD, 1);
+            BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
+            meta.setUnbreakable(true);
+            meta.setDisplayName(ChatColor.GREEN + "Simple Shield Base");
+            List<String> lore = new ArrayList<>();
+            lore.add(" ");
+            lore.add(ChatColor.GREEN + "§lUNCOMMON SHIELD");
+            Banner banner = (Banner) meta.getBlockState();
+            banner.setBaseColor(DyeColor.LIGHT_GRAY);
+            banner.addPattern(new Pattern(DyeColor.GRAY, PatternType.BORDER));
+            banner.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.GRADIENT));
+            banner.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.GRADIENT_UP));
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Integrity"), PersistentDataType.DOUBLE, 2.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "shield");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Simple Shield Base");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "UNCOMMON");
+
+            meta.setLore(lore);
+            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            meta.setBlockState(banner);
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    HARDWOOD_HANDLE {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.STICK, 1);
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(ChatColor.BLUE + "Hardwood Handle");
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.BLUE + "§lRARE");
+            meta.setLore(lore);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Hardwood Handle");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
+            item.setItemMeta(meta);
+            return item;
+        }
+    },
+
+    GYROSCOPE {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.FIREWORK_STAR, 1);
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(ChatColor.BLUE + "Gyroscope");
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.BLUE + "§lRARE");
+            meta.setLore(lore);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"), PersistentDataType.STRING, "Gyroscope");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "RARE");
+            item.setItemMeta(meta);
             return item;
         }
     },
@@ -1926,9 +2218,29 @@ public enum Items implements ItemLike {
             lore.add(ChatColor.GRAY + "§oOh cool, a tomato!");
             lore.add(" ");
             lore.add(ChatColor.GREEN + "§lUNCOMMON TROPHY");
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "trophy");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "trophy");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "UNCOMMON");
 
+            meta.setLore(lore);
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    GOLD_POT {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODdlMGFhOTQzM2RiYTliNzU5MzJhMTFkYzk0ZDQwNmJkZTE5ZTg2MzUxNDIxNDkyYjNlZDM3OGM4ZTFhN2NjIn19fQ");
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(ChatColor.BLUE + "Pot of Gold");
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.GRAY + "Apply to an item in an anvil");
+            lore.add(ChatColor.GRAY + "to " + ChatColor.GOLD + "gild " + ChatColor.GRAY + "it.");
+            lore.add(" ");
+            lore.add(ChatColor.BLUE + "§lRARE");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Pot of Gold");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
             meta.setLore(lore);
             item.setItemMeta(meta);
 
@@ -1947,6 +2259,7 @@ public enum Items implements ItemLike {
             lore.add(ChatColor.GRAY + "you crouch");
             lore.add(" ");
             lore.add(ChatColor.BLUE + "§lRARE");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "artifact");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Feather Charm");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
             meta.setLore(lore);
@@ -1985,7 +2298,7 @@ public enum Items implements ItemLike {
         }
     },
 
-    SWOERS_WILL {
+    SOWERS_WILL {
         @Override
         public ItemStack getItem(Plugin plugin) {
             ItemStack item = new ItemStack(Material.FILLED_MAP, 1);
@@ -2006,6 +2319,46 @@ public enum Items implements ItemLike {
         }
     },
 
+    LASER_PICK {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.AMETHYST_SHARD, 1);
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(ChatColor.DARK_PURPLE + "Laser Drill X2085");
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.GRAY + "Can mine blocks up to 11 blocks awawy");
+            lore.add(" ");
+            lore.add(ChatColor.DARK_PURPLE + "§lEPIC");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Laser Drill X2085");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "EPIC");
+            meta.setLore(lore);
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    SUPER_PICK {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.IRON_PICKAXE, 1);
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(ChatColor.BLUE + "Chain Pickaxe");
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.GRAY + "Mine up to 5 blocks at a time");
+            lore.add(" ");
+            lore.add(ChatColor.BLUE + "§lRARE");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Chain Pickaxe");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
+            meta.setLore(lore);
+            meta.setUnbreakable(true);
+            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
     POCKET_WORKBENCH {
         @Override
         public ItemStack getItem(Plugin plugin) {
@@ -2020,6 +2373,47 @@ public enum Items implements ItemLike {
             lore.add(ChatColor.GREEN + "§lUNCOMMON");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Pocket Crafting Table");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "UNCOMMON");
+
+            meta.setLore(lore);
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    DEATH_CHARM {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.TOTEM_OF_UNDYING, 1);
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(ChatColor.BLUE + "Death Charm");
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.GRAY + "This ancient charm can let the");
+            lore.add(ChatColor.GRAY + "wearer escape death, although");
+            lore.add(ChatColor.GRAY + "it is not very reliable");
+            lore.add(" ");
+            lore.add(ChatColor.BLUE + "§lRARE ARTIFACT");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Death Charm");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "artifact");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
+
+            meta.setLore(lore);
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    SILVERFISH_SCALE {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.LIGHT_GRAY_DYE, 1);
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(ChatColor.BLUE + "Silverfish Scale");
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.BLUE + "§lRARE");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Silverfish Scale");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
 
             meta.setLore(lore);
             item.setItemMeta(meta);
@@ -2143,6 +2537,75 @@ public enum Items implements ItemLike {
         }
     },
 
+    KINETIC_ROD {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.FISHING_ROD, 1);
+            ItemMeta meta = item.getItemMeta();
+            meta.setUnbreakable(true);
+            meta.setDisplayName(ChatColor.BLUE + "Kinetic Rod");
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.GRAY + "Send enemies you hook flying!");
+            lore.add(" ");
+            lore.add(ChatColor.BLUE + "§lRARE");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Kinetic Rod");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
+
+            meta.setLore(lore);
+            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    DIMENSIONAL_ROD {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.FISHING_ROD, 1);
+            ItemMeta meta = item.getItemMeta();
+            meta.setUnbreakable(true);
+            meta.setDisplayName(ChatColor.DARK_PURPLE + "Dimensional Rod");
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.GRAY + "Swap places with enemies you hook");
+            lore.add(" ");
+            lore.add(ChatColor.DARK_PURPLE + "§lEPIC");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Dimensional Rod");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "EPIC");
+
+            meta.setLore(lore);
+            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    GRAPPLING_HOOK {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.FISHING_ROD, 1);
+            ItemMeta meta = item.getItemMeta();
+            meta.setUnbreakable(true);
+            meta.setDisplayName(ChatColor.BLUE + "Grappling Hook");
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.GOLD + "Item Ability: Grapple " + ChatColor.YELLOW + "§lRIGHT-CLICK");
+            lore.add(ChatColor.GRAY + "Launch yourself with high forward");
+            lore.add(ChatColor.GRAY + "momentum.");
+            lore.add(ChatColor.DARK_GRAY + "Cooldown: " + ChatColor.GREEN + "2.5s");
+            lore.add(" ");
+            lore.add(ChatColor.BLUE + "§lRARE");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Grappling Hook");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
+
+            meta.setLore(lore);
+            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
     OVERWORLD_SCROLL {
         @Override
         public ItemStack getItem(Plugin plugin) {
@@ -2231,7 +2694,7 @@ public enum Items implements ItemLike {
             lore.add(ChatColor.DARK_PURPLE + "§lEPIC SWORD");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Damage"), PersistentDataType.DOUBLE, 100.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Moon Glove");
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "sword");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "sword");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "EPIC");
             meta.setLore(lore);
             item.setItemMeta(meta);
@@ -2260,7 +2723,7 @@ public enum Items implements ItemLike {
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Damage"), PersistentDataType.DOUBLE, 80.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Strength"), PersistentDataType.DOUBLE, 30.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Aspect of The End");
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "sword");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "sword");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
             meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
             meta.setLore(lore);
@@ -2289,8 +2752,35 @@ public enum Items implements ItemLike {
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
 
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Pufferfish Canon");
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "wand");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "wand");
             meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            meta.setLore(lore);
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    WAND_OF_MAGGOTS {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.BAMBOO, 1);
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(ChatColor.BLUE + "Wand of Maggots");
+            List<String> lore = new ArrayList<>();
+            lore.add(" ");
+            lore.add(ChatColor.YELLOW + "Item Ability: Swarm Summon " + ChatColor.GOLD + "§lRIGHT-CLICK");
+            lore.add(ChatColor.GRAY + "Summon 3 " + ChatColor.DARK_RED + "maggots " + ChatColor.GRAY + "that copy");
+            lore.add(ChatColor.GREEN + "25% " + ChatColor.GRAY + "of you stats and last for");
+            lore.add(ChatColor.GREEN + "20s.");
+            lore.add(ChatColor.DARK_GRAY + "Cooldown: " + ChatColor.GREEN + "30s");
+            lore.add(ChatColor.DARK_GRAY + "Mana Cost: " + ChatColor.AQUA + "80");
+            lore.add(" ");
+            lore.add(ChatColor.BLUE + "§lRARE WAND");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Wand of Maggots");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "wand");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
             meta.setLore(lore);
             item.setItemMeta(meta);
 
@@ -2314,7 +2804,7 @@ public enum Items implements ItemLike {
             lore.add(ChatColor.GREEN + "§lUNCOMMON WAND");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Lesser Wand of Healing");
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "wand");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "wand");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "UNCOMMON");
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
@@ -2341,7 +2831,7 @@ public enum Items implements ItemLike {
             lore.add(ChatColor.BLUE + "§lRARE WAND");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Wand of Healing");
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "wand");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "wand");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
@@ -2368,7 +2858,7 @@ public enum Items implements ItemLike {
             lore.add(ChatColor.DARK_PURPLE + "§lEPIC WAND");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Chain Heal Wand");
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "wand");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "wand");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "EPIC");
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
@@ -2395,7 +2885,7 @@ public enum Items implements ItemLike {
             lore.add(ChatColor.DARK_PURPLE + "§lEPIC WAND");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Greater Wand of Healing");
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "wand");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "wand");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "EPIC");
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
@@ -2555,7 +3045,7 @@ public enum Items implements ItemLike {
             lore.add(ChatColor.BLUE + "§lRARE WAND");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Tnt Wand");
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "wand");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "wand");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
@@ -2584,7 +3074,7 @@ public enum Items implements ItemLike {
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Intelligence"), PersistentDataType.DOUBLE, 45.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Lightning Wand");
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "wand");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "wand");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "EPIC");
             meta.setLore(lore);
             meta.addEnchant(Enchantment.LUCK, 1, false);
@@ -2649,36 +3139,6 @@ public enum Items implements ItemLike {
         }
     },
 
-    SIMPLE_SHIELD_BASE {
-        @Override
-        public ItemStack getItem(Plugin plugin) {
-            ItemStack item = new ItemStack(Material.SHIELD, 1);
-            BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
-            meta.setUnbreakable(true);
-            meta.setDisplayName(ChatColor.GREEN + "Simple Shield Base");
-            List<String> lore = new ArrayList<>();
-            lore.add(" ");
-            lore.add(ChatColor.GREEN + "§lUNCOMMON SHIELD");
-            Banner banner = (Banner) meta.getBlockState();
-            banner.setBaseColor(DyeColor.LIGHT_GRAY);
-            banner.addPattern(new Pattern(DyeColor.GRAY, PatternType.BORDER));
-            banner.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.GRADIENT));
-            banner.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.GRADIENT_UP));
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Integrity"), PersistentDataType.DOUBLE, 2.0);
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "shield");
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Simple Shield Base");
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "UNCOMMON");
-
-            meta.setLore(lore);
-            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-            meta.setBlockState(banner);
-            item.setItemMeta(meta);
-
-            return item;
-        }
-    },
-
     CACTUS_SHIELD {
         @Override
         public ItemStack getItem(Plugin plugin) {
@@ -2702,7 +3162,7 @@ public enum Items implements ItemLike {
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Integrity"), PersistentDataType.DOUBLE, 5.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 25.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Crit"), PersistentDataType.DOUBLE, 12.0);
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "shield");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "shield");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Cactus Shield");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
@@ -2742,7 +3202,7 @@ public enum Items implements ItemLike {
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Integrity"), PersistentDataType.DOUBLE, 4.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 20.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Intelligence"), PersistentDataType.DOUBLE, 30.0);
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "shield");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "shield");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Sparkling Shield");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
@@ -2773,7 +3233,7 @@ public enum Items implements ItemLike {
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Integrity"), PersistentDataType.DOUBLE, 2.5);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 25.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Speed"), PersistentDataType.DOUBLE, 10.0);
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "shield");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "shield");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Copper Shield");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
@@ -2804,7 +3264,7 @@ public enum Items implements ItemLike {
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Integrity"), PersistentDataType.DOUBLE, 4.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 30.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Strength"), PersistentDataType.DOUBLE, 10.0);
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "shield");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "shield");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Iron Shield");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
@@ -2837,7 +3297,7 @@ public enum Items implements ItemLike {
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 15.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Intelligence"), PersistentDataType.DOUBLE, 40.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Crit"), PersistentDataType.DOUBLE, 10.0);
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "shield");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "shield");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Lapis Shield");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
@@ -2870,7 +3330,7 @@ public enum Items implements ItemLike {
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 20.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Strength"), PersistentDataType.DOUBLE, 15.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Crit"), PersistentDataType.DOUBLE, 20.0);
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "shield");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "shield");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Redstone Shield");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
@@ -2903,7 +3363,7 @@ public enum Items implements ItemLike {
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 40.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"CC"), PersistentDataType.DOUBLE, 5.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Crit"), PersistentDataType.DOUBLE, 10.0);
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "shield");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "shield");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Diamond Shield");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
@@ -2934,7 +3394,7 @@ public enum Items implements ItemLike {
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Integrity"), PersistentDataType.DOUBLE, 6.5);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 25.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Speed"), PersistentDataType.DOUBLE, 5.0);
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "shield");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "shield");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Emerald Shield");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
@@ -2967,7 +3427,7 @@ public enum Items implements ItemLike {
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 55.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Strength"), PersistentDataType.DOUBLE, 30.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Speed"), PersistentDataType.DOUBLE, -10.0);
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "shield");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "shield");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Dual"), PersistentDataType.INTEGER, 1);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Netherite Shield");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
@@ -3045,7 +3505,7 @@ public enum Items implements ItemLike {
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Health"), PersistentDataType.DOUBLE, 15.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 25.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Strength"), PersistentDataType.DOUBLE, 5.0);
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "helmet");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "helmet");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Alloy Helmet");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
 
@@ -3073,7 +3533,7 @@ public enum Items implements ItemLike {
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Health"), PersistentDataType.DOUBLE, 30.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 60.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Strength"), PersistentDataType.DOUBLE, 15.0);
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "chestplate");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "chestplate");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Alloy Chestplate");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
 
@@ -3101,7 +3561,7 @@ public enum Items implements ItemLike {
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Health"), PersistentDataType.DOUBLE, 25.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 45.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Strength"), PersistentDataType.DOUBLE, 10.0);
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "leggings");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "leggings");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Alloy Leggings");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
 
@@ -3129,11 +3589,128 @@ public enum Items implements ItemLike {
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Health"), PersistentDataType.DOUBLE, 10.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Defense"), PersistentDataType.DOUBLE, 25.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Strength"), PersistentDataType.DOUBLE, 5.0);
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "boots");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "boots");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Alloy Boots");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
 
             meta.setLore(lore);
+            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    SILVERFISH_HELMET {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGE5MWRhYjgzOTFhZjVmZGE1NGFjZDJjMGIxOGZiZDgxOWI4NjVlMWE4ZjFkNjIzODEzZmE3NjFlOTI0NTQwIn19fQ===");
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(ChatColor.BLUE + "Silverfish Helmet");
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.GRAY + "Health: " + ChatColor.GREEN + "+40");
+            lore.add(" ");
+            lore.add(ChatColor.GRAY + "Gain a 5% chance to");
+            lore.add(ChatColor.GRAY + "summon a silverfish that copies");
+            lore.add(ChatColor.GREEN + "10%" + ChatColor.GRAY + " of your stats and lasts");
+            lore.add(ChatColor.GRAY + "for " + ChatColor.GREEN + "10s");
+            lore.add(" ");
+            lore.add(ChatColor.RED + "§lRARE HELMET");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Silverfish Helmet");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "helmet");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Health"), PersistentDataType.DOUBLE, 40.0);
+
+            meta.setLore(lore);
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    SILVERFISH_CHESTPLATE {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.LEATHER_CHESTPLATE, 1);
+            ItemMeta meta = item.hasItemMeta() ? item.getItemMeta() : Bukkit.getItemFactory().getItemMeta(item.getType());
+            LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
+            leatherArmorMeta.setColor(Color.fromBGR(120,133,138));
+            meta.setDisplayName(ChatColor.BLUE + "Silverfish Chestplate");
+            meta.setUnbreakable(true);
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.GRAY + "Health: " + ChatColor.GREEN + "+100");
+            lore.add(" ");
+            lore.add(ChatColor.GRAY + "Gain a 5% chance to");
+            lore.add(ChatColor.GRAY + "summon a silverfish that copies");
+            lore.add(ChatColor.GREEN + "10%" + ChatColor.GRAY + " of your stats and lasts");
+            lore.add(ChatColor.GRAY + "for " + ChatColor.GREEN + "10s");
+            lore.add(" ");
+            lore.add(ChatColor.BLUE + "§lRARE CHESTPLATE");
+            meta.setLore(lore);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Health"), PersistentDataType.DOUBLE, 100.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "chestplate");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Silverfish Chestplate");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
+            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    SILVERFISH_LEGGINGS {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.LEATHER_LEGGINGS, 1);
+            ItemMeta meta = item.hasItemMeta() ? item.getItemMeta() : Bukkit.getItemFactory().getItemMeta(item.getType());
+            LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
+            leatherArmorMeta.setColor(Color.fromBGR(120,133,138));
+            meta.setDisplayName(ChatColor.BLUE + "Silverfish Leggings");
+            meta.setUnbreakable(true);
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.GRAY + "Health: " + ChatColor.GREEN + "+70");
+            lore.add(" ");
+            lore.add(ChatColor.GRAY + "Gain a 5% chance to");
+            lore.add(ChatColor.GRAY + "summon a silverfish that copies");
+            lore.add(ChatColor.GREEN + "10%" + ChatColor.GRAY + " of your stats and lasts");
+            lore.add(ChatColor.GRAY + "for " + ChatColor.GREEN + "10s");
+            lore.add(" ");
+            lore.add(ChatColor.BLUE + "§lRARE LEGGINGS");
+            meta.setLore(lore);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Health"), PersistentDataType.DOUBLE, 70.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "chestplate");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Silverfish Leggings");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
+            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            item.setItemMeta(meta);
+
+            return item;
+        }
+    },
+
+    SILVERFISH_BOOTS {
+        @Override
+        public ItemStack getItem(Plugin plugin) {
+            ItemStack item = new ItemStack(Material.LEATHER_BOOTS, 1);
+            ItemMeta meta = item.hasItemMeta() ? item.getItemMeta() : Bukkit.getItemFactory().getItemMeta(item.getType());
+            LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
+            leatherArmorMeta.setColor(Color.fromBGR(120,133,138));
+            meta.setDisplayName(ChatColor.BLUE + "Silverfish Boots");
+            meta.setUnbreakable(true);
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.GRAY + "Health: " + ChatColor.GREEN + "+30");
+            lore.add(" ");
+            lore.add(ChatColor.GRAY + "Gain a 5% chance to");
+            lore.add(ChatColor.GRAY + "summon a silverfish that copies");
+            lore.add(ChatColor.GREEN + "10%" + ChatColor.GRAY + " of your stats and lasts");
+            lore.add(ChatColor.GRAY + "for " + ChatColor.GREEN + "10s");
+            lore.add(" ");
+            lore.add(ChatColor.BLUE + "§lRARE BOOTS");
+            meta.setLore(lore);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Health"), PersistentDataType.DOUBLE, 30.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "boots");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Silverfish Boots");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "RARE");
             meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
             item.setItemMeta(meta);
 
@@ -3151,13 +3728,15 @@ public enum Items implements ItemLike {
             lore.add(ChatColor.GRAY + "The most powerful piece of armor");
             lore.add(ChatColor.GRAY + "used by higher beings when");
             lore.add(ChatColor.GRAY + "testing the limits of their");
-            lore.add(ChatColor.GRAY + "Creations");
+            lore.add(ChatColor.GRAY + "creations");
             lore.add(" ");
             lore.add(ChatColor.RED + "§lSPECIAL HELMET");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"id"), PersistentDataType.STRING, "Almighty Helmet");
-            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Type"), PersistentDataType.STRING, "helmet");
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"type"), PersistentDataType.STRING, "helmet");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"rarity"), PersistentDataType.STRING, "SPECIAL");
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Health"), PersistentDataType.DOUBLE, 10000.0);
+            meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Magic"), PersistentDataType.DOUBLE, 1000.0);
+
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Strength"), PersistentDataType.DOUBLE, 10000.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"Intelligence"), PersistentDataType.DOUBLE, 10000.0);
             meta.getPersistentDataContainer().set(new NamespacedKey(plugin,"CC"), PersistentDataType.DOUBLE, 100.0);
@@ -3177,8 +3756,8 @@ public enum Items implements ItemLike {
         // Shaped Recipe for Fire Ball Name
         ShapedRecipe sr = new ShapedRecipe(NamespacedKey.minecraft("testitem_s"), Items.TEST_FIREBALL.getItem(plugin));
         sr.shape("S S",
-                " F ",
-                "S S");
+                 " F ",
+                 "S S");
         sr.setIngredient('S', Material.STICK);
         sr.setIngredient('F', Material.FIRE_CHARGE);
         Bukkit.getServer().addRecipe(sr);
@@ -3588,11 +4167,19 @@ public enum Items implements ItemLike {
         sr.setIngredient('S', Material.STICK);
         Bukkit.getServer().addRecipe(sr);
 
-        //Shaped recipe for The Drip
-        sr = new ShapedRecipe(NamespacedKey.minecraft("the_drip_s"), Items.THE_DRIP.getItem(plugin));
+        //Shaped recipe for The Drip 1
+        sr = new ShapedRecipe(NamespacedKey.minecraft("the_drip_s1"), Items.THE_DRIP.getItem(plugin));
         sr.shape("   ",
                  "D D",
                  "D D");
+        sr.setIngredient('D', new RecipeChoice.ExactChoice(Items.ENCHANTED_DRIPSTONE.getItem(plugin)));
+        Bukkit.getServer().addRecipe(sr);
+
+        //Shaped recipe for The Drip
+        sr = new ShapedRecipe(NamespacedKey.minecraft("the_drip_s2"), Items.THE_DRIP.getItem(plugin));
+        sr.shape("D D",
+                 "D D",
+                 "   ");
         sr.setIngredient('D', new RecipeChoice.ExactChoice(Items.ENCHANTED_DRIPSTONE.getItem(plugin)));
         Bukkit.getServer().addRecipe(sr);
 
@@ -3606,11 +4193,19 @@ public enum Items implements ItemLike {
         sr.setIngredient('D', new RecipeChoice.ExactChoice(Items.ENCHANTED_DRIPSTONE_BLOCK.getItem(plugin)));
         Bukkit.getServer().addRecipe(sr);
 
-        //Shaped recipe for Alloy Helmet
-        sr = new ShapedRecipe(NamespacedKey.minecraft("alloy_helm_s"), Items.ALLOY_HELMET.getItem(plugin));
+        //Shaped recipe for Alloy Helmet 1
+        sr = new ShapedRecipe(NamespacedKey.minecraft("alloy_helm_s1"), Items.ALLOY_HELMET.getItem(plugin));
         sr.shape("AAA",
                  "A A",
                  "   ");
+        sr.setIngredient('A', new RecipeChoice.ExactChoice(Items.ALLOY.getItem(plugin)));
+        Bukkit.getServer().addRecipe(sr);
+
+        //Shaped recipe for Alloy Helmet 2
+        sr = new ShapedRecipe(NamespacedKey.minecraft("alloy_helm_s2"), Items.ALLOY_HELMET.getItem(plugin));
+        sr.shape("   ",
+                 "AAA",
+                 "A A");
         sr.setIngredient('A', new RecipeChoice.ExactChoice(Items.ALLOY.getItem(plugin)));
         Bukkit.getServer().addRecipe(sr);
 
@@ -3630,11 +4225,19 @@ public enum Items implements ItemLike {
         sr.setIngredient('A', new RecipeChoice.ExactChoice(Items.ALLOY.getItem(plugin)));
         Bukkit.getServer().addRecipe(sr);
 
-        //Shaped recipe for Alloy Leggings
-        sr = new ShapedRecipe(NamespacedKey.minecraft("alloy_boots_s"), Items.ALLOY_BOOTS.getItem(plugin));
+        //Shaped recipe for Alloy Boots 1
+        sr = new ShapedRecipe(NamespacedKey.minecraft("alloy_boots_s1"), Items.ALLOY_BOOTS.getItem(plugin));
         sr.shape("   ",
                  "A A",
                  "A A");
+        sr.setIngredient('A', new RecipeChoice.ExactChoice(Items.ALLOY.getItem(plugin)));
+        Bukkit.getServer().addRecipe(sr);
+
+        //Shaped recipe for Alloy Boots 2
+        sr = new ShapedRecipe(NamespacedKey.minecraft("alloy_boots_s2"), Items.ALLOY_BOOTS.getItem(plugin));
+        sr.shape("A A",
+                 "A A",
+                 "   ");
         sr.setIngredient('A', new RecipeChoice.ExactChoice(Items.ALLOY.getItem(plugin)));
         Bukkit.getServer().addRecipe(sr);
 
@@ -4208,6 +4811,109 @@ public enum Items implements ItemLike {
         sr.setIngredient('R', new RecipeChoice.ExactChoice(Items.ENCHANTED_REDSTONE_BLOCK.getItem(plugin)));
         sr.setIngredient('C', new RecipeChoice.ExactChoice(Items.ENCHANTED_CUT_COPPER.getItem(plugin)));
 
+        Bukkit.getServer().addRecipe(sr);
+
+        // Shapeless Recipe for Enchanted Ghast Tear
+        slr = new ShapelessRecipe(NamespacedKey.minecraft("e_tear_sl"), Items.ENCHANTED_GHAST_TEAR.getItem(plugin));
+        slr.addIngredient(5, Material.GHAST_TEAR);
+        Bukkit.getServer().addRecipe(slr);
+
+        //Shaped recipe for Hardwood Handle
+        sr = new ShapedRecipe(NamespacedKey.minecraft("wood_handle_s"), Items.HARDWOOD_HANDLE.getItem(plugin));
+        sr.shape("  O",
+                 " O ",
+                 "O  ");
+        sr.setIngredient('O', new RecipeChoice.ExactChoice(Items.ENCHANTED_OAK_WOOD.getItem(plugin)));
+
+        Bukkit.getServer().addRecipe(sr);
+
+        //Shaped recipe for Gyroscope
+        sr = new ShapedRecipe(NamespacedKey.minecraft("gyro_s"), Items.GYROSCOPE.getItem(plugin));
+        sr.shape(" I ",
+                 "IRI",
+                 " I ");
+        sr.setIngredient('I', new RecipeChoice.ExactChoice(Items.ENCHANTED_IRON.getItem(plugin)));
+        sr.setIngredient('R', new RecipeChoice.ExactChoice(Items.ENCHANTED_REDSTONE.getItem(plugin)));
+
+        Bukkit.getServer().addRecipe(sr);
+
+        //Shaped recipe for Kinetic Rod
+        sr = new ShapedRecipe(NamespacedKey.minecraft("kinetic_rod_s"), Items.KINETIC_ROD.getItem(plugin));
+        sr.shape("  G",
+                 " HS",
+                 "H S");
+        sr.setIngredient('H', new RecipeChoice.ExactChoice(Items.HARDWOOD_HANDLE.getItem(plugin)));
+        sr.setIngredient('G', new RecipeChoice.ExactChoice(Items.GYROSCOPE.getItem(plugin)));
+        sr.setIngredient('S', new RecipeChoice.ExactChoice(Items.ENCHANTED_STRING.getItem(plugin)));
+
+        Bukkit.getServer().addRecipe(sr);
+
+        //Shaped recipe for Grappling Hook
+        sr = new ShapedRecipe(NamespacedKey.minecraft("grappling_hook_s"), Items.GRAPPLING_HOOK.getItem(plugin));
+        sr.shape("  S",
+                 " Ss",
+                 "S s");
+        sr.setIngredient('S', Material.STICK);
+        sr.setIngredient('s', new RecipeChoice.ExactChoice(Items.ENCHANTED_STRING.getItem(plugin)));
+
+        Bukkit.getServer().addRecipe(sr);
+
+        //Shaped recipe for Wand of Maggots
+        sr = new ShapedRecipe(NamespacedKey.minecraft("mite_wand_s"), Items.WAND_OF_MAGGOTS.getItem(plugin));
+        sr.shape(" SS",
+                 " HS",
+                 "H  ");
+        sr.setIngredient('H', new RecipeChoice.ExactChoice(Items.HARDWOOD_HANDLE.getItem(plugin)));
+        sr.setIngredient('S', new RecipeChoice.ExactChoice(Items.SILVERFISH_SCALE.getItem(plugin)));
+
+        Bukkit.getServer().addRecipe(sr);
+
+        //Shaped recipe for Silverfish Helmet 1
+        sr = new ShapedRecipe(NamespacedKey.minecraft("silverfish_helm_s1"), Items.SILVERFISH_HELMET.getItem(plugin));
+        sr.shape("SSS",
+                 "S S",
+                 "   ");
+        sr.setIngredient('S', new RecipeChoice.ExactChoice(Items.SILVERFISH_SCALE.getItem(plugin)));
+        Bukkit.getServer().addRecipe(sr);
+
+        //Shaped recipe for Silverfish Helmet 2
+        sr = new ShapedRecipe(NamespacedKey.minecraft("silverfish_helm_s2"), Items.SILVERFISH_HELMET.getItem(plugin));
+        sr.shape("   ",
+                 "SSS",
+                 "S S");
+        sr.setIngredient('S', new RecipeChoice.ExactChoice(Items.SILVERFISH_SCALE.getItem(plugin)));
+        Bukkit.getServer().addRecipe(sr);
+
+        //Shaped recipe for Silverfish Chestplate
+        sr = new ShapedRecipe(NamespacedKey.minecraft("silverfish_chest_s"), Items.SILVERFISH_CHESTPLATE.getItem(plugin));
+        sr.shape("S S",
+                 "SSS",
+                 "SSS");
+        sr.setIngredient('S', new RecipeChoice.ExactChoice(Items.SILVERFISH_SCALE.getItem(plugin)));
+        Bukkit.getServer().addRecipe(sr);
+
+        //Shaped recipe for Silverfish Leggings
+        sr = new ShapedRecipe(NamespacedKey.minecraft("silverfish_legs_s"), Items.SILVERFISH_LEGGINGS.getItem(plugin));
+        sr.shape("SSS",
+                 "S S",
+                 "S S");
+        sr.setIngredient('S', new RecipeChoice.ExactChoice(Items.SILVERFISH_SCALE.getItem(plugin)));
+        Bukkit.getServer().addRecipe(sr);
+
+        //Shaped recipe for Silverfish Boots 1
+        sr = new ShapedRecipe(NamespacedKey.minecraft("silverfish_boots_s1"), Items.SILVERFISH_BOOTS.getItem(plugin));
+        sr.shape("   ",
+                 "S S",
+                 "S S");
+        sr.setIngredient('S', new RecipeChoice.ExactChoice(Items.SILVERFISH_SCALE.getItem(plugin)));
+        Bukkit.getServer().addRecipe(sr);
+
+        //Shaped recipe for Silverfish Boots 2
+        sr = new ShapedRecipe(NamespacedKey.minecraft("silverfish_boots_s2"), Items.SILVERFISH_BOOTS.getItem(plugin));
+        sr.shape("S S",
+                 "S S",
+                 "   ");
+        sr.setIngredient('S', new RecipeChoice.ExactChoice(Items.SILVERFISH_SCALE.getItem(plugin)));
         Bukkit.getServer().addRecipe(sr);
     }
 }

@@ -82,8 +82,6 @@ public class PlayerStatEvents implements Listener {
         //Define Magic Find
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "MagicBase"),
                 PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "MagicModifier"),
-                PersistentDataType.DOUBLE, 0.0);
 
         //Define Mining Fortune
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "MineFBase"),
@@ -1332,6 +1330,82 @@ if (player.getInventory().getHelmet() != null &&
     player.getPersistentDataContainer().set(new NamespacedKey(plugin, "MaxMana"),
             PersistentDataType.DOUBLE, (1 + manaMod) * (mana + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
                     PersistentDataType.DOUBLE)));
+
+    //take base magic find
+    double magic = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MagicBase"),
+            PersistentDataType.DOUBLE);
+
+    //Check player's main hand item for speed and apply it to magic find
+    if (player.getInventory().getItemInMainHand() != null &&
+        player.getInventory().getItemInMainHand().getItemMeta() != null &&
+        player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer() != null &&
+        player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Magic"),
+                PersistentDataType.DOUBLE) != null) {
+
+        magic = magic + player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Magic"),
+                PersistentDataType.DOUBLE);
+    }
+
+    //Check player's off hand item for speed and apply it to magic find
+    if (player.getInventory().getItemInOffHand() != null &&
+        player.getInventory().getItemInOffHand().getItemMeta() != null &&
+        player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer() != null &&
+        player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Magic"),
+                PersistentDataType.DOUBLE) != null &&
+        player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Dual"),
+                PersistentDataType.INTEGER) != null) {
+
+        magic = magic + player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Magic"),
+                PersistentDataType.DOUBLE);
+    }
+
+    //Check player's helmet for speed and apply it to magic find
+    if (player.getInventory().getHelmet() != null &&
+        player.getInventory().getHelmet().getItemMeta() != null &&
+        player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer() != null &&
+        player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Magic"),
+                PersistentDataType.DOUBLE) != null) {
+
+        magic = magic + player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Magic"),
+                PersistentDataType.DOUBLE);
+    }
+
+    //Check player's chest for speed and apply it to magic find
+    if (player.getInventory().getChestplate() != null &&
+        player.getInventory().getChestplate().getItemMeta() != null &&
+        player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer() != null &&
+        player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Magic"),
+                PersistentDataType.DOUBLE) != null) {
+
+        magic = magic + player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Magic"),
+                PersistentDataType.DOUBLE);
+    }
+
+    //Check player's legs for speed and apply it to magic find
+    if (player.getInventory().getLeggings() != null &&
+        player.getInventory().getLeggings().getItemMeta() != null &&
+        player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer() != null &&
+        player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Magic"),
+                PersistentDataType.DOUBLE) != null) {
+
+        magic = magic + player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Magic"),
+                PersistentDataType.DOUBLE);
+    }
+
+    //Check player's boots for speed and apply it to magic find
+    if (player.getInventory().getBoots() != null &&
+        player.getInventory().getBoots().getItemMeta() != null &&
+        player.getInventory().getBoots().getItemMeta().getPersistentDataContainer() != null &&
+        player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Magic"),
+                PersistentDataType.DOUBLE) != null) {
+
+        magic = magic + player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Magic"),
+                PersistentDataType.DOUBLE);
+    }
+
+    player.getPersistentDataContainer().set(new NamespacedKey(plugin, "MagicFind"),
+            PersistentDataType.DOUBLE, magic);
+
 }
 
     @EventHandler

@@ -35,6 +35,8 @@ public class MiscSelectGUI implements InventoryHolder {
         main.setItem(0, Items.FEATHER_CHARM.getItem(plugin));
         main.setItem(1, Items.MEATY_STEW.getItem(plugin));
         main.setItem(2, Items.MAGIC_STEW.getItem(plugin));
+        main.setItem(6, Items.GRAPPLING_HOOK.getItem(plugin));
+        main.setItem(7, Items.KINETIC_ROD.getItem(plugin));
 
         //Bottom Row with options to change pages and a go back button
         for (int i = 45; i < 54; i++) {

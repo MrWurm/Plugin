@@ -27,11 +27,29 @@ public class StatEvents implements Listener {
 
     public StatEvents(Main plugin) { this.plugin = plugin;}
 
+    public void rotate(LivingEntity entity,LivingEntity passenger) {
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            public void run() {
+                if (entity.isDead()) {
+                    return;
+                }
+                passenger.setRotation(entity.getLocation().getPitch(), entity.getLocation().getYaw());
+                rotate(entity, passenger);
+            }
+        }, 1);
+    }
+
     @EventHandler
     public void onSpawn(EntitySpawnEvent event) {
         Entity entity = event.getEntity();
         if (!(entity instanceof Player)) {
             StatFunctions.CheckHealth(entity, plugin);
+        }
+        if (entity.getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                PersistentDataType.INTEGER) != null &&
+        entity.getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                PersistentDataType.INTEGER) == 13) {
+            rotate((LivingEntity) entity, (LivingEntity) event.getEntity().getPassengers().get(0));
         }
     }
 
@@ -184,7 +202,7 @@ public class StatEvents implements Listener {
             }
 
             boolean iscrit = false;
-            Double AfterDamage = (attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "Strength"),
+            double AfterDamage = (attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "Strength"),
                     PersistentDataType.DOUBLE)/20) + 5 + attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "Damage"),
                     PersistentDataType.DOUBLE);
             AfterDamage = ((attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "Strength"),
@@ -291,7 +309,7 @@ public class StatEvents implements Listener {
                 case 5:
                     if (victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
                             PersistentDataType.DOUBLE) < 1.0) {
-                        Mobs.createGrowth(victim.getLocation());
+                        Mobs.GROWTH.createMob(plugin, victim.getLocation());
                     }
                     break;
                 case 7:
@@ -317,6 +335,19 @@ public class StatEvents implements Listener {
                         }
                     }, 110);
                     break;
+                case 10:
+                    if (victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+                            PersistentDataType.DOUBLE) < 1.0) {
+                        Husk husk = (Husk) victim;
+                        if (husk.getEquipment().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING) {
+                            event.setCancelled(true);
+                            husk.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
+                            PersistentDataType.DOUBLE, 270.0);
+                            husk.getWorld().spawnParticle(Particle.TOTEM, husk.getLocation(), 6);
+                            ItemStack item = new ItemStack(Material.AIR);
+                            husk.getEquipment().setItemInMainHand(item);
+                        }
+                    }
                 default:
                     return;
             }
@@ -338,9 +369,6 @@ public class StatEvents implements Listener {
         String Name = victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "Name"),
                 PersistentDataType.STRING);
 
-        victim.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
-                PersistentDataType.DOUBLE, Health);
-
         Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             public void run() {
                 if (event.getCause() == EntityDamageEvent.DamageCause.CRAMMING ||
@@ -350,7 +378,7 @@ public class StatEvents implements Listener {
                     victim.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
                             PersistentDataType.DOUBLE, Health - (victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
                                     PersistentDataType.DOUBLE) / 20) - 10);
-                    Attacks.createDamageIndicator(victim.getLocation(), false, (victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+                    Attacks.createDamageIndicator(victim.getLocation(), false, (victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
                             PersistentDataType.DOUBLE) / 20) - 10);
                 }
 
@@ -362,7 +390,7 @@ public class StatEvents implements Listener {
                     victim.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
                             PersistentDataType.DOUBLE, Health - victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
                                     PersistentDataType.DOUBLE) / 35);
-                    Attacks.createDamageIndicator(victim.getLocation(), false, victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+                    Attacks.createDamageIndicator(victim.getLocation(), false, victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
                             PersistentDataType.DOUBLE) / 35);
                 }
 
@@ -371,7 +399,7 @@ public class StatEvents implements Listener {
                     victim.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
                             PersistentDataType.DOUBLE, Health - victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
                                     PersistentDataType.DOUBLE) / 18);
-                    Attacks.createDamageIndicator(victim.getLocation(), false, victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+                    Attacks.createDamageIndicator(victim.getLocation(), false, victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
                             PersistentDataType.DOUBLE) / 18);
                 }
 
@@ -399,9 +427,30 @@ public class StatEvents implements Listener {
                     event.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
                     frame.setNoDamageTicks(0);
                 }
+
                 if (!(victim instanceof Player)) {
                     victim.setCustomName(ChatColor.GOLD + "" + Name + "" + ChatColor.RED + " ❤" +
                             afterHealth + "/" + MaxHealth);
+                }
+
+                if (victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                        PersistentDataType.INTEGER) != null) {
+                    switch (victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                            PersistentDataType.INTEGER)) {
+                        case 11:
+                            Mobs.FLESH_MAGGOT.createMob(plugin, victim.getLocation());
+                            break;
+                        case 13:
+                            LivingEntity passenger = (LivingEntity) event.getEntity().getPassengers().get(0);
+                            if (victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+                                    PersistentDataType.DOUBLE) < 1) {
+                                passenger.setHealth(0);
+                            }
+                            passenger.setCustomName(victim.getCustomName());
+                            break;
+                        default:
+                            break;
+                    }
                 }
 
                 if (afterHealth < 1.0) {

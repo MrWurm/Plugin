@@ -7,6 +7,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
 
 public class Attacks implements Listener {
@@ -107,4 +109,47 @@ public class Attacks implements Listener {
                 PersistentDataType.DOUBLE, 999999999.0);
     }
 
+    public static void createSummon(Location location, int lifeTicks, AnimalTamer owner, LivingEntity type, double damage, double health, double defense, String name) {
+        Wolf wolf = location.getWorld().spawn(location, Wolf.class);
+        wolf.setAge(-666);
+        wolf.setAgeLock(true);
+        wolf.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,
+                9999999, 0, true, false));
+        wolf.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,
+                9999999, 5, true, false));
+        wolf.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,
+                9999999, 1, true, false));
+        wolf.setOwner(owner);
+        wolf.setSilent(true);
+        wolf.getPersistentDataContainer().set(new NamespacedKey(plugin, "MaxHealth"),
+                PersistentDataType.DOUBLE, health);
+        wolf.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
+                PersistentDataType.DOUBLE, health);
+        wolf.getPersistentDataContainer().set(new NamespacedKey(plugin, "Defense"),
+                PersistentDataType.DOUBLE, defense);
+        wolf.getPersistentDataContainer().set(new NamespacedKey(plugin, "Damage"),
+                PersistentDataType.DOUBLE, damage);
+        wolf.getPersistentDataContainer().set(new NamespacedKey(plugin, "Name"),
+                PersistentDataType.STRING, name);
+        wolf.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"),
+                PersistentDataType.INTEGER, 13);
+
+        type.setInvulnerable(true);
+        type.setAI(false);
+
+        type.setCustomName(ChatColor.GOLD + "" + wolf.getPersistentDataContainer().get(new NamespacedKey(plugin, "Name"),
+                PersistentDataType.STRING) + "" + ChatColor.RED + " ❤" +
+                wolf.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+                PersistentDataType.DOUBLE) + "/" + wolf.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
+                PersistentDataType.DOUBLE));
+
+        wolf.addPassenger(type);
+
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            public void run() {
+                wolf.remove();
+                type.remove();
+            }
+        }, lifeTicks);
+    }
 }

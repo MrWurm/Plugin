@@ -1,6 +1,10 @@
 package its.wurm.testplugin.Events;
 
+import java.lang.Math.*;
+
+import its.wurm.testplugin.Items.Items;
 import its.wurm.testplugin.Main;
+import its.wurm.testplugin.Mobs.Mobs;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
@@ -10,18 +14,18 @@ import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class SkillEvents implements Listener {
 
@@ -4742,57 +4746,131 @@ public class SkillEvents implements Listener {
         }
     }
 
+    public void dropItem(Player player, Items item, float chance, int amount) {
+        float choice = (float) Math.random();
+        ChatColor color = ChatColor.WHITE;
+        if (item.getItem(plugin).getItemMeta().getPersistentDataContainer() != null &&
+            item.getItem(plugin).getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "rarity"),
+                    PersistentDataType.STRING) != null) {
+            switch (item.getItem(plugin).getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "rarity"),
+                    PersistentDataType.STRING)) {
+                case "UNCOMMON":
+                    color = ChatColor.GREEN;
+                    break;
+                case "RARE":
+                    color = ChatColor.BLUE;
+                    break;
+                case "EPIC":
+                    color = ChatColor.DARK_PURPLE;
+                    break;
+                case "LEGENDARY":
+                    color = ChatColor.GOLD;
+                    break;
+                case "MYTHIC":
+                    color = ChatColor.LIGHT_PURPLE;
+                    break;
+                case "SPECIAL":
+                case "UNIQUE":
+                    color = ChatColor.RED;
+                    break;
+            }
+
+        }
+        double magic = ((player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MagicFind"),
+                PersistentDataType.DOUBLE)/100) + 1);
+        if (choice / magic <= chance) {
+            Random random = new Random();
+            int finalAmount = random.nextInt(amount + 1);
+            for (int i = 0; i < finalAmount; ++i) {
+                player.sendMessage(ChatColor.BLUE + "§lRARE DROP! " + color + "" + item.getItem(plugin).getItemMeta().getDisplayName() + " " + ChatColor.AQUA + "(" + ((chance * 100) * magic) + "% chance)");
+                player.getInventory().addItem(item.getItem(plugin));
+            }
+        }
+    }
+
+    public void doDrops(Player player, Mobs mob) {
+        int i;
+        for (i = 0; i < mob.item.length; i++) {
+
+            // accessing each element of array
+            dropItem(player, mob.item[i], mob.chance[i], mob.amount[i]);
+        }
+    }
+
     @EventHandler
     public void combatXP(EntityDeathEvent event) {
-        if (event.getEntity().getKiller() instanceof Player) {
+        if (event.getEntity().getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+                PersistentDataType.DOUBLE)  == null) {
+            return;
+        }
+        if (event.getEntity().getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+                    PersistentDataType.DOUBLE) < 1) {
+            if (event.getEntity().getKiller() instanceof Player ||
+                event.getEntity().getKiller() instanceof Projectile) {
 
-            Player player = event.getEntity().getKiller();
-            PlayerSkillData csd = skills.get(player.getUniqueId());
-            player.sendMessage("Player Killed Mob");
-            if (event.getEntity().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
-                    PersistentDataType.INTEGER) != null) {
-                player.sendMessage("Custom Mob Killed");
-                switch (event.getEntity().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
-                        PersistentDataType.INTEGER)) {
-                    case 1:
-                        player.sendMessage("Registered Kill");
-                        csd.combat.xp += 7.0;
-                        break;
-                    case 2:
-                    case 8:
-                        csd.combat.xp += 9.0;
-                        break;
-                    case 3:
-                        csd.combat.xp += 6.0;
-                        break;
-                    case 4:
-                        csd.combat.xp += 8.0;
-                        break;
-                    case 5:
-                        csd.combat.xp += 0.0;
-                        break;
-                    case 6:
-                        csd.combat.xp += 300.0;
-                        break;
-                    case 7:
-                        csd.combat.xp += 12.0;
-                        break;
-                    default:
-                        csd.combat.xp += 0.8;
-                        break;
+
+                Player player = event.getEntity().getKiller();
+                if (event.getEntity().getKiller() instanceof Projectile) {
+                    Projectile projectile = (Projectile) event.getEntity().getKiller();
+                    if (projectile.getShooter() instanceof Player) {
+                        player = (Player) projectile.getShooter();
+                    }
                 }
-            }
-            skills.put(player.getUniqueId(), csd);
+                PlayerSkillData csd = skills.get(player.getUniqueId());
 
-            String message = String.format(
-                    "§3+%.1f/%.0f Combat XP",
-                    skills.get(player.getUniqueId()).combat.xp,
-                    skills.get(player.getUniqueId()).combat.xpNext
-            );
-            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CoolDown"),
-                    PersistentDataType.DOUBLE, 5.0);
-            checkCombat(player);
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
+                if (event.getEntity().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                        PersistentDataType.INTEGER) != null) {
+                    switch (event.getEntity().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                            PersistentDataType.INTEGER)) {
+                        case 1:
+                            csd.combat.xp += Mobs.FROST_ZOMBIE.xp;
+                            doDrops(player, Mobs.FROST_ZOMBIE);
+                            break;
+                        case 2:
+                            csd.combat.xp += Mobs.FENCER_ZOMBIE.xp;
+                            doDrops(player, Mobs.FENCER_ZOMBIE);
+                            break;
+                        case 3:
+                            csd.combat.xp += Mobs.ARMOR_ZOMBIE.xp;
+                            doDrops(player, Mobs.ARMOR_ZOMBIE);
+                            break;
+                        case 4:
+                            csd.combat.xp += Mobs.GROWTH.xp;
+                            doDrops(player, Mobs.GROWTH);
+                            break;
+                        case 7:
+                            csd.combat.xp += Mobs.BERZERK_ZOMBIE.xp;
+                            doDrops(player, Mobs.BERZERK_ZOMBIE);
+                            break;
+                        case 8:
+                            csd.combat.xp += Mobs.NOVICE_SKELETON.xp;
+                            doDrops(player, Mobs.NOVICE_SKELETON);
+                            break;
+                        case 10:
+                            csd.combat.xp += Mobs.RELENTLESS.xp;
+                            doDrops(player, Mobs.RELENTLESS);
+                            break;
+                        case 11:
+                            csd.combat.xp += Mobs.HOST.xp;
+                            doDrops(player, Mobs.HOST);
+                            break;
+                        default:
+                            csd.combat.xp += 0.8;
+                            break;
+                    }
+                }
+                skills.put(player.getUniqueId(), csd);
+
+                String message = String.format(
+                        "§3+%.1f/%.0f Combat XP",
+                        skills.get(player.getUniqueId()).combat.xp,
+                        skills.get(player.getUniqueId()).combat.xpNext
+                );
+                player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CoolDown"),
+                        PersistentDataType.DOUBLE, 5.0);
+                checkCombat(player);
+                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
+            }
         }
     }
 }

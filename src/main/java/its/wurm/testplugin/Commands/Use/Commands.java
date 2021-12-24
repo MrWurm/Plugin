@@ -9,7 +9,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.persistence.PersistentDataType;
 
 
@@ -29,41 +29,36 @@ public class Commands implements CommandExecutor {
         Player player = (Player) sender;
 
         if (cmd.getName().equalsIgnoreCase("giveall")) {
+            player.getInventory().addItem(Items.GOLD_POT.getItem(plugin));
             player.getInventory().addItem(Items.DEV_HAMMER.getItem(plugin));
-            player.getInventory().addItem(Items.MOON_GLOVE.getItem(plugin));
+            player.getInventory().addItem(Items.SUPER_PICK.getItem(plugin));
             player.getInventory().addItem(Items.ECHO_STONE.getItem(plugin));
             player.getInventory().addItem(Items.ALLMIGHTY.getItem(plugin));
-            player.getInventory().addItem(Items.OVERWORLD_SCROLL.getItem(plugin));
+            player.getInventory().addItem(Items.DIMENSIONAL_ROD.getItem(plugin));
         }
 
         if (cmd.getName().equalsIgnoreCase("testgui")) {
-            MainGUI gui = new MainGUI(plugin);
+            MainGUI gui = new MainGUI(plugin, player);
             player.openInventory(gui.getInventory());
         }
 
         if (cmd.getName().equalsIgnoreCase("customsummon/dummy")) {
-            Mobs.createDummy(player.getLocation());
+            Mobs.DUMMY.createMob(plugin, player.getLocation());
         }
 
-        if (cmd.getName().equalsIgnoreCase("summonzombie")) {
-            Mobs.createChillZombie(player.getLocation());
-            Mobs.createFencerZombie(player.getLocation());
-            Mobs.createArmoredZombie(player.getLocation());
-            Mobs.createRegenZombie(player.getLocation());
-            Mobs.createRageZombie(player.getLocation());
-            Mobs.createRelentless(player.getLocation());
+        if (cmd.getName().equalsIgnoreCase("summonnew")) {
+            Silverfish summon = player.getLocation().getWorld().spawn(player.getLocation(), Silverfish.class);
+            Attacks.createSummon(player.getLocation(), 1200, player, summon, 25.0, 125.0, 0.0, "Test");
         }
 
-        if (cmd.getName().equalsIgnoreCase("customsummon/smolGhast")) {
-            Mobs.createSmolGhast(player.getLocation());
-        }
-
-        if (cmd.getName().equalsIgnoreCase("marker")) {
-            Attacks.createDamageIndicator(player.getLocation(), true, 1000.0);
-        }
-
-        if (cmd.getName().equalsIgnoreCase("customsummon/noviceSkele")) {
-            Mobs.createNoviceSkele(player.getLocation());
+        if (cmd.getName().equalsIgnoreCase("summonall")) {
+            Mobs.NOVICE_SKELETON.createMob(plugin, player.getLocation());
+            Mobs.FROST_ZOMBIE.createMob(plugin, player.getLocation());
+            Mobs.REGEN_ZOMBIE.createMob(plugin, player.getLocation());
+            Mobs.FENCER_ZOMBIE.createMob(plugin, player.getLocation());
+            Mobs.BERZERK_ZOMBIE.createMob(plugin, player.getLocation());
+            Mobs.ARMOR_ZOMBIE.createMob(plugin, player.getLocation());
+            Mobs.HOST.createMob(plugin, player.getLocation());
         }
 
         if (cmd.getName().equalsIgnoreCase("check")) {
