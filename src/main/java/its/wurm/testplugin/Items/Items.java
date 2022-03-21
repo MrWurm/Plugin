@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
 //c:beginning, c:start
 
@@ -6843,12 +6843,11 @@ public enum Items implements ItemLike {
 
     public final List<String> baseLore;
 
-    public final Function<Plugin, FormatRecipesGUI> recipeGUI;
+    public final BiFunction<Plugin, InventoryHolder, FormatRecipesGUI> recipeGUI;
 
-    Items(String[] lore, Function<Plugin, FormatRecipesGUI> GUI) {
+    Items(String[] lore, BiFunction<Plugin, InventoryHolder, FormatRecipesGUI> GUI) {
         recipeGUI = GUI;
         baseLore = new ArrayList<>(Arrays.asList(lore));
-
     }
 
     public void initItem(Plugin plugin, ItemStack item) {
@@ -8818,7 +8817,7 @@ public enum Items implements ItemLike {
         sr.setIngredient('M', new RecipeChoice.ExactChoice(Items.SATURATED_CREEPER_MASK.getItem(plugin)));
         Bukkit.getServer().addRecipe(sr);
 
-        //Shaped recipe for Lesser Spirit Bone
+        /*//Shaped recipe for Lesser Spirit Bone
         sr = new ShapedRecipe(NamespacedKey.minecraft("lesser_spirit_bone_s1"), Items.LESSER_SPIRIT_BONE.getItem(plugin));
         sr.shape(" BB",
                  "BSB",
@@ -8853,7 +8852,7 @@ public enum Items implements ItemLike {
                  "B  ");
         sr.setIngredient('B', new RecipeChoice.ExactChoice(Items.ENCHANTED_BONE.getItem(plugin)));
         sr.setIngredient('S', new RecipeChoice.ExactChoice(Items.GREATER_SPIRIT_BONE_SHARD.getItem(plugin)));
-        Bukkit.getServer().addRecipe(sr);
+        Bukkit.getServer().addRecipe(sr);*/
     }
 
     public void updateItem(Plugin plugin, ItemStack item) {
