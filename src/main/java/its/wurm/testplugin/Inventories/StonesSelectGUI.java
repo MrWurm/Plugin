@@ -12,13 +12,13 @@ import org.bukkit.plugin.Plugin;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StonesGUI implements InventoryHolder {
+public class StonesSelectGUI implements InventoryHolder {
 
     private Inventory main;
 
     static Plugin plugin;
 
-    public StonesGUI(Plugin plugin) {
+    public StonesSelectGUI(Plugin plugin) {
         this.plugin = plugin;
         main = Bukkit.createInventory(this, 54, "Reforge Stones - 1");
         init();
@@ -31,6 +31,8 @@ public class StonesGUI implements InventoryHolder {
 
         //Adding in all instances of the reforge stones
         main.setItem(0, Items.WHETSTONE.getItem(plugin));
+        main.setItem(1, Items.CHUNK_OF_MEAT.getItem(plugin));
+        main.setItem(2, Items.LIVING_HONEY.getItem(plugin));
 
         //Bottom Row with options to change pages and a go back button
         for (int i = 45; i < 54; i++) {

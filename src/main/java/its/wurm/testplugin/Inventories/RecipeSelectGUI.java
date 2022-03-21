@@ -1,8 +1,9 @@
 package its.wurm.testplugin.Inventories;
 
+import dev.dbassett.skullcreator.SkullCreator;
 import its.wurm.testplugin.Items.Items;
-import its.wurm.testplugin.Main;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -17,11 +18,11 @@ public class RecipeSelectGUI implements InventoryHolder {
 
     private Inventory main;
 
-    static Plugin plugin;
+    Plugin plugin;
 
     public RecipeSelectGUI(Plugin plugin) {
         this.plugin = plugin;
-        main = Bukkit.createInventory(this, 45, "Recipe categories");
+        main = Bukkit.createInventory(this, 54, "Recipe categories");
         init();
     }
 
@@ -81,10 +82,24 @@ public class RecipeSelectGUI implements InventoryHolder {
         //Clear the lore list so the next item can use it
         lore.clear();
 
+        //Reforge Stones category
+        lore.add("§8Contains");
+        lore.add("§7 · Reforge Stones");
+        ItemStack skull = SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDBmOGRmYTVlZmM3NTYzMGNlMGRmNDBhNDliOGY1OWJjMjIyMTRkZTk3ZTNmYjQ0YjNjNTZlOGE5YzhhNTZiNiJ9fX0=");
+        ItemMeta meta = skull.getItemMeta();
+        meta.setDisplayName(ChatColor.GOLD + "Reforge Stones");
+        meta.setLore(lore);
+        skull.setItemMeta(meta);
+        main.setItem(24, skull);
+        //Clear the lore list so the next item can use it
+        lore.clear();
+
         //Setting in menu glass (filler) for last half of the GUI
-        for (int i = 24; i < 45; i++) {
+        for (int i = 25; i < 54; i++) {
             main.setItem(i, Items.MENU_GLASS.getItem(plugin));
         }
+
+        main.setItem(49, Items.BACK_ARROW.getItem(plugin));
     }
 
     private ItemStack createItem(String name, Material mat, List<String> lore) {

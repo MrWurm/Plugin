@@ -5,24 +5,33 @@ api-version: 1.17
 authors: [ Wurm ]
 description: learning how to do plugin stuff
 commands:
-  giveall:
-    description: Give all test items to the player
+  giveitem:
+    description: Give an item with an optional paramiter for amount and player
     usage: /<command>
-  testgui:
+  menu:
     description: Open a custom GUI to the player
     usage: /<command>
-  customsummon/dummy:
-    description: Summon the Dummy mob
+  anvil:
+    description: Open a custom GUI to the player
+    usage: /<command>
+  recipes:
+    description: Open a custom GUI to the player
     usage: /<command>
   marker:
     description: Create a damage marker
     usage: /<command>
-  summonall:
-    description: Create a Custom Mob
-    usage: /<command>
   summonnew:
     description: Create a Custom Mob
     usage: /<command>
+  rank:
+    description: set a player's rank
+    usage: /<command>
   check:
     description: check player's item
+    usage: /<command>
+  inventory:
+    description: check a player's inventory
+    usage: /<command>
+  editinventory:
+    description: go inside a player's inventory
     usage: /<command>

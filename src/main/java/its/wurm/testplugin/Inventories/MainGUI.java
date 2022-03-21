@@ -1,17 +1,18 @@
 package its.wurm.testplugin.Inventories;
 
 import its.wurm.testplugin.Items.Items;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
+import org.bukkit.block.banner.Pattern;
+import org.bukkit.block.banner.PatternType;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
@@ -30,6 +31,7 @@ public class MainGUI implements InventoryHolder {
         init(player);
     }
 
+
     private void init(Player player)
     {
         ItemStack item;
@@ -39,6 +41,7 @@ public class MainGUI implements InventoryHolder {
         for (int i = 0; i < 54; i++) {
             main.setItem(i, Items.MENU_GLASS.getItem(plugin));
         }
+
         item = createItem("§cClose", Material.BARRIER, false);
         main.setItem(49, item);
 
@@ -63,7 +66,36 @@ public class MainGUI implements InventoryHolder {
         main.setItem(32, item);
         item = createItem("§eRewards - Coming Soon", Material.SUNFLOWER, false);
         main.setItem(33, item);
-
+        if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "peace"),
+                PersistentDataType.INTEGER) == 0) {
+            item = new ItemStack(Material.WHITE_BANNER);
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(ChatColor.YELLOW + "Pacifist Mode");
+            lore.add(ChatColor.GRAY + "You and your followers deal no");
+            lore.add(ChatColor.RED + "damage " + ChatColor.GRAY + "to other players however");
+            lore.add(ChatColor.GRAY + "they can still hurt you.");
+            lore.add(" ");
+            lore.add(ChatColor.YELLOW + "Click to toggle");
+            lore.add(ChatColor.DARK_GRAY + "Currently " + ChatColor.RED + "OFF");
+            meta.setLore(lore);
+            item.setItemMeta(meta);
+        } else {
+            item = new ItemStack(Material.BLACK_BANNER);
+            BannerMeta meta = (BannerMeta) item.getItemMeta();
+            Pattern pattern = new Pattern(DyeColor.RED, PatternType.SKULL);
+            meta.addPattern(pattern);
+            meta.setDisplayName(ChatColor.YELLOW + "Pacifist Mode");
+            lore.add(ChatColor.GRAY + "You and your followers deal no");
+            lore.add(ChatColor.RED + "damage " + ChatColor.GRAY + "to other players however");
+            lore.add(ChatColor.GRAY + "they can still hurt you.");
+            lore.add(" ");
+            lore.add(ChatColor.YELLOW + "Click to toggle");
+            lore.add(ChatColor.DARK_GRAY + "Currently " + ChatColor.GREEN + "ON");
+            meta.setLore(lore);
+            meta.addItemFlags(ItemFlag.HIDE_DYE);
+            item.setItemMeta(meta);
+        }
+        main.setItem(46, item);
     }
 
     private ItemStack createItem(String name, Material mat, boolean glint) {
@@ -80,8 +112,9 @@ public class MainGUI implements InventoryHolder {
     }
 
     private ItemStack createStats(String name, Material mat, Player player) {
-        ItemStack item = new ItemStack(mat, 1);
-        ItemMeta meta = item.getItemMeta();
+        ItemStack item = new ItemStack(Material.PLAYER_HEAD, 1);
+        SkullMeta meta = (SkullMeta) item.getItemMeta();
+        meta.setOwningPlayer(player);
         meta.setDisplayName(name);
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.RED + "  " + "❤ Health" + ChatColor.WHITE + " " + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
@@ -94,11 +127,23 @@ public class MainGUI implements InventoryHolder {
                 PersistentDataType.DOUBLE));
         lore.add(ChatColor.BLUE + "  " + "☠ Crit Damage" + ChatColor.WHITE + " " + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Crit"),
                 PersistentDataType.DOUBLE));
+        lore.add(ChatColor.YELLOW + "  " + "⚔ Attack Speed" + ChatColor.WHITE + " " + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeed"),
+                PersistentDataType.DOUBLE));
         lore.add(ChatColor.WHITE + "  " + "✦ Speed" + ChatColor.WHITE + " " + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
                 PersistentDataType.DOUBLE));
         lore.add(ChatColor.AQUA + "  " + "✎ Intelligence" + ChatColor.WHITE + " " + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
                 PersistentDataType.DOUBLE));
-        lore.add(ChatColor.AQUA + "  " + "✯ Magic Find" + ChatColor.WHITE + " " + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MagicFind"),
+        lore.add(ChatColor.LIGHT_PURPLE + "  " + "҉ Invocation" + ChatColor.WHITE + " " + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Invocation"),
+                PersistentDataType.DOUBLE));
+        lore.add(ChatColor.DARK_PURPLE + "  " + "ᛝ Thaumaturgy" + ChatColor.WHITE + " " + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Thaumaturgy"),
+                PersistentDataType.DOUBLE));
+        lore.add(ChatColor.DARK_AQUA + "  " + "✯ Magic Find" + ChatColor.WHITE + " " + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MagicFind"),
+                PersistentDataType.DOUBLE));
+        lore.add(ChatColor.GOLD + "  " + "☘ Farming Fortune" + ChatColor.WHITE + " " + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "FarmingFortune"),
+                PersistentDataType.DOUBLE));
+        lore.add(ChatColor.GOLD + "  " + "⛏ Mining Fortune" + ChatColor.WHITE + " " + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MiningFortune"),
+                PersistentDataType.DOUBLE));
+        lore.add(ChatColor.GOLD + "  " + "♠ Excavating Fortune" + ChatColor.WHITE + " " + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "ExcavatingFortune"),
                 PersistentDataType.DOUBLE));
         meta.setLore(lore);
         item.setItemMeta(meta);

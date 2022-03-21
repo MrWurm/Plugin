@@ -39,7 +39,7 @@ public class MaterialsSelectGUI2 implements InventoryHolder {
         main.setItem(6, Items.ENCHANTED_BONE_BLOCK.getItem(plugin));
         main.setItem(7, Items.ENCHANTED_STRING.getItem(plugin));
         main.setItem(8, Items.ENCHANTED_WEB.getItem(plugin));
-        main.setItem(9, Items.ENCHANTED_SPIDER_EYE.getItem(plugin));
+        main.setItem(9, Items.ENCHANTED_GHAST_TEAR.getItem(plugin));
         main.setItem(10, Items.ENCHANTED_AMETHYST.getItem(plugin));
         main.setItem(11, Items.ENCHANTED_AMETHYST_BLOCK.getItem(plugin));
         main.setItem(12, Items.ENCHANTED_INK_SAC.getItem(plugin));

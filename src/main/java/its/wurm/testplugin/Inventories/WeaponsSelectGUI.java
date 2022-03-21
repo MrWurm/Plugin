@@ -40,10 +40,16 @@ public class WeaponsSelectGUI implements InventoryHolder {
         main.setItem(6, Items.PUFFERFISH_CANON.getItem(plugin));
         main.setItem(7, Items.ASPECT_OF_THE_END.getItem(plugin));
         main.setItem(8, Items.MEAT_CLEAVER.getItem(plugin));
+        main.setItem(9, Items.SLATED_SCIMITAR.getItem(plugin));
+        main.setItem(10, Items.ALLOY_SCIMITAR.getItem(plugin));
+        main.setItem(11, Items.ORNAMENTAL_SCIMITAR.getItem(plugin));
+        main.setItem(12, Items.OBSIDIAN_SCIMITAR.getItem(plugin));
         main.setItem(14, Items.CACTUS_SHIELD.getItem(plugin));
         main.setItem(15, Items.SPARKLING_SHIELD.getItem(plugin));
         main.setItem(16, Items.COPPER_SHIELD.getItem(plugin));
         main.setItem(17, Items.IRON_SHIELD.getItem(plugin));
+        main.setItem(20, Items.CEREMONIAL_SCIMITAR.getItem(plugin));
+        main.setItem(21, Items.GEMSTONE_SCIMITAR.getItem(plugin));
         main.setItem(23, Items.LAPIS_SHIELD.getItem(plugin));
         main.setItem(24, Items.REDSTONE_SHIELD.getItem(plugin));
         main.setItem(25, Items.DIAMOND_SHIELD.getItem(plugin));
@@ -51,6 +57,13 @@ public class WeaponsSelectGUI implements InventoryHolder {
         main.setItem(32, Items.NETHERITE_SHIELD.getItem(plugin));
         main.setItem(33, Items.LIGHTNING_WAND.getItem(plugin));
         main.setItem(34, Items.WAND_OF_MAGGOTS.getItem(plugin));
+        main.setItem(35, Items.BAMBOO_SHORTBOW.getItem(plugin));
+        main.setItem(36, Items.POTION_SHORTBOW.getItem(plugin));
+        main.setItem(37, Items.LESSER_HEAL_WAND.getItem(plugin));
+        main.setItem(38, Items.HEAL_WAND.getItem(plugin));
+        main.setItem(39, Items.FLASH_HEAL_WAND.getItem(plugin));
+        main.setItem(41, Items.DUNE_WAND.getItem(plugin));
+        main.setItem(42, Items.PRISMATIC_WAND.getItem(plugin));
 
         //Bottom Row with options to change pages and a go back button
         for (int i = 45; i < 54; i++) {

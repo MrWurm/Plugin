@@ -16,7 +16,7 @@ public class MaterialsSelectGUI3 implements InventoryHolder {
 
     private Inventory main;
 
-    static Plugin plugin;
+    Plugin plugin;
 
     public MaterialsSelectGUI3(Plugin plugin) {
         this.plugin = plugin;
@@ -46,10 +46,19 @@ public class MaterialsSelectGUI3 implements InventoryHolder {
         main.setItem(13, Items.ENCHANTED_ENDSTONE.getItem(plugin));
         main.setItem(14, Items.ENCHANTED_ROTTEN_FLESH.getItem(plugin));
         main.setItem(15, Items.SIMPLE_SHIELD_BASE.getItem(plugin));
-        main.setItem(16, Items.HARDWOOD_HANDLE.getItem(plugin));
-        main.setItem(17, Items.GYROSCOPE.getItem(plugin));
-        main.setItem(18, Items.ENCHANTED_GHAST_TEAR.getItem(plugin));
-
+        main.setItem(16, Items.ADVANCED_SHIELD_BASE.getItem(plugin));
+        main.setItem(17, Items.HARDWOOD_HANDLE.getItem(plugin));
+        main.setItem(18, Items.GYROSCOPE.getItem(plugin));
+        main.setItem(19, Items.GEMSTONE.getItem(plugin));
+        main.setItem(20, Items.LUMINOUS_QUARTZ.getItem(plugin));
+        main.setItem(21, Items.MINERAL_CLUSTER.getItem(plugin));
+        main.setItem(22, Items.ENCHANTED_SLIMEBALL.getItem(plugin));
+        main.setItem(23, Items.ENCHANTED_SLIME_BLOCK.getItem(plugin));
+        main.setItem(24, Items.ENCHANTED_SPIDER_EYE.getItem(plugin));
+        main.setItem(25, Items.ENCHANTED_FERMENTED_SPIDER_EYE.getItem(plugin));
+        main.setItem(26, Items.DEEPSLATE_MONOLITH.getItem(plugin));
+        main.setItem(27, Items.CACTUS_LEATHER.getItem(plugin));
+        main.setItem(28, Items.ENCHANTED_OBSIDIAN.getItem(plugin));
 
         //Bottom Row with options to change pages and a go back and next page button
         for (int i = 45; i < 54; i++) {

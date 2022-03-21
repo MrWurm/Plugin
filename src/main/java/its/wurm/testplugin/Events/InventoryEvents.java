@@ -1,16 +1,24 @@
 package its.wurm.testplugin.Events;
 import its.wurm.testplugin.Inventories.FormatRecipesGUI;
 import its.wurm.testplugin.Inventories.*;
-import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class InventoryEvents implements Listener {
 
-    static Plugin plugin;
+    Plugin plugin;
+    Map<UUID, PlayerInventoryGUI> player_inventory = new HashMap<>();
 
     public InventoryEvents(Plugin plugin) {
         this.plugin = plugin;
@@ -21,6 +29,11 @@ public class InventoryEvents implements Listener {
 
         if (e.getClickedInventory() == null) {
             return;
+        }
+
+        //Player Inventory GUI
+        if (e.getClickedInventory().getHolder() instanceof PlayerInventoryGUI) {
+            e.setCancelled(true);
         }
 
         //Main GUI
@@ -44,6 +57,19 @@ public class InventoryEvents implements Listener {
                     //open Recipes gui
                     RecipeSelectGUI gui1 = new RecipeSelectGUI(plugin);
                     player.openInventory(gui1.getInventory());
+                    return;
+                case 46:
+                    if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "peace"),
+                            PersistentDataType.INTEGER) == 0) {
+                        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "peace"),
+                                PersistentDataType.INTEGER, 1);
+                    } else {
+                        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "peace"),
+                                PersistentDataType.INTEGER, 0);
+                    }
+                    player.getWorld().playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 40, 0.4f);
+                    MainGUI mainGUI = new MainGUI(plugin, player);
+                    player.openInventory(mainGUI.getInventory());
                     return;
                 case 49:
                     //close the gui
@@ -82,6 +108,14 @@ public class InventoryEvents implements Listener {
                     MaterialsSelectGUI materialsSelectGUI = new MaterialsSelectGUI(plugin);
                     player.openInventory(materialsSelectGUI.getInventory());
                     return;
+                case PLAYER_HEAD:
+                    //open materials gui
+                    StonesSelectGUI stonesGUI = new StonesSelectGUI(plugin);
+                    player.openInventory(stonesGUI.getInventory());
+                    return;
+                case ARROW:
+                    MainGUI mainGUI = new MainGUI(plugin, player);
+                    player.openInventory(mainGUI.getInventory());
                 default:
                     return;
             }
@@ -140,7 +174,7 @@ public class InventoryEvents implements Listener {
                     return;
                 case 6:
                     //open Pufferfish Canon recipe gui
-                    player.openInventory(FormatRecipesGUI.newPuferFishCanonGUI(plugin).getInventory());
+                    player.openInventory(FormatRecipesGUI.newPufferFishCanonGUI(plugin).getInventory());
                     return;
                 case 7:
                     //open Aspect of The end recipe gui
@@ -149,6 +183,30 @@ public class InventoryEvents implements Listener {
                 case 8:
                     //open Meat Cleaver recipe gui
                     player.openInventory(FormatRecipesGUI.newMeatCleaverGUI(plugin).getInventory());
+                    return;
+                case 9:
+                    //open Slated Scimitar recipe gui
+                    player.openInventory(FormatRecipesGUI.newSlatedScimitarGUI(plugin).getInventory());
+                    return;
+                case 10:
+                    //open Alloy Scimitar recipe gui
+                    player.openInventory(FormatRecipesGUI.newAlloyScimitarGUI(plugin).getInventory());
+                    return;
+                case 11:
+                    //open Ornamental Scimitar recipe gui
+                    player.openInventory(FormatRecipesGUI.newOrnamentalScimitarGUI(plugin).getInventory());
+                    return;
+                case 12:
+                    //open Obsidian Scimitar recipe gui
+                    player.openInventory(FormatRecipesGUI.newObsidianScimitarGUI(plugin).getInventory());
+                    return;
+                case 20:
+                    //open Ceremonial Scimitar recipe gui
+                    player.openInventory(FormatRecipesGUI.newCeremonialScimitarGUI(plugin).getInventory());
+                    return;
+                case 21:
+                    //open Gemstone Scimitar recipe gui
+                    player.openInventory(FormatRecipesGUI.newGemstoneScimitarGUI(plugin).getInventory());
                     return;
                 case 14:
                     //open Cactus Shield recipe gui
@@ -194,6 +252,34 @@ public class InventoryEvents implements Listener {
                     //open Wand of Maggots recipe GUI
                     player.openInventory(FormatRecipesGUI.newMaggotWandGUI(plugin).getInventory());
                     return;
+                case 35:
+                    //open Bamboo Shortbow recipe GUI
+                    player.openInventory(FormatRecipesGUI.newBambooShortbowGUI(plugin).getInventory());
+                    return;
+                case 36:
+                    //open Potion Shortbow recipe GUI
+                    player.openInventory(FormatRecipesGUI.newPotionShortbowGUI(plugin).getInventory());
+                    return;
+                case 37:
+                    //open Lesser Wand of Healing recipe GUI
+                    player.openInventory(FormatRecipesGUI.newLesserHealWandGUI(plugin).getInventory());
+                    return;
+                case 38:
+                    //open Wand of Healing recipe GUI
+                    player.openInventory(FormatRecipesGUI.newHealWandGUI(plugin).getInventory());
+                    return;
+                case 39:
+                    //open Chain Heal Wand recipe GUI
+                    player.openInventory(FormatRecipesGUI.newChainHealWandGUI(plugin).getInventory());
+                    return;
+                case 41:
+                    //open Dune Wand recipe GUI
+                    player.openInventory(FormatRecipesGUI.newDuneWandGUI(plugin).getInventory());
+                    return;
+                case 42:
+                    //open Prismatic Wand recipe GUI
+                    player.openInventory(FormatRecipesGUI.newPrismaticWandGUI(plugin).getInventory());
+                    return;
                 case 49:
                     //go back
                     RecipeSelectGUI gui0 = new RecipeSelectGUI(plugin);
@@ -203,6 +289,7 @@ public class InventoryEvents implements Listener {
                     return;
             }
         }
+
         //armor gui recipes
         if (e.getClickedInventory().getHolder() instanceof ArmorSelectGUI) {
             e.setCancelled(true);
@@ -214,11 +301,11 @@ public class InventoryEvents implements Listener {
             switch (e.getSlot()) {
                 case 0:
                     //open The Drip recipe gui
-                    player.openInventory(FormatRecipesGUI.newDripRecipeGUI(plugin).getInventory());
+                    player.openInventory(FormatRecipesGUI.newDripGUI(plugin).getInventory());
                     return;
                 case 1:
                     //open Supreme Drip recipe gui
-                    player.openInventory(FormatRecipesGUI.newSupremeDripRecipeGUI(plugin).getInventory());
+                    player.openInventory(FormatRecipesGUI.newSupremeDripGUI(plugin).getInventory());
                     return;
                 case 2:
                     //open Alloy Helmet recipe gui
@@ -236,6 +323,142 @@ public class InventoryEvents implements Listener {
                     //open Alloy Boots recipe gui
                     player.openInventory(FormatRecipesGUI.newAlloyBootsGUI(plugin).getInventory());
                     return;
+                case 6:
+                    //open Silverfish Helmet recipe gui
+                    player.openInventory(FormatRecipesGUI.newSilverfishHelmetGUI(plugin).getInventory());
+                    return;
+                case 7:
+                    //open Silverfish Chestplate recipe gui
+                    player.openInventory(FormatRecipesGUI.newSilverfishChestplateGUI(plugin).getInventory());
+                    return;
+                case 8:
+                    //open Silverfish Leggings recipe gui
+                    player.openInventory(FormatRecipesGUI.newSilverfishLegsGUI(plugin).getInventory());
+                    return;
+                case 9:
+                    //open Silverfish Boots recipe gui
+                    player.openInventory(FormatRecipesGUI.newSilverfishBootsGUI(plugin).getInventory());
+                    return;
+                case 10:
+                    //open Invoker Hood recipe gui
+                    player.openInventory(FormatRecipesGUI.newInvokerHoodGUI(plugin).getInventory());
+                    return;
+                case 11:
+                    //open Invoker Robes recipe gui
+                    player.openInventory(FormatRecipesGUI.newInvokerRobesGUI(plugin).getInventory());
+                    return;
+                case 12:
+                    //open Invoker Trousers recipe gui
+                    player.openInventory(FormatRecipesGUI.newInvokerTrousersGUI(plugin).getInventory());
+                    return;
+                case 13:
+                    //open Invoker Boots recipe gui
+                    player.openInventory(FormatRecipesGUI.newInvokerBootsGUI(plugin).getInventory());
+                    return;
+                case 14:
+                    //open Incanter Hood recipe gui
+                    player.openInventory(FormatRecipesGUI.newIncanterHoodGUI(plugin).getInventory());
+                    return;
+                case 15:
+                    //open Incanter Robes recipe gui
+                    player.openInventory(FormatRecipesGUI.newIncanterRobesGUI(plugin).getInventory());
+                    return;
+                case 16:
+                    //open Incanter Trousers recipe gui
+                    player.openInventory(FormatRecipesGUI.newIncanterTrousersGUI(plugin).getInventory());
+                    return;
+                case 17:
+                    //open Incanter Boots recipe gui
+                    player.openInventory(FormatRecipesGUI.newIncanterBootsGUI(plugin).getInventory());
+                    return;
+                case 18:
+                    //open Mystic Hood recipe gui
+                    player.openInventory(FormatRecipesGUI.newMysticHoodGUI(plugin).getInventory());
+                    return;
+                case 19:
+                    //open Mystic Robes recipe gui
+                    player.openInventory(FormatRecipesGUI.newMysticRobesGUI(plugin).getInventory());
+                    return;
+                case 20:
+                    //open Mystic Trousers recipe gui
+                    player.openInventory(FormatRecipesGUI.newMysticTrousersGUI(plugin).getInventory());
+                    return;
+                case 21:
+                    //open Mystic Boots recipe gui
+                    player.openInventory(FormatRecipesGUI.newMysticBootsGUI(plugin).getInventory());
+                    return;
+                case 22:
+                    //open Chanter Hood recipe gui
+                    player.openInventory(FormatRecipesGUI.newChanterHoodGUI(plugin).getInventory());
+                    return;
+                case 23:
+                    //open Chanter Robes recipe gui
+                    player.openInventory(FormatRecipesGUI.newChanterRobesGUI(plugin).getInventory());
+                    return;
+                case 24:
+                    //open Chanter Trousers recipe gui
+                    player.openInventory(FormatRecipesGUI.newChanterTrousersGUI(plugin).getInventory());
+                    return;
+                case 25:
+                    //open Chanter Boots recipe gui
+                    player.openInventory(FormatRecipesGUI.newChanterBootsGUI(plugin).getInventory());
+                    return;
+                case 26:
+                    //open Cooper Helmet recipe gui
+                    player.openInventory(FormatRecipesGUI.newCopperHelmetGUI(plugin).getInventory());
+                    return;
+                case 27:
+                    //open Copper Chestplate recipe gui
+                    player.openInventory(FormatRecipesGUI.newCopperChestplateGUI(plugin).getInventory());
+                    return;
+                case 28:
+                    //open Copper Leggings recipe gui
+                    player.openInventory(FormatRecipesGUI.newCopperLegsGUI(plugin).getInventory());
+                    return;
+                case 29:
+                    //open Copper Boots recipe gui
+                    player.openInventory(FormatRecipesGUI.newCopperBootsGUI(plugin).getInventory());
+                    return;
+                case 30:
+                    //open Cactus Helmet recipe gui
+                    player.openInventory(FormatRecipesGUI.newCactusHelmetGUI(plugin).getInventory());
+                    return;
+                case 31:
+                    //open Cactus Chestplate recipe gui
+                    player.openInventory(FormatRecipesGUI.newCactusChestplateGUI(plugin).getInventory());
+                    return;
+                case 32:
+                    //open Cactus Leggings recipe gui
+                    player.openInventory(FormatRecipesGUI.newCactusLegsGUI(plugin).getInventory());
+                    return;
+                case 33:
+                    //open Cactus Boots recipe gui
+                    player.openInventory(FormatRecipesGUI.newCactusBootsGUI(plugin).getInventory());
+                    return;
+                case 34:
+                    //open Onyx Helmet recipe gui
+                    player.openInventory(FormatRecipesGUI.newOnyxHelmetGUI(plugin).getInventory());
+                    return;
+                case 35:
+                    //open Onyx Chestplate recipe gui
+                    player.openInventory(FormatRecipesGUI.newOnyxChestplateGUI(plugin).getInventory());
+                    return;
+                case 36:
+                    //open Onyx Leggings recipe gui
+                    player.openInventory(FormatRecipesGUI.newOnyxLegsGUI(plugin).getInventory());
+                    return;
+                case 37:
+                    //open Onyx Boots recipe gui
+                    player.openInventory(FormatRecipesGUI.newOnyxBootsGUI(plugin).getInventory());
+                    return;
+                case 38:
+                    //open Saturated Creeper Mask recipe gui
+                    player.openInventory(FormatRecipesGUI.newSaturatedCreeperMaskGUI(plugin).getInventory());
+                    return;
+                case 39:
+                    //open Intricate Creeper Mask recipe gui
+                    player.openInventory(FormatRecipesGUI.newIntricateCreeperMaskGUI(plugin).getInventory());
+                    return;
                 case 49:
                     //go back
                     RecipeSelectGUI gui0 = new RecipeSelectGUI(plugin);
@@ -244,7 +467,6 @@ public class InventoryEvents implements Listener {
                 default:
                     return;
             }
-
         }
 
         //misc gui recipes
@@ -268,6 +490,18 @@ public class InventoryEvents implements Listener {
                     //open Magic Stew recipe gui
                     player.openInventory(FormatRecipesGUI.newMagicStewGUI(plugin).getInventory());
                     return;
+                case 3:
+                    //open Fibrous Stew recipe gui
+                    player.openInventory(FormatRecipesGUI.newFibrousStewGUI(plugin).getInventory());
+                    return;
+                case 4:
+                    //open Spicy Stew recipe gui
+                    player.openInventory(FormatRecipesGUI.newSpicyStewGUI(plugin).getInventory());
+                    return;
+                case 5:
+                    //open Hearty Stew recipe gui
+                    player.openInventory(FormatRecipesGUI.newHeartyStewGUI(plugin).getInventory());
+                    return;
                 case 6:
                     //open Grappling Hook recipe gui
                     player.openInventory(FormatRecipesGUI.newGrapplerGUI(plugin).getInventory());
@@ -275,6 +509,46 @@ public class InventoryEvents implements Listener {
                 case 7:
                     //open Kinetic Rod recipe gui
                     player.openInventory(FormatRecipesGUI.newKineticRodGUI(plugin).getInventory());
+                    return;
+                case 8:
+                    //open Metal Detector recipe gui
+                    player.openInventory(FormatRecipesGUI.newMetalDetectorGUI(plugin).getInventory());
+                    return;
+                case 9:
+                    //open Metalloid Detector recipe gui
+                    player.openInventory(FormatRecipesGUI.newMetalloidDetectorGUI(plugin).getInventory());
+                    return;
+                case 10:
+                    //open Treasure Detector recipe gui
+                    player.openInventory(FormatRecipesGUI.newTreasureDetectorGUI(plugin).getInventory());
+                    return;
+                case 11:
+                    //open Pocket Workbench recipe gui
+                    player.openInventory(FormatRecipesGUI.newPocketWorkbenchGUI(plugin).getInventory());
+                    return;
+                case 12:
+                    //open Mini Enderchest recipe gui
+                    player.openInventory(FormatRecipesGUI.newMiniEnderChestGUI(plugin).getInventory());
+                    return;
+                case 13:
+                    //open Prosperous Grove recipe gui
+                    player.openInventory(FormatRecipesGUI.newProsperousGroveGUI(plugin).getInventory());
+                    return;
+                case 14:
+                    //open Leaching Brambles recipe gui
+                    player.openInventory(FormatRecipesGUI.newLeachingBramblesGUI(plugin).getInventory());
+                    return;
+                case 15:
+                    //open Proliferating Sapling recipe gui
+                    player.openInventory(FormatRecipesGUI.newProliferatingSaplingGUI(plugin).getInventory());
+                    return;
+                case 16:
+                    //open Lasing Vines recipe gui
+                    player.openInventory(FormatRecipesGUI.newLashingVinesGUI(plugin).getInventory());
+                    return;
+                case 17:
+                    //open Pungent Herbs recipe gui
+                    player.openInventory(FormatRecipesGUI.newPungentHerbsGUI(plugin).getInventory());
                     return;
                 case 49:
                     //go back
@@ -534,8 +808,8 @@ public class InventoryEvents implements Listener {
                         player.openInventory(FormatRecipesGUI.newsEnchantedStringGUI(plugin).getInventory());
                         return;
                     case 9:
-                        //open Enchanted String recipe gui
-                        player.openInventory(FormatRecipesGUI.newEnchantedSpiderEyeGUI(plugin).getInventory());
+                        //open Enchanted Ghast Tear recipe gui
+                        player.openInventory(FormatRecipesGUI.newEnchantedGhastTearGUI(plugin).getInventory());
                         return;
                     case 10:
                         //open Enchanted Amethyst recipe gui
@@ -683,9 +957,9 @@ public class InventoryEvents implements Listener {
                         player.openInventory(gui1.getInventory());
                         return;
                     case 45:
-                            //previous page
-                            MaterialsSelectGUI materialsSelectGUI = new MaterialsSelectGUI(plugin);
-                            player.openInventory(materialsSelectGUI.getInventory());
+                        //previous page
+                        MaterialsSelectGUI materialsSelectGUI = new MaterialsSelectGUI(plugin);
+                        player.openInventory(materialsSelectGUI.getInventory());
                         return;
                     case 53:
                         MaterialsSelectGUI3 materialsSelectGUI3 = new MaterialsSelectGUI3(plugin);
@@ -770,23 +1044,63 @@ public class InventoryEvents implements Listener {
                         player.openInventory(FormatRecipesGUI.newSimpleShieldGUI(plugin).getInventory());
                         return;
                     case 16:
+                        //open Advanced Shield Base recipe gui
+                        player.openInventory(FormatRecipesGUI.newAdvancedShieldGUI(plugin).getInventory());
+                        return;
+                    case 17:
                         //open Hardwood Handle recipe gui
                         player.openInventory(FormatRecipesGUI.newHardwoodHandleGUI(plugin).getInventory());
                         return;
-                    case 17:
+                    case 18:
                         //open Gyroscope recipe gui
                         player.openInventory(FormatRecipesGUI.newGyroscopeGUI(plugin).getInventory());
                         return;
-                    case 18:
-                        //open Enchanted Ghast Tear recipe gui
-                        player.openInventory(FormatRecipesGUI.newEnchantedGhastTearGUI(plugin).getInventory());
+                    case 19:
+                        //open Gemstone recipe gui
+                        player.openInventory(FormatRecipesGUI.newGemstoneGUI(plugin).getInventory());
+                        return;
+                    case 20:
+                        //open Luminous Quartz recipe gui
+                        player.openInventory(FormatRecipesGUI.newLuminousQuartzGUI(plugin).getInventory());
+                        return;
+                    case 21:
+                        //open Mineral Cluster gui
+                        player.openInventory(FormatRecipesGUI.newMineralClusterGUI(plugin).getInventory());
+                        return;
+                    case 22:
+                        //open Enchanted Slimeball gui
+                        player.openInventory(FormatRecipesGUI.newEnchantedSlimeGUI(plugin).getInventory());
+                        return;
+                    case 23:
+                        //open Enchanted Slime Block gui
+                        player.openInventory(FormatRecipesGUI.newsEnchantedSlimeGUI(plugin).getInventory());
+                        return;
+                    case 24:
+                        //open Enchanted Spider Eye gui
+                        player.openInventory(FormatRecipesGUI.newEnchantedSpiderEyeGUI(plugin).getInventory());
+                        return;
+                    case 25:
+                        //open Enchanted Fermented Spider Eye gui
+                        player.openInventory(FormatRecipesGUI.newsEnchantedSpiderEyeGUI(plugin).getInventory());
+                        return;
+                    case 26:
+                        //open Deepslate Monolith gui
+                        player.openInventory(FormatRecipesGUI.newDeepslateMonolithGUI(plugin).getInventory());
+                        return;
+                    case 27:
+                        //open Cactus Leather gui
+                        player.openInventory(FormatRecipesGUI.newCactusLeatherGUI(plugin).getInventory());
+                        return;
+                    case 28:
+                        //open Enchanted Obsidian gui
+                        player.openInventory(FormatRecipesGUI.newEnchantedObsidianGUI(plugin).getInventory());
                         return;
                     case 49:
                         //go back
                         RecipeSelectGUI gui1 = new RecipeSelectGUI(plugin);
                         player.openInventory(gui1.getInventory());
                         return;
-                    case 43:
+                    case 45:
                         //previous page
                         MaterialsSelectGUI2 gui2 = new MaterialsSelectGUI2(plugin);
                         player.openInventory(gui2.getInventory());
@@ -795,5 +1109,36 @@ public class InventoryEvents implements Listener {
                         return;
                 }
             }
+
+        //reforge stone gui recipes
+        if (e.getClickedInventory().getHolder() instanceof StonesSelectGUI) {
+            e.setCancelled(true);
+            Player player = (Player) e.getWhoClicked();
+            if (e.getCurrentItem() == null) {
+                return;
+            }
+
+            switch (e.getSlot()) {
+                case 0:
+                    //open Whetstone recipe gui
+                    player.openInventory(FormatRecipesGUI.newWhetstoneGUI(plugin).getInventory());
+                    return;
+                case 1:
+                    //open Chunk of Meat recipe gui
+                    player.openInventory(FormatRecipesGUI.newChunkOfMeatGUI(plugin).getInventory());
+                    return;
+                case 2:
+                    //open Living Honey recipe gui
+                    player.openInventory(FormatRecipesGUI.newLivingHoneyGUI(plugin).getInventory());
+                    return;
+                case 49:
+                    //go back
+                    RecipeSelectGUI gui0 = new RecipeSelectGUI(plugin);
+                    player.openInventory(gui0.getInventory());
+                    return;
+                default:
+                    return;
+            }
+        }
         }
     }
