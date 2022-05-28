@@ -105,7 +105,7 @@ public class FormatRecipesGUI implements InventoryHolder {
         ItemStack coal = new ItemStack(Material.COAL, 1);
         return new FormatRecipesGUI(plugin, back, Items.ENCHANTED_COAL.getItem(plugin),
                 1, coal, 2, coal, 3, coal,
-                4, coal, 6, coal,
+                4, coal, 5, coal, 6, coal,
                 7, coal, 8, coal, 9, coal);
     }
 
@@ -164,7 +164,7 @@ public class FormatRecipesGUI implements InventoryHolder {
         ItemStack iron = new ItemStack(Material.IRON_INGOT, 1);
         return new FormatRecipesGUI(plugin, back, Items.ENCHANTED_IRON.getItem(plugin),
                 1, iron, 2, iron, 3, iron,
-                4, iron, 6, iron,
+                4, iron, 5, iron, 6, iron,
                 7, iron, 8, iron, 9, iron);
     }
 
@@ -207,7 +207,7 @@ public class FormatRecipesGUI implements InventoryHolder {
         ItemStack gold = new ItemStack(Material.GOLD_INGOT, 1);
         return new FormatRecipesGUI(plugin, back, Items.ENCHANTED_GOLD.getItem(plugin),
                 1, gold, 2, gold, 3, gold,
-                4, gold, 6, gold,
+                4, gold, 5, gold, 6, gold,
                 7, gold, 8, gold, 9, gold);
     }
 
@@ -249,7 +249,7 @@ public class FormatRecipesGUI implements InventoryHolder {
         ItemStack copper = new ItemStack(Material.COPPER_INGOT, 1);
         return new FormatRecipesGUI(plugin, back, Items.ENCHANTED_COPPER.getItem(plugin),
                 1, copper, 2, copper, 3, copper,
-                4, copper, 6, copper,
+                4, copper, 5, copper, 6, copper,
                 7, copper, 8, copper, 9, copper);
     }
 
@@ -274,7 +274,7 @@ public class FormatRecipesGUI implements InventoryHolder {
         ItemStack quartz = new ItemStack(Material.QUARTZ, 1);
         return new FormatRecipesGUI(plugin, back, Items.ENCHANTED_QUARTZ.getItem(plugin),
                 1, quartz, 2, quartz, 3, quartz,
-                4, quartz, 6, quartz,
+                4, quartz, 5, quartz, 6, quartz,
                 7, quartz, 8, quartz, 9, quartz);
     }
 
@@ -308,7 +308,7 @@ public class FormatRecipesGUI implements InventoryHolder {
         ItemStack diamond = new ItemStack(Material.DIAMOND, 1);
         return new FormatRecipesGUI(plugin, back, Items.ENCHANTED_DIAMOND.getItem(plugin),
                 1, diamond, 2, diamond, 3, diamond,
-                4, diamond, 6, diamond,
+                4, diamond, 5, diamond, 6, diamond,
                 7, diamond, 8, diamond, 9, diamond);
     }
 
@@ -317,7 +317,7 @@ public class FormatRecipesGUI implements InventoryHolder {
         ItemStack emerald = new ItemStack(Material.EMERALD, 1);
         return new FormatRecipesGUI(plugin, back, Items.ENCHANTED_EMERALD.getItem(plugin),
                 1, emerald, 2, emerald, 3, emerald,
-                4, emerald, 6, emerald,
+                4, emerald, 5, emerald, 6, emerald,
                 7, emerald, 8, emerald, 9, emerald);
     }
 
@@ -388,7 +388,7 @@ public class FormatRecipesGUI implements InventoryHolder {
         ItemStack wart = new ItemStack(Material.NETHER_WART, 1);
         return new FormatRecipesGUI(plugin, back, Items.ENCHANTED_WART.getItem(plugin),
                 1, wart, 2, wart, 3, wart,
-                4, wart, 6, wart,
+                4, wart, 5, wart, 6, wart,
                 7, wart, 8, wart, 9, wart);
     }
 
@@ -421,7 +421,7 @@ public class FormatRecipesGUI implements InventoryHolder {
 
     // Enchanted Rabbit GUI
     public static FormatRecipesGUI newEnchantedRabbitGUI(Plugin plugin, InventoryHolder back) {
-        ItemStack rabbit = new ItemStack(Material.BEEF, 1);
+        ItemStack rabbit = new ItemStack(Material.RABBIT, 1);
         return new FormatRecipesGUI(plugin, back, Items.ENCHANTED_RABBIT.getItem(plugin),
                 1, rabbit, 2, rabbit, 3, rabbit,
                 4, rabbit, 5, rabbit, 6, rabbit,
@@ -485,7 +485,7 @@ public class FormatRecipesGUI implements InventoryHolder {
         ItemStack lapis = new ItemStack(Material.LAPIS_LAZULI, 1);
         return new FormatRecipesGUI(plugin, back, Items.ENCHANTED_LAPIS.getItem(plugin),
                 1, lapis, 2, lapis, 3, lapis,
-                4, lapis, 6, lapis,
+                4, lapis, 5, lapis, 6, lapis,
                 7, lapis, 8, lapis, 9, lapis);
     }
 
@@ -502,7 +502,7 @@ public class FormatRecipesGUI implements InventoryHolder {
         ItemStack redstone = new ItemStack(Material.REDSTONE, 1);
         return new FormatRecipesGUI(plugin, back, Items.ENCHANTED_REDSTONE.getItem(plugin),
                 1, redstone, 2, redstone, 3, redstone,
-                4, redstone, 6, redstone,
+                4, redstone, 5, redstone, 6, redstone,
                 7, redstone, 8, redstone, 9, redstone);
     }
 
@@ -613,7 +613,7 @@ public class FormatRecipesGUI implements InventoryHolder {
         ItemStack string = new ItemStack(Material.STRING, 1);
         return new FormatRecipesGUI(plugin, back, Items.ENCHANTED_STRING.getItem(plugin),
                 1, string, 2, string, 3, string,
-                4, string, 6, string,
+                4, string, 5, string, 6, string,
                 7, string, 8, string, 9, string);
     }
 
@@ -784,7 +784,7 @@ public class FormatRecipesGUI implements InventoryHolder {
         return new FormatRecipesGUI(plugin, back, Items.ENCHANTED_ENDER_EYE.getItem(plugin),
                 2, Items.ENCHANTED_ENDER_PEARL.getItem(plugin),
                 4, Items.ENCHANTED_ENDER_PEARL.getItem(plugin), 5, Items.ENCHANTED_BLAZE_POWDER.getItem(plugin), 6, Items.ENCHANTED_ENDER_PEARL.getItem(plugin),
-                8, Items.ENCHANTED_BLAZE_POWDER.getItem(plugin));
+                8, Items.ENCHANTED_ENDER_PEARL.getItem(plugin));
     }
 
     // Enchanted Sweet Berries GUI
@@ -858,7 +858,7 @@ public class FormatRecipesGUI implements InventoryHolder {
 
     // Enchanted Baked Potato GUI
     public static FormatRecipesGUI newsEnchantedPotatoGUI(Plugin plugin, InventoryHolder back) {
-        return new FormatRecipesGUI(plugin, back, Items.ENCHANTED_GOLDEN_CARROT.getItem(plugin),
+        return new FormatRecipesGUI(plugin, back, Items.ENCHANTED_BAKED_POTATO.getItem(plugin),
                 1, Items.ENCHANTED_POTATO.getItem(plugin), 2, Items.ENCHANTED_POTATO.getItem(plugin), 3, Items.ENCHANTED_POTATO.getItem(plugin),
                 4, Items.ENCHANTED_POTATO.getItem(plugin), 5, Items.ENCHANTED_POTATO.getItem(plugin), 6, Items.ENCHANTED_POTATO.getItem(plugin),
                 7, Items.ENCHANTED_POTATO.getItem(plugin), 8, Items.ENCHANTED_POTATO.getItem(plugin), 9, Items.ENCHANTED_POTATO.getItem(plugin));
@@ -887,7 +887,7 @@ public class FormatRecipesGUI implements InventoryHolder {
         ItemStack melon = new ItemStack(Material.MELON_SLICE, 1);
         return new FormatRecipesGUI(plugin, back, Items.ENCHANTED_MELON_SLICE.getItem(plugin),
                 1, melon, 2, melon, 3, melon,
-                4, melon, 6, melon,
+                4, melon, 5, melon, 6, melon,
                 7, melon, 8, melon, 9, melon);
     }
 
@@ -1130,8 +1130,8 @@ public class FormatRecipesGUI implements InventoryHolder {
     public static FormatRecipesGUI newSimpleShieldGUI(Plugin plugin, InventoryHolder back) {
 
         return new FormatRecipesGUI(plugin, back, Items.SIMPLE_SHIELD_BASE.getItem(plugin),
-            1, Items.ENCHANTED_DARK_OAK_WOOD.getItem(plugin), 2, Items.ENCHANTED_OAK_WOOD.getItem(plugin), 3, Items.ENCHANTED_DARK_OAK_WOOD.getItem(plugin),
-            4, Items.ENCHANTED_DARK_OAK_WOOD.getItem(plugin), 5, Items.ENCHANTED_WOOL.getItem(plugin), 6, Items.ENCHANTED_DARK_OAK_WOOD.getItem(plugin),
+            1, Items.BUNDLED_DARK_OAK_LOGS.getItem(plugin), 2, Items.BUNDLED_OAK_LOGS.getItem(plugin), 3, Items.BUNDLED_DARK_OAK_LOGS.getItem(plugin),
+            4, Items.BUNDLED_DARK_OAK_LOGS.getItem(plugin), 5, Items.ENCHANTED_WOOL.getItem(plugin), 6, Items.BUNDLED_DARK_OAK_LOGS.getItem(plugin),
             8, Items.ENCHANTED_IRON.getItem(plugin));
     }
 
@@ -1238,9 +1238,9 @@ public class FormatRecipesGUI implements InventoryHolder {
     public static FormatRecipesGUI newHardwoodHandleGUI(Plugin plugin, InventoryHolder back) {
 
         return new FormatRecipesGUI(plugin, back, Items.HARDWOOD_HANDLE.getItem(plugin),
-                3, Items.ENCHANTED_OAK_WOOD.getItem(plugin),
-                5, Items.ENCHANTED_OAK_WOOD.getItem(plugin),
-                7, Items.ENCHANTED_OAK_WOOD.getItem(plugin));
+                3, Items.BUNDLED_OAK_LOGS.getItem(plugin),
+                5, Items.BUNDLED_OAK_LOGS.getItem(plugin),
+                7, Items.BUNDLED_OAK_LOGS.getItem(plugin));
     }
 
     // Gyroscope GUI
@@ -1589,9 +1589,9 @@ public class FormatRecipesGUI implements InventoryHolder {
     // Mineral Cluster GUI
     public static FormatRecipesGUI newMineralClusterGUI(Plugin plugin, InventoryHolder back) {
         return new FormatRecipesGUI(plugin, back, Items.MINERAL_CLUSTER.getItem(plugin),
-                1, Items.ENCHANTED_REDSTONE.getItem(plugin), 2, Items.ENCHANTED_LAPIS.getItem(plugin), 3, Items.ENCHANTED_REDSTONE.getItem(plugin),
+                1, Items.ENCHANTED_REDSTONE_BLOCK.getItem(plugin), 2, Items.ENCHANTED_LAPIS.getItem(plugin), 3, Items.ENCHANTED_REDSTONE_BLOCK.getItem(plugin),
                 4, Items.ENCHANTED_LAPIS.getItem(plugin), 5, Items.ENCHANTED_LAPIS.getItem(plugin), 6, Items.ENCHANTED_LAPIS.getItem(plugin),
-                7, Items.ENCHANTED_REDSTONE.getItem(plugin), 8, Items.ENCHANTED_LAPIS.getItem(plugin), 9, Items.ENCHANTED_REDSTONE.getItem(plugin));
+                7, Items.ENCHANTED_REDSTONE_BLOCK.getItem(plugin), 8, Items.ENCHANTED_LAPIS.getItem(plugin), 9, Items.ENCHANTED_REDSTONE_BLOCK.getItem(plugin));
     }
 
     // Slated Scimitar GUI
@@ -1638,7 +1638,7 @@ public class FormatRecipesGUI implements InventoryHolder {
     public static FormatRecipesGUI newEnchantedSlimeGUI(Plugin plugin, InventoryHolder back) {
         return new FormatRecipesGUI(plugin, back, Items.ENCHANTED_SLIMEBALL.getItem(plugin),
                 1, new ItemStack(Material.SLIME_BALL), 2, new ItemStack(Material.SLIME_BALL), 3, new ItemStack(Material.SLIME_BALL),
-                4, new ItemStack(Material.SLIME_BALL), 6, new ItemStack(Material.SLIME_BALL),
+                4, new ItemStack(Material.SLIME_BALL), 5, new ItemStack(Material.SLIME_BALL), 6, new ItemStack(Material.SLIME_BALL),
                 7, new ItemStack(Material.SLIME_BALL), 8, new ItemStack(Material.SLIME_BALL), 9, new ItemStack(Material.SLIME_BALL));
     }
 
@@ -1677,9 +1677,9 @@ public class FormatRecipesGUI implements InventoryHolder {
     // Prosperous Grove GUI
     public static FormatRecipesGUI newProsperousGroveGUI(Plugin plugin, InventoryHolder back) {
         return new FormatRecipesGUI(plugin, back, Items.PROSPEROUS_GROVE.getItem(plugin),
-                1, Items.ENCHANTED_BONE_BLOCK.getItem(plugin), 2, Items.ENCHANTED_OAK_WOOD.getItem(plugin), 3, Items.ENCHANTED_OAK_WOOD.getItem(plugin),
-                4, Items.ENCHANTED_SUGAR_CANE.getItem(plugin), 5, Items.FOREST_ESSENCE.getItem(plugin), 6, Items.ENCHANTED_OAK_WOOD.getItem(plugin),
-                7, Items.ENCHANTED_SUGAR_CANE.getItem(plugin), 8, Items.FOREST_ESSENCE.getItem(plugin), 9, Items.ENCHANTED_OAK_WOOD.getItem(plugin));
+                1, Items.ENCHANTED_BONE_BLOCK.getItem(plugin), 2, Items.BUNDLED_OAK_LOGS.getItem(plugin), 3, Items.BUNDLED_OAK_LOGS.getItem(plugin),
+                4, Items.ENCHANTED_SUGAR_CANE.getItem(plugin), 5, Items.FOREST_ESSENCE.getItem(plugin), 6, Items.BUNDLED_OAK_LOGS.getItem(plugin),
+                7, Items.ENCHANTED_SUGAR_CANE.getItem(plugin), 8, Items.FOREST_ESSENCE.getItem(plugin), 9, Items.BUNDLED_OAK_LOGS.getItem(plugin));
     }
 
     // Leaching Brambles GUI
@@ -1694,23 +1694,23 @@ public class FormatRecipesGUI implements InventoryHolder {
     public static FormatRecipesGUI newProliferatingSaplingGUI(Plugin plugin, InventoryHolder back) {
         return new FormatRecipesGUI(plugin, back, Items.PROLIFERATING_SAPLING.getItem(plugin),
                 1, Items.ENCHANTED_MELON.getItem(plugin), 2, Items.ENCHANTED_MELON.getItem(plugin), 3, Items.ENCHANTED_SWEET_BERRIES.getItem(plugin),
-                4, Items.ENCHANTED_MELON.getItem(plugin), 5, Items.FOREST_ESSENCE.getItem(plugin), 6, Items.ENCHANTED_BIRCH_WOOD.getItem(plugin),
-                7, Items.ENCHANTED_SWEET_BERRIES.getItem(plugin), 8, Items.ENCHANTED_BIRCH_WOOD.getItem(plugin), 9, Items.ENCHANTED_BIRCH_WOOD.getItem(plugin));
+                4, Items.ENCHANTED_MELON.getItem(plugin), 5, Items.FOREST_ESSENCE.getItem(plugin), 6, Items.BUNDLED_BIRCH_LOGS.getItem(plugin),
+                7, Items.ENCHANTED_SWEET_BERRIES.getItem(plugin), 8, Items.BUNDLED_BIRCH_LOGS.getItem(plugin), 9, Items.BUNDLED_BIRCH_LOGS.getItem(plugin));
     }
 
     // Lasing Vines GUI
     public static FormatRecipesGUI newLashingVinesGUI(Plugin plugin, InventoryHolder back) {
         return new FormatRecipesGUI(plugin, back, Items.LASHING_VINES.getItem(plugin),
-                1, Items.ENCHANTED_JUNGLE_WOOD.getItem(plugin), 2, Items.BAMBOO_BUNDLE.getItem(plugin), 3, Items.FOREST_ESSENCE.getItem(plugin),
-                4, Items.ENCHANTED_JUNGLE_WOOD.getItem(plugin), 5, Items.BAMBOO_BUNDLE.getItem(plugin), 6, Items.BAMBOO_BUNDLE.getItem(plugin),
-                7, Items.ENCHANTED_COCOA.getItem(plugin), 8, Items.ENCHANTED_JUNGLE_WOOD.getItem(plugin), 9, Items.ENCHANTED_JUNGLE_WOOD.getItem(plugin));
+                1, Items.BUNDLED_JUNGLE_LOGS.getItem(plugin), 2, Items.BAMBOO_BUNDLE.getItem(plugin), 3, Items.FOREST_ESSENCE.getItem(plugin),
+                4, Items.BUNDLED_JUNGLE_LOGS.getItem(plugin), 5, Items.BAMBOO_BUNDLE.getItem(plugin), 6, Items.BAMBOO_BUNDLE.getItem(plugin),
+                7, Items.ENCHANTED_COCOA.getItem(plugin), 8, Items.BUNDLED_JUNGLE_LOGS.getItem(plugin), 9, Items.BUNDLED_JUNGLE_LOGS.getItem(plugin));
     }
 
     // Pungent Herbs GUI
     public static FormatRecipesGUI newPungentHerbsGUI(Plugin plugin, InventoryHolder back) {
         return new FormatRecipesGUI(plugin, back, Items.PUNGENT_HERBS.getItem(plugin),
-                1, Items.FOREST_ESSENCE.getItem(plugin), 2, Items.ENCHANTED_ACACIA_WOOD.getItem(plugin), 3, Items.FOREST_ESSENCE.getItem(plugin),
-                4, Items.ENCHANTED_ACACIA_WOOD.getItem(plugin), 5, Items.ENCHANTED_CRIMSON_STEM.getItem(plugin), 6, Items.ENCHANTED_ACACIA_WOOD.getItem(plugin),
+                1, Items.FOREST_ESSENCE.getItem(plugin), 2, Items.BUNDLED_ACACIA_LOGS.getItem(plugin), 3, Items.FOREST_ESSENCE.getItem(plugin),
+                4, Items.BUNDLED_ACACIA_LOGS.getItem(plugin), 5, Items.ENCHANTED_CRIMSON_STEM.getItem(plugin), 6, Items.BUNDLED_ACACIA_LOGS.getItem(plugin),
                 7, Items.ENCHANTED_CRIMSON_STEM.getItem(plugin), 8, Items.ENCHANTED_BEETROOT_SOUP.getItem(plugin), 9, Items.ENCHANTED_CRIMSON_STEM.getItem(plugin));
     }
 
@@ -1849,7 +1849,7 @@ public class FormatRecipesGUI implements InventoryHolder {
         return new FormatRecipesGUI(plugin, back, Items.LESSER_SPIRIT_BONE.getItem(plugin),
                 2, Items.ENCHANTED_BONE.getItem(plugin), 3, Items.ENCHANTED_BONE.getItem(plugin),
                 4, Items.ENCHANTED_BONE.getItem(plugin), 5, Items.FRAGMENTED_SOUL_REMNANTS.getItem(plugin), 6, Items.ENCHANTED_BONE.getItem(plugin),
-                7, Items.ENCHANTED_BONE.getItem(plugin),8, new ItemStack(Material.BONE));
+                7, Items.ENCHANTED_BONE.getItem(plugin), 8, Items.ENCHANTED_BONE.getItem(plugin));
     }
 
     // Greater Spirit Bone GUI
@@ -1866,5 +1866,529 @@ public class FormatRecipesGUI implements InventoryHolder {
                 1, new ItemStack(Material.OBSIDIAN), 2, new ItemStack(Material.OBSIDIAN),3, new ItemStack(Material.OBSIDIAN),
                 4, new ItemStack(Material.OBSIDIAN), 5, new ItemStack(Material.OBSIDIAN), 6, new ItemStack(Material.OBSIDIAN),
                 7, new ItemStack(Material.OBSIDIAN), 8, new ItemStack(Material.OBSIDIAN), 9, new ItemStack(Material.OBSIDIAN));
+    }
+
+    // Cactus Dye GUI
+    public static FormatRecipesGUI newCactusDyeGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.CACTUS_DYE.getItem(plugin),
+                1, Items.ENCHANTED_CACTUS.getItem(plugin), 2, Items.ENCHANTED_CACTUS.getItem(plugin) ,3, Items.ENCHANTED_CACTUS.getItem(plugin),
+                4, Items.ENCHANTED_CACTUS.getItem(plugin), 5, Items.ENCHANTED_COAL.getItem(plugin), 6, Items.ENCHANTED_CACTUS.getItem(plugin),
+                7, Items.ENCHANTED_CACTUS.getItem(plugin), 8, Items.ENCHANTED_CACTUS.getItem(plugin), 9, Items.ENCHANTED_CACTUS.getItem(plugin));
+    }
+
+    // Flimsy Bamboo Spear GUI
+    public static FormatRecipesGUI newFlimsyBambooSpearGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.FLIMSY_BAMBOO_SPEAR.getItem(plugin),
+                3, Items.SPEARHEAD.getItem(plugin),
+                4, Items.ENCHANTED_STRING.getItem(plugin), 5, Items.ENCHANTED_BAMBOO.getItem(plugin),
+                7, Items.ENCHANTED_BAMBOO.getItem(plugin), 8, Items.ENCHANTED_STRING.getItem(plugin));
+    }
+
+    // Bamboo Spear GUI
+    public static FormatRecipesGUI newBambooSpearGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.BAMBOO_SPEAR.getItem(plugin),
+                3, Items.BAMBOO_BUNDLE.getItem(plugin),
+                4, Items.ENCHANTED_WEB.getItem(plugin), 5, Items.BAMBOO_BUNDLE.getItem(plugin),
+                7, Items.FLIMSY_BAMBOO_SPEAR.getItem(plugin), 8, Items.ENCHANTED_WEB.getItem(plugin));
+    }
+
+    // Enchanted Magma Cream GUI
+    public static FormatRecipesGUI newEnchantedMagmaCream(Plugin plugin, InventoryHolder back) {
+        ItemStack item = new ItemStack(Material.MAGMA_CREAM);
+        return new FormatRecipesGUI(plugin, back, Items.ENCHANTED_MAGMA_CREAM.getItem(plugin),
+                1, item, 2, item, 3, item,
+                4, item, 5, item, 6, item,
+                7, item, 8, item, 9, item);
+    }
+
+    // Enchanted Magma Block GUI
+    public static FormatRecipesGUI newsEnchantedMagma(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.ENCHANTED_MAGMA_BLOCK.getItem(plugin),
+                1, Items.ENCHANTED_MAGMA_CREAM.getItem(plugin), 2, Items.ENCHANTED_MAGMA_CREAM.getItem(plugin), 3, Items.ENCHANTED_MAGMA_CREAM.getItem(plugin),
+                4, Items.ENCHANTED_MAGMA_CREAM.getItem(plugin), 5, Items.ENCHANTED_MAGMA_CREAM.getItem(plugin), 6, Items.ENCHANTED_MAGMA_CREAM.getItem(plugin),
+                7, Items.ENCHANTED_MAGMA_CREAM.getItem(plugin), 8, Items.ENCHANTED_MAGMA_CREAM.getItem(plugin), 9, Items.ENCHANTED_MAGMA_CREAM.getItem(plugin));
+    }
+
+    // Attachable Lantern GUI
+    public static FormatRecipesGUI newAttachableLantern(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.ATTACHABLE_LANTERN.getItem(plugin),
+                1, Items.TITANIUM_PLATE.getItem(plugin), 2, Items.TITANIUM_PLATE.getItem(plugin), 3, Items.TITANIUM_PLATE.getItem(plugin),
+                4, Items.ENCHANTED_IRON.getItem(plugin), 5, Items.ENCHANTED_COAL.getItem(plugin), 6, Items.ENCHANTED_IRON.getItem(plugin),
+                7, Items.ENCHANTED_IRON.getItem(plugin), 8, Items.ENCHANTED_IRON.getItem(plugin), 9, Items.ENCHANTED_IRON.getItem(plugin));
+    }
+
+    // Compacted Coal Lump GUI
+    public static FormatRecipesGUI newvsEnchantedCoal(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.COMPACTED_COAL_LUMP.getItem(plugin),
+                1, Items.ENCHANTED_COAL_BLOCK.getItem(plugin), 2, Items.ENCHANTED_COAL_BLOCK.getItem(plugin), 3, Items.ENCHANTED_COAL_BLOCK.getItem(plugin),
+                4, Items.ENCHANTED_COAL_BLOCK.getItem(plugin), 5, Items.ENCHANTED_COAL_BLOCK.getItem(plugin), 6, Items.ENCHANTED_COAL_BLOCK.getItem(plugin),
+                7, Items.ENCHANTED_COAL_BLOCK.getItem(plugin), 8, Items.ENCHANTED_COAL_BLOCK.getItem(plugin), 9, Items.ENCHANTED_COAL_BLOCK.getItem(plugin));
+    }
+
+    // Pure Iron Nugget GUI
+    public static FormatRecipesGUI newvsEnchantedIron(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.PURE_IRON_NUGGET.getItem(plugin),
+                1, Items.ENCHANTED_IRON_BLOCK.getItem(plugin), 2, Items.ENCHANTED_IRON_BLOCK.getItem(plugin), 3, Items.ENCHANTED_IRON_BLOCK.getItem(plugin),
+                4, Items.ENCHANTED_IRON_BLOCK.getItem(plugin), 6, Items.ENCHANTED_IRON_BLOCK.getItem(plugin),
+                7, Items.ENCHANTED_IRON_BLOCK.getItem(plugin), 8, Items.ENCHANTED_IRON_BLOCK.getItem(plugin), 9, Items.ENCHANTED_IRON_BLOCK.getItem(plugin));
+    }
+
+    // Polished Slated Handle GUI
+    public static FormatRecipesGUI newPolishedHandleGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.POLISHED_SLATED_HANDLE.getItem(plugin),
+                3, Items.ENCHANTED_DEEPSLATE_TILES.getItem(plugin),
+                5, Items.ENCHANTED_POLISHED_DEEPSLATE.getItem(plugin),
+                7, Items.ENCHANTED_DEEPSLATE_TILES.getItem(plugin));
+    }
+
+    // Seastone GUI
+    public static FormatRecipesGUI newSeastoneGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.SEASTONE.getItem(plugin),
+                1, Items.SEASTONE_SHARD.getItem(plugin), 2, Items.SEASTONE_SHARD.getItem(plugin), 3, Items.SEASTONE_SHARD.getItem(plugin),
+                4, Items.SEASTONE_SHARD.getItem(plugin), 5, Items.SEASTONE_SHARD.getItem(plugin), 6, Items.SEASTONE_SHARD.getItem(plugin),
+                7, Items.SEASTONE_SHARD.getItem(plugin), 8, Items.SEASTONE_SHARD.getItem(plugin), 9, Items.SEASTONE_SHARD.getItem(plugin));
+    }
+
+    // Polished Seastone GUI
+    public static FormatRecipesGUI newPolishedSeastoneGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.POLISHED_SEASTONE.getItem(plugin),
+                1, Items.SEASTONE.getItem(plugin), 2, Items.SEASTONE.getItem(plugin),
+                4, Items.SEASTONE.getItem(plugin), 5, Items.SEASTONE.getItem(plugin));
+    }
+
+    // Torrent GUI
+    public static FormatRecipesGUI newTorrentGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.TORRENT.getItem(plugin),
+                1, Items.SEASTONE.getItem(plugin), 2, Items.POLISHED_SEASTONE.getItem(plugin), 3, Items.SEASTONE.getItem(plugin),
+                5, Items.POLISHED_SLATED_HANDLE.getItem(plugin),
+                8, Items.POLISHED_SLATED_HANDLE.getItem(plugin));
+    }
+
+    // Stonk GUI
+    public static FormatRecipesGUI newStonkGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.STONK.getItem(plugin),
+                1, Items.ENCHANTED_GOLD_BLOCK.getItem(plugin), 2, Items.ENCHANTED_GOLD_BLOCK.getItem(plugin), 3, Items.ENCHANTED_GOLD_BLOCK.getItem(plugin),
+                5, Items.POLISHED_SLATED_HANDLE.getItem(plugin),
+                8, Items.POLISHED_SLATED_HANDLE.getItem(plugin));
+    }
+
+    // Wood Pile GUI
+    public static FormatRecipesGUI newWoodPileGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.WOOD_PILE.getItem(plugin),
+                1, Items.BUNDLED_OAK_LOGS.getItem(plugin), 2, Items.BUNDLED_DARK_OAK_LOGS.getItem(plugin), 3, Items.BUNDLED_BIRCH_LOGS.getItem(plugin),
+                4, Items.BUNDLED_SPRUCE_LOGS.getItem(plugin), 5, Items.BAMBOO_BUNDLE.getItem(plugin), 6, Items.BUNDLED_ACACIA_LOGS.getItem(plugin),
+                7, Items.BUNDLED_JUNGLE_LOGS.getItem(plugin), 8, Items.BUNDLED_CRIMSON_STEMS.getItem(plugin), 9, Items.BUNDLED_WARPED_STEMS.getItem(plugin));
+    }
+
+    // Quarterstaff GUI
+    public static FormatRecipesGUI newQuarterstaffGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.QUARTERSTAFF.getItem(plugin),
+                3, Items.HARDWOOD_HANDLE.getItem(plugin),
+                5, Items.HARDWOOD_HANDLE.getItem(plugin),
+                7, Items.HARDWOOD_HANDLE.getItem(plugin));
+    }
+
+    // Scruffy Lasso GUI
+    public static FormatRecipesGUI newScruffyLassoGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.SCRUFFY_LASSO.getItem(plugin),
+                2, Items.SCRUB.getItem(plugin), 3, Items.SCRUB.getItem(plugin),
+                5, Items.ENCHANTED_SLIMEBALL.getItem(plugin), 6, Items.SCRUB.getItem(plugin),
+                7, Items.ENCHANTED_WEB.getItem(plugin));
+    }
+
+    // Snaggletooth Lasso GUI
+    public static FormatRecipesGUI newSnaggletoothLassoGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.SNAGGLETOOTH_LASSO.getItem(plugin),
+                2, Items.WOLF_FANG.getItem(plugin), 3, Items.RAZOR_CLAW.getItem(plugin),
+                5, Items.SCRUFFY_LASSO.getItem(plugin), 6, Items.WOLF_FANG.getItem(plugin),
+                7, Items.ENCHANTED_WEB.getItem(plugin));
+    }
+
+    // Amethyst Spear GUI
+    public static FormatRecipesGUI newAmethystSpearGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.AMETHYST_SPEAR.getItem(plugin),
+                2, Items.ENCHANTED_AMETHYST.getItem(plugin), 3, Items.SPEARHEAD.getItem(plugin),
+                4, Items.ENCHANTED_AMETHYST.getItem(plugin), 5, Items.POLISHED_SLATED_HANDLE.getItem(plugin), 6, Items.ENCHANTED_AMETHYST.getItem(plugin),
+                7, Items.ENCHANTED_SLIME_BLOCK.getItem(plugin), 8, Items.ENCHANTED_AMETHYST.getItem(plugin));
+    }
+
+    // Brittle Bone Spear GUI
+    public static FormatRecipesGUI newBrittleBoneSpearGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.BRITTLE_BONE_SPEAR.getItem(plugin),
+                2, Items.HIDE.getItem(plugin), 3, Items.SPEARHEAD.getItem(plugin),
+                5, Items.ENCHANTED_BONE.getItem(plugin), 6, Items.HIDE.getItem(plugin),
+                7, Items.ENCHANTED_BONE.getItem(plugin));
+    }
+
+    // Bone Spear GUI
+    public static FormatRecipesGUI newBoneSpearGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.BONE_SPEAR.getItem(plugin),
+                2, Items.CACTUS_LEATHER.getItem(plugin), 3, Items.ENCHANTED_BONE_BLOCK.getItem(plugin),
+                4, Items.ENCHANTED_BONE_BLOCK.getItem(plugin), 5, Items.ENCHANTED_BONE_BLOCK.getItem(plugin), 6, Items.CACTUS_LEATHER.getItem(plugin),
+                7, Items.BRITTLE_BONE_SPEAR.getItem(plugin), 8, Items.ENCHANTED_BONE_BLOCK.getItem(plugin));
+    }
+
+    // Forester's Axe GUI
+    public static FormatRecipesGUI newForestersAxeGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.FORESTERS_AXE.getItem(plugin),
+                2, Items.WOODCUTTERS_AXE.getItem(plugin),
+                4, Items.ENCHANTED_GOLD_BLOCK.getItem(plugin), 5, Items.ENCHANTED_BEETROOT_SOUP.getItem(plugin), 6, Items.CHUNK_OF_MEAT.getItem(plugin),
+                7, Items.LUMBERJACKS_AXE.getItem(plugin), 8, Items.WOOD_PILE.getItem(plugin), 9, Items.LOGGERS_AXE.getItem(plugin));
+    }
+
+    // Bundled Dark Oak Logs GUI
+    public static FormatRecipesGUI newsEnchantedDarkOakGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.BUNDLED_DARK_OAK_LOGS.getItem(plugin),
+                1, Items.ENCHANTED_DARK_OAK_WOOD.getItem(plugin), 2, Items.ENCHANTED_DARK_OAK_WOOD.getItem(plugin), 3, Items.ENCHANTED_DARK_OAK_WOOD.getItem(plugin),
+                4, Items.ENCHANTED_DARK_OAK_WOOD.getItem(plugin), 5, Items.ENCHANTED_DARK_OAK_WOOD.getItem(plugin), 6, Items.ENCHANTED_DARK_OAK_WOOD.getItem(plugin),
+                7, Items.ENCHANTED_DARK_OAK_WOOD.getItem(plugin), 8, Items.ENCHANTED_DARK_OAK_WOOD.getItem(plugin), 9, Items.ENCHANTED_DARK_OAK_WOOD.getItem(plugin));
+    }
+
+    // Bundled Birch Logs GUI
+    public static FormatRecipesGUI newsEnchantedBirchGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.BUNDLED_BIRCH_LOGS.getItem(plugin),
+                1, Items.ENCHANTED_BIRCH_WOOD.getItem(plugin), 2, Items.ENCHANTED_BIRCH_WOOD.getItem(plugin), 3, Items.ENCHANTED_BIRCH_WOOD.getItem(plugin),
+                4, Items.ENCHANTED_BIRCH_WOOD.getItem(plugin), 5, Items.ENCHANTED_BIRCH_WOOD.getItem(plugin), 6, Items.ENCHANTED_BIRCH_WOOD.getItem(plugin),
+                7, Items.ENCHANTED_BIRCH_WOOD.getItem(plugin), 8, Items.ENCHANTED_BIRCH_WOOD.getItem(plugin), 9, Items.ENCHANTED_BIRCH_WOOD.getItem(plugin));
+    }
+
+    // Bundled Spruce Logs GUI
+    public static FormatRecipesGUI newsEnchantedSpruceGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.BUNDLED_SPRUCE_LOGS.getItem(plugin),
+                1, Items.ENCHANTED_SPRUCE_WOOD.getItem(plugin), 2, Items.ENCHANTED_SPRUCE_WOOD.getItem(plugin), 3, Items.ENCHANTED_SPRUCE_WOOD.getItem(plugin),
+                4, Items.ENCHANTED_SPRUCE_WOOD.getItem(plugin), 5, Items.ENCHANTED_SPRUCE_WOOD.getItem(plugin), 6, Items.ENCHANTED_SPRUCE_WOOD.getItem(plugin),
+                7, Items.ENCHANTED_SPRUCE_WOOD.getItem(plugin), 8, Items.ENCHANTED_SPRUCE_WOOD.getItem(plugin), 9, Items.ENCHANTED_SPRUCE_WOOD.getItem(plugin));
+    }
+
+    // Bundled Acacia Logs GUI
+    public static FormatRecipesGUI newsEnchantedAcaciaGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.BUNDLED_ACACIA_LOGS.getItem(plugin),
+                1, Items.ENCHANTED_ACACIA_WOOD.getItem(plugin), 2, Items.ENCHANTED_ACACIA_WOOD.getItem(plugin), 3, Items.ENCHANTED_ACACIA_WOOD.getItem(plugin),
+                4, Items.ENCHANTED_ACACIA_WOOD.getItem(plugin), 5, Items.ENCHANTED_ACACIA_WOOD.getItem(plugin), 6, Items.ENCHANTED_ACACIA_WOOD.getItem(plugin),
+                7, Items.ENCHANTED_ACACIA_WOOD.getItem(plugin), 8, Items.ENCHANTED_ACACIA_WOOD.getItem(plugin), 9, Items.ENCHANTED_ACACIA_WOOD.getItem(plugin));
+    }
+
+    // Bundled Jungle Logs GUI
+    public static FormatRecipesGUI newsEnchantedJungleGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.BUNDLED_JUNGLE_LOGS.getItem(plugin),
+                1, Items.ENCHANTED_JUNGLE_WOOD.getItem(plugin), 2, Items.ENCHANTED_JUNGLE_WOOD.getItem(plugin), 3, Items.ENCHANTED_JUNGLE_WOOD.getItem(plugin),
+                4, Items.ENCHANTED_JUNGLE_WOOD.getItem(plugin), 5, Items.ENCHANTED_JUNGLE_WOOD.getItem(plugin), 6, Items.ENCHANTED_JUNGLE_WOOD.getItem(plugin),
+                7, Items.ENCHANTED_JUNGLE_WOOD.getItem(plugin), 8, Items.ENCHANTED_JUNGLE_WOOD.getItem(plugin), 9, Items.ENCHANTED_JUNGLE_WOOD.getItem(plugin));
+    }
+
+    // Bundled Oak Logs GUI
+    public static FormatRecipesGUI newsEnchantedOakGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.BUNDLED_OAK_LOGS.getItem(plugin),
+                1, Items.ENCHANTED_OAK_WOOD.getItem(plugin), 2, Items.ENCHANTED_OAK_WOOD.getItem(plugin), 3, Items.ENCHANTED_OAK_WOOD.getItem(plugin),
+                4, Items.ENCHANTED_OAK_WOOD.getItem(plugin), 5, Items.ENCHANTED_OAK_WOOD.getItem(plugin), 6, Items.ENCHANTED_OAK_WOOD.getItem(plugin),
+                7, Items.ENCHANTED_OAK_WOOD.getItem(plugin), 8, Items.ENCHANTED_OAK_WOOD.getItem(plugin), 9, Items.ENCHANTED_OAK_WOOD.getItem(plugin));
+    }
+
+    // Bundled Crimson Stems GUI
+    public static FormatRecipesGUI newsEnchantedCrimsonGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.BUNDLED_CRIMSON_STEMS.getItem(plugin),
+                1, Items.ENCHANTED_CRIMSON_STEM.getItem(plugin), 2, Items.ENCHANTED_CRIMSON_STEM.getItem(plugin), 3, Items.ENCHANTED_CRIMSON_STEM.getItem(plugin),
+                4, Items.ENCHANTED_CRIMSON_STEM.getItem(plugin), 5, Items.ENCHANTED_CRIMSON_STEM.getItem(plugin), 6, Items.ENCHANTED_CRIMSON_STEM.getItem(plugin),
+                7, Items.ENCHANTED_CRIMSON_STEM.getItem(plugin), 8, Items.ENCHANTED_CRIMSON_STEM.getItem(plugin), 9, Items.ENCHANTED_CRIMSON_STEM.getItem(plugin));
+    }
+
+    // Bundled Warped Stems GUI
+    public static FormatRecipesGUI newsEnchantedWarpedGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.BUNDLED_WARPED_STEMS.getItem(plugin),
+                1, Items.ENCHANTED_WARPED_STEM.getItem(plugin), 2, Items.ENCHANTED_WARPED_STEM.getItem(plugin), 3, Items.ENCHANTED_WARPED_STEM.getItem(plugin),
+                4, Items.ENCHANTED_WARPED_STEM.getItem(plugin), 5, Items.ENCHANTED_WARPED_STEM.getItem(plugin), 6, Items.ENCHANTED_WARPED_STEM.getItem(plugin),
+                7, Items.ENCHANTED_WARPED_STEM.getItem(plugin), 8, Items.ENCHANTED_WARPED_STEM.getItem(plugin), 9, Items.ENCHANTED_WARPED_STEM.getItem(plugin));
+    }
+
+    // Woodcutter's Axe GUI
+    public static FormatRecipesGUI newWoodCuttersAxeGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.WOODCUTTERS_AXE.getItem(plugin),
+                1, Items.PURE_IRON_NUGGET.getItem(plugin), 2, Items.ENCHANTED_IRON_BLOCK.getItem(plugin),
+                4, Items.ENCHANTED_IRON_BLOCK.getItem(plugin), 5, Items.HARDWOOD_HANDLE.getItem(plugin),
+                8, Items.HARDWOOD_HANDLE.getItem(plugin));
+    }
+
+    // Dull Pickaxe GUI
+    public static FormatRecipesGUI newDullPickaxeGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.DULL_PICKAXE.getItem(plugin),
+                1, Items.ENCHANTED_DEEPSLATE.getItem(plugin), 2, Items.ENCHANTED_DEEPSLATE.getItem(plugin), 3, Items.ENCHANTED_DEEPSLATE.getItem(plugin),
+                5, new ItemStack(Material.STICK),
+                8, new ItemStack(Material.STICK));
+    }
+
+    // Notched Pick GUI
+    public static FormatRecipesGUI newNotchedPickGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.NOTCHED_PICK.getItem(plugin),
+                1, Items.ALLOY.getItem(plugin), 2, Items.ENCHANTED_IRON.getItem(plugin), 3, Items.ALLOY.getItem(plugin),
+                5, Items.HARDWOOD_HANDLE.getItem(plugin),
+                8, Items.HARDWOOD_HANDLE.getItem(plugin));
+    }
+
+    // Imbalanced Pickaxe GUI
+    public static FormatRecipesGUI newImbalancedPickaxeGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.IMBALANCED_PICKAXE.getItem(plugin),
+                1, Items.ENCHANTED_CUT_COPPER.getItem(plugin), 2, Items.ENCHANTED_IRON_BLOCK.getItem(plugin), 3, Items.ENCHANTED_IRON_BLOCK.getItem(plugin),
+                4, Items.ENCHANTED_IRON_BLOCK.getItem(plugin), 5, Items.HARDWOOD_HANDLE.getItem(plugin),
+                8, Items.HARDWOOD_HANDLE.getItem(plugin));
+    }
+
+    // Dark Iron Helmet GUI
+    public static FormatRecipesGUI newDarkIronHelmetGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.DARK_IRON_HELMET.getItem(plugin),
+                1, Items.PURE_IRON_NUGGET.getItem(plugin), 2, Items.DARK_IRON_CORE.getItem(plugin), 3, Items.PURE_IRON_NUGGET.getItem(plugin),
+                4, Items.ENCHANTED_IRON_BLOCK.getItem(plugin), 5, Items.ALLOY_HELMET.getItem(plugin), 6, Items.ENCHANTED_IRON_BLOCK.getItem(plugin));
+    }
+
+    // Dark Iron Chestplate GUI
+    public static FormatRecipesGUI newDarkIronChestplatetGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.DARK_IRON_CHESTPLATE.getItem(plugin),
+                1, Items.ENCHANTED_IRON_BLOCK.getItem(plugin), 3, Items.ENCHANTED_IRON_BLOCK.getItem(plugin),
+                4, Items.PURE_IRON_NUGGET.getItem(plugin), 5, Items.DARK_IRON_CORE.getItem(plugin), 6, Items.PURE_IRON_NUGGET.getItem(plugin),
+                7, Items.PURE_IRON_NUGGET.getItem(plugin), 8, Items.ALLOY_CHESTPLATE.getItem(plugin),9, Items.PURE_IRON_NUGGET.getItem(plugin));
+    }
+
+    // Dark Iron Leggings GUI
+    public static FormatRecipesGUI newDarkIronLeggingsGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.DARK_IRON_LEGGINGS.getItem(plugin),
+                1, Items.PURE_IRON_NUGGET.getItem(plugin), 2, Items.PURE_IRON_NUGGET.getItem(plugin), 3, Items.PURE_IRON_NUGGET.getItem(plugin),
+                4, Items.ALLOY_LEGGINGS.getItem(plugin), 6, Items.DARK_IRON_CORE.getItem(plugin),
+                7, Items.ENCHANTED_IRON_BLOCK.getItem(plugin), 9, Items.ENCHANTED_IRON_BLOCK.getItem(plugin));
+    }
+
+    // Dark Iron Boots GUI
+    public static FormatRecipesGUI newDarkIronBootsGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.DARK_IRON_BOOTS.getItem(plugin),
+                2, Items.DARK_IRON_CORE.getItem(plugin),
+                4, Items.PURE_IRON_NUGGET.getItem(plugin), 5, Items.ALLOY_BOOTS.getItem(plugin), 6, Items.ENCHANTED_IRON_BLOCK.getItem(plugin));
+    }
+
+    // Tough Cord GUI
+    public static FormatRecipesGUI newToughCordGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.TOUGH_CORD.getItem(plugin),
+                2, Items.ENCHANTED_FLINT.getItem(plugin), 3, Items.ENCHANTED_FLINT.getItem(plugin),
+                4, Items.ENCHANTED_FLINT.getItem(plugin), 5, Items.ENCHANTED_WEB.getItem(plugin), 6, Items.ENCHANTED_FLINT.getItem(plugin),
+                7, Items.ENCHANTED_FLINT.getItem(plugin), 8, Items.ENCHANTED_FLINT.getItem(plugin));
+    }
+
+    // Seastone Handle GUI
+    public static FormatRecipesGUI newSeastoneHandleGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.SEASTONE_HANDLE.getItem(plugin),
+                2, Items.SEASTONE.getItem(plugin), 3, Items.POLISHED_SEASTONE.getItem(plugin),
+                4, Items.SEASTONE.getItem(plugin), 5, Items.POLISHED_SLATED_HANDLE.getItem(plugin), 6, Items.SEASTONE.getItem(plugin),
+                7, Items.POLISHED_SEASTONE.getItem(plugin), 8, Items.SEASTONE.getItem(plugin));
+    }
+
+    // Magmite Handle GUI
+    public static FormatRecipesGUI newMagmiteHandleGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.MAGMITE_HANDLE.getItem(plugin),
+                2, Items.ENCHANTED_OBSIDIAN.getItem(plugin), 3, Items.ENCHANTED_MAGMA_BLOCK.getItem(plugin),
+                4, Items.ENCHANTED_OBSIDIAN.getItem(plugin), 5, Items.POLISHED_SLATED_HANDLE.getItem(plugin), 6, Items.ENCHANTED_OBSIDIAN.getItem(plugin),
+                7, Items.ENCHANTED_MAGMA_BLOCK.getItem(plugin), 8, Items.ENCHANTED_OBSIDIAN.getItem(plugin));
+    }
+
+    // Enchanted Paper GUI
+    public static FormatRecipesGUI newEnchantedPaperGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.ENCHANTED_PAPER.getItem(plugin),
+        4, Items.ENCHANTED_SUGAR_CANE.getItem(plugin), 5, Items.ENCHANTED_SUGAR_CANE.getItem(plugin), 6, Items.ENCHANTED_SUGAR_CANE.getItem(plugin));
+    }
+
+    // Necronomicon Page GUI
+    public static FormatRecipesGUI newNecronomiconPageGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.NECRONOMICON_PAGE.getItem(plugin),
+                5, Items.ENCHANTED_PAPER.getItem(plugin), 6, Items.ENCHANTED_PAPER.getItem(plugin),
+                8, Items.ENCHANTED_PAPER.getItem(plugin), 9, Items.DISTILLED_SOUL_ESSENCE.getItem(plugin));
+    }
+
+    // Stats Guide GUI
+    public static FormatRecipesGUI newStatsGuideGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.STATS_GUIDE.getItem(plugin),
+                5, Items.ENCHANTED_INK_SAC.getItem(plugin), 6, Items.ENCHANTED_REDSTONE.getItem(plugin),
+                8, Items.ENCHANTED_LEATHER.getItem(plugin), 9, Items.ENCHANTED_PAPER.getItem(plugin));
+    }
+
+    // Gemstone Trident GUI
+    public static FormatRecipesGUI newGemstoneTridentGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.GEMSTONE_TRIDENT.getItem(plugin),
+                1, Items.GEMSTONE.getItem(plugin), 3, Items.GEMSTONE.getItem(plugin),
+                4, Items.GEMSTONE.getItem(plugin), 5, Items.SEASTONE_HANDLE.getItem(plugin), 6, Items.GEMSTONE.getItem(plugin),
+                8, Items.SEASTONE_HANDLE.getItem(plugin));
+    }
+
+    // Amalgamated Tissue GUI
+    public static FormatRecipesGUI newAmalgamatedTissueGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.AMALGAMATED_TISSUE.getItem(plugin),
+                5, Items.ENCHANTED_SLIME_BLOCK.getItem(plugin), 6, Items.CHUNK_OF_MEAT.getItem(plugin),
+                8, Items.PULSING_TUMOR.getItem(plugin),  9, Items.ENCHANTED_FERMENTED_SPIDER_EYE.getItem(plugin));
+    }
+
+    // Sugar Cube GUI
+    public static FormatRecipesGUI newSugarCubeGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.SUGAR_CUBE.getItem(plugin),
+                5, Items.ENCHANTED_SUGAR.getItem(plugin), 6, Items.ENCHANTED_SUGAR.getItem(plugin),
+                8, Items.ENCHANTED_SUGAR.getItem(plugin),  9, Items.ENCHANTED_SUGAR.getItem(plugin));
+    }
+
+    // Shortbow Cord GUI
+    public static FormatRecipesGUI newShortbowCordGUI(Plugin plugin, InventoryHolder back) {
+        ItemStack item = Items.SHORTBOW_CORD.getItem(plugin);
+        item.setAmount(2);
+        return new FormatRecipesGUI(plugin, back, item,
+                3, Items.TOUGH_CORD.getItem(plugin),
+                5, Items.SHORTBOW_CORD.getItem(plugin),
+                7, Items.TOUGH_CORD.getItem(plugin));
+    }
+
+    // Superstone Powder GUI
+    public static FormatRecipesGUI newSuperstonePowderGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.SUPERSTONE_POWDER.getItem(plugin),
+                1, Items.ENCHANTED_COBBLESTONE.getItem(plugin), 2, Items.ENCHANTED_DEEPSLATE_TILES.getItem(plugin), 3, Items.ENCHANTED_COBBLESTONE.getItem(plugin),
+                4, Items.ENCHANTED_DEEPSLATE_TILES.getItem(plugin), 5, Items.ENCHANTED_POWDER_BALL.getItem(plugin), 6, Items.ENCHANTED_DEEPSLATE_TILES.getItem(plugin),
+                7, Items.ENCHANTED_COBBLESTONE.getItem(plugin), 8, Items.ENCHANTED_DEEPSLATE_TILES.getItem(plugin), 9, Items.ENCHANTED_COBBLESTONE.getItem(plugin));
+    }
+
+    // Staff of Explosions GUI
+    public static FormatRecipesGUI newExplosionStaffGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.STAFF_OF_EXPLOSIVES.getItem(plugin),
+                2, Items.SUPERSTONE_POWDER.getItem(plugin), 3, Items.COMPACTED_COAL_LUMP.getItem(plugin),
+                5, Items.TNT_WAND.getItem(plugin), 6, Items.SUPERSTONE_POWDER.getItem(plugin),
+                7, Items.TNT_WAND.getItem(plugin));
+    }
+
+    // Drawstring Bag GUI
+    public static FormatRecipesGUI newDrawstringBagGUI(Plugin plugin, InventoryHolder back) {
+        ItemStack item = new ItemStack(Material.RABBIT_HIDE);
+            return new FormatRecipesGUI(plugin, back, Items.DRAWSTRING_BAG.getItem(plugin),
+                1, item, 2, Items.ENCHANTED_STRING.getItem(plugin), 3, item,
+                4, item, 5, Items.ENCHANTED_LEATHER.getItem(plugin), 6, item,
+                7, item, 8, item, 9, item);
+    }
+
+    // Tiny Rock Sack GUI
+    public static FormatRecipesGUI newTinyRockSackGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.TINY_ROCK_SACK.getItem(plugin),
+                1, Items.ENCHANTED_POLISHED_DEEPSLATE.getItem(plugin), 2, Items.ENCHANTED_POLISHED_DEEPSLATE.getItem(plugin), 3, Items.ENCHANTED_DRIPSTONE.getItem(plugin),
+                4, Items.ENCHANTED_POLISHED_DEEPSLATE.getItem(plugin), 5, Items.ENCHANTED_LEATHER.getItem(plugin), 6, Items.ENCHANTED_DRIPSTONE_BLOCK.getItem(plugin),
+                7, Items.ENCHANTED_DRIPSTONE.getItem(plugin), 8, Items.ENCHANTED_DRIPSTONE_BLOCK.getItem(plugin), 9, Items.ENCHANTED_DRIPSTONE_BLOCK.getItem(plugin));
+    }
+
+    // Small Rock Sack GUI
+    public static FormatRecipesGUI newSmallRockSackGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.SMALL_ROCK_SACK.getItem(plugin),
+                1, Items.ENCHANTED_DEEPSLATE_TILES.getItem(plugin), 2, Items.ENCHANTED_LEATHER.getItem(plugin), 3, Items.ENCHANTED_DEEPSLATE_TILES.getItem(plugin),
+                4, Items.ENCHANTED_DEEPSLATE_TILES.getItem(plugin), 5, Items.TINY_ROCK_SACK.getItem(plugin), 6, Items.ENCHANTED_DEEPSLATE_TILES.getItem(plugin),
+                7, Items.ENCHANTED_DEEPSLATE_TILES.getItem(plugin), 8, Items.ENCHANTED_LEATHER.getItem(plugin), 9, Items.ENCHANTED_DEEPSLATE_TILES.getItem(plugin));
+    }
+
+    // Medium Rock Sack GUI
+    public static FormatRecipesGUI newMediumRockSackGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.MEDIUM_ROCK_SACK.getItem(plugin),
+                1, Items.DEEPSLATE_MONOLITH.getItem(plugin), 2, Items.HIDE.getItem(plugin), 3, Items.ENCHANTED_DEEPSLATE_TILES.getItem(plugin),
+                4, Items.HIDE.getItem(plugin), 5, Items.SMALL_ROCK_SACK.getItem(plugin), 6, Items.ENCHANTED_DEEPSLATE_TILES.getItem(plugin),
+                7, Items.ENCHANTED_DEEPSLATE_TILES.getItem(plugin), 8, Items.ENCHANTED_DEEPSLATE_TILES.getItem(plugin), 9, Items.ENCHANTED_DEEPSLATE_TILES.getItem(plugin));
+    }
+
+    // Large Rock Sack GUI
+    public static FormatRecipesGUI newLargeRockSackGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.LARGE_ROCK_SACK.getItem(plugin),
+                1, Items.DEEPSLATE_MONOLITH.getItem(plugin), 2, Items.HIDE.getItem(plugin), 3, Items.DEEPSLATE_MONOLITH.getItem(plugin),
+                4, Items.ENCHANTED_DRIPSTONE_BLOCK.getItem(plugin), 5, Items.MEDIUM_ROCK_SACK.getItem(plugin), 6, Items.HIDE.getItem(plugin),
+                7, Items.HIDE.getItem(plugin), 8, Items.ENCHANTED_DRIPSTONE_BLOCK.getItem(plugin), 9, Items.DEEPSLATE_MONOLITH.getItem(plugin));
+    }
+
+    // Gigantic Rock Sack GUI
+    public static FormatRecipesGUI newGiganticRockSackGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.GIGANTIC_ROCK_SACK.getItem(plugin),
+                1, Items.HIDE.getItem(plugin), 2, Items.HIDE.getItem(plugin), 3, Items.HIDE.getItem(plugin),
+                4, Items.DEEPSLATE_MONOLITH.getItem(plugin), 5, Items.LARGE_ROCK_SACK.getItem(plugin), 6, Items.DEEPSLATE_MONOLITH.getItem(plugin),
+                7, Items.DEEPSLATE_MONOLITH.getItem(plugin), 8, Items.SUPERSTONE_POWDER.getItem(plugin), 9, Items.DEEPSLATE_MONOLITH.getItem(plugin));
+    }
+
+    // Humongous Rock Sack GUI
+    public static FormatRecipesGUI newHumongousRockSackGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.HUMONGOUS_ROCK_SACK.getItem(plugin),
+                1, Items.DEEPSLATE_MONOLITH.getItem(plugin), 2, Items.SUPERSTONE_POWDER.getItem(plugin), 3, Items.SUPERSTONE_POWDER.getItem(plugin),
+                4, Items.DEEPSLATE_MONOLITH.getItem(plugin), 5, Items.SUPERSTONE_POWDER.getItem(plugin), 6, Items.SUPERSTONE_POWDER.getItem(plugin),
+                7, Items.GIGANTIC_ROCK_SACK.getItem(plugin), 8, Items.DEEPSLATE_MONOLITH.getItem(plugin), 9, Items.DEEPSLATE_MONOLITH.getItem(plugin));
+    }
+
+    // Rock Sack Extension GUI
+    public static FormatRecipesGUI newRockSackExtensionGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.ROCK_SACK_EXTENSION.getItem(plugin),
+                1, Items.SUPERSTONE_POWDER.getItem(plugin), 2, Items.ENCHANTED_OBSIDIAN.getItem(plugin),
+                4, Items.ENCHANTED_OBSIDIAN.getItem(plugin), 5, Items.DEEPSLATE_MONOLITH.getItem(plugin), 6, Items.ENCHANTED_OBSIDIAN.getItem(plugin),
+                8, Items.ENCHANTED_OBSIDIAN.getItem(plugin), 9, Items.SUPERSTONE_POWDER.getItem(plugin));
+    }
+
+    // Tiny Mineral Sack GUI
+    public static FormatRecipesGUI newTinyMineralSackGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.TINY_ROCK_SACK.getItem(plugin),
+                1, Items.ENCHANTED_EMERALD.getItem(plugin), 2, Items.ENCHANTED_AMETHYST.getItem(plugin), 3, Items.ENCHANTED_REDSTONE.getItem(plugin),
+                4, Items.ENCHANTED_AMETHYST.getItem(plugin), 5, Items.ENCHANTED_LEATHER.getItem(plugin), 6, Items.ENCHANTED_AMETHYST.getItem(plugin),
+                7, Items.ENCHANTED_AMETHYST.getItem(plugin), 8, Items.ENCHANTED_AMETHYST.getItem(plugin), 9, Items.ENCHANTED_AMETHYST.getItem(plugin));
+    }
+
+    // Small Mineral Sack GUI
+    public static FormatRecipesGUI newSmallMineralSackGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.SMALL_MINERAL_SACK.getItem(plugin),
+                1, Items.ENCHANTED_DIAMOND.getItem(plugin), 2, Items.ENCHANTED_EMERALD.getItem(plugin), 3, Items.ENCHANTED_GLOWSTONE.getItem(plugin),
+                4, Items.ENCHANTED_REDSTONE_BLOCK.getItem(plugin), 5, Items.ENCHANTED_AMETHYST_BLOCK.getItem(plugin), 6, Items.ENCHANTED_REDSTONE_BLOCK.getItem(plugin),
+                7, Items.ENCHANTED_LEATHER.getItem(plugin), 8, Items.TINY_MINERAL_SACK.getItem(plugin), 9, Items.ENCHANTED_LEATHER.getItem(plugin));
+    }
+
+    // Medium Mineral Sack GUI
+    public static FormatRecipesGUI newMediumMineralSackGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.MEDIUM_MINERAL_SACK.getItem(plugin),
+                1, Items.MINERAL_CLUSTER.getItem(plugin), 2, Items.ENCHANTED_AMETHYST.getItem(plugin), 3, Items.ENCHANTED_AMETHYST_BLOCK.getItem(plugin),
+                4, Items.ENCHANTED_GLOWSTONE.getItem(plugin), 5, Items.SMALL_MINERAL_SACK.getItem(plugin), 6, Items.ENCHANTED_AMETHYST.getItem(plugin),
+                7, Items.HIDE.getItem(plugin), 8, Items.ENCHANTED_GLOWSTONE.getItem(plugin), 9, Items.MINERAL_CLUSTER.getItem(plugin));
+    }
+
+    // Large Mineral Sack GUI
+    public static FormatRecipesGUI newLargeMineralSackGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.LARGE_MINERAL_SACK.getItem(plugin),
+                1, Items.ENCHANTED_DIAMOND.getItem(plugin), 2, Items.ENCHANTED_DIAMOND.getItem(plugin), 3, Items.HIDE.getItem(plugin),
+                4, Items.ENCHANTED_AMETHYST_BLOCK.getItem(plugin), 5, Items.MEDIUM_MINERAL_SACK.getItem(plugin), 6, Items.ENCHANTED_DIAMOND.getItem(plugin),
+                7, Items.HIDE.getItem(plugin), 8, Items.ENCHANTED_AMETHYST_BLOCK.getItem(plugin), 9, Items.ENCHANTED_AMETHYST_BLOCK.getItem(plugin));
+    }
+
+    // Gigantic Mineral Sack GUI
+    public static FormatRecipesGUI newGiganticMineralSackGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.GIGANTIC_MINERAL_SACK.getItem(plugin),
+                1, Items.ENCHANTED_EMERALD.getItem(plugin), 2, Items.ENCHANTED_AMETHYST_BLOCK.getItem(plugin), 3, Items.ENCHANTED_DIAMOND.getItem(plugin),
+                4, Items.ENCHANTED_EMERALD.getItem(plugin), 5, Items.LARGE_MINERAL_SACK.getItem(plugin), 6, Items.ENCHANTED_DIAMOND.getItem(plugin),
+                7, Items.ENCHANTED_EMERALD.getItem(plugin), 8, Items.ENCHANTED_AMETHYST_BLOCK.getItem(plugin), 9, Items.ENCHANTED_DIAMOND.getItem(plugin));
+    }
+
+    // Humongous Mineral Sack GUI
+    public static FormatRecipesGUI newHumongousMineralSackGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.HUMONGOUS_MINERAL_SACK.getItem(plugin),
+                1, Items.GEMSTONE.getItem(plugin), 2, Items.ENCHANTED_AMETHYST_BLOCK.getItem(plugin), 3, Items.COMPACTED_COAL_LUMP.getItem(plugin),
+                4, Items.ENCHANTED_AMETHYST_BLOCK.getItem(plugin), 5, Items.GIGANTIC_MINERAL_SACK.getItem(plugin), 6, Items.ENCHANTED_AMETHYST_BLOCK.getItem(plugin),
+                7, Items.LUMINOUS_QUARTZ.getItem(plugin), 8, Items.ENCHANTED_AMETHYST_BLOCK.getItem(plugin), 9, Items.MINERAL_CLUSTER.getItem(plugin));
+    }
+
+    // Mineral Sack Extension GUI
+    public static FormatRecipesGUI newMineralSackExtensionGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.MINERAL_SACK_EXTENSION.getItem(plugin),
+                1, Items.ENCHANTED_AMETHYST.getItem(plugin), 2, Items.ENCHANTED_AMETHYST.getItem(plugin), 3, Items.ENCHANTED_AMETHYST.getItem(plugin),
+                4, Items.ENCHANTED_GLOWSTONE.getItem(plugin), 5, Items.COMPACTED_COAL_LUMP.getItem(plugin), 6, Items.ENCHANTED_AMETHYST.getItem(plugin),
+                7, Items.COMPACTED_COAL_LUMP.getItem(plugin), 8, Items.ENCHANTED_GLOWSTONE.getItem(plugin), 9, Items.ENCHANTED_AMETHYST.getItem(plugin));
+    }
+
+    // Enchanted Shulker Shell GUI
+    public static FormatRecipesGUI neweShulkerShellGUI(Plugin plugin, InventoryHolder back) {
+        ItemStack item = new ItemStack(Material.SHULKER_SHELL);
+        return new FormatRecipesGUI(plugin, back, Items.ENCHANTED_SHULKER_SHELL.getItem(plugin),
+                1, item, 2, item, 3, item,
+                4, item, 6, item,
+                7, item, 8, item, 9, item);
+    }
+
+    // Sticky Bomb Launcher GUI
+    public static FormatRecipesGUI newStickyBombLauncherGUI(Plugin plugin, InventoryHolder back) {
+        return new FormatRecipesGUI(plugin, back, Items.STICKY_BOMB_LAUNCHER.getItem(plugin),
+                2, Items.ENCHANTED_IRON_BLOCK.getItem(plugin), 3, Items.STICKY_BALL.getItem(plugin),
+                4, Items.PURE_IRON_NUGGET.getItem(plugin), 5, Items.ENCHANTED_SLIME_BLOCK.getItem(plugin), 6, Items.ENCHANTED_IRON_BLOCK.getItem(plugin),
+                7, Items.ENCHANTED_POWDER_BALL.getItem(plugin), 8, Items.PURE_IRON_NUGGET.getItem(plugin));
     }
 }

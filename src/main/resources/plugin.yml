@@ -35,3 +35,18 @@ commands:
   editinventory:
     description: go inside a player's inventory
     usage: /<command>
+  addenchant:
+    description: add an enchantment to a player's inventory
+    usage: /<command>
+  etable:
+    description: open an enchanting table gui
+    usage: /<command>
+  setContainer:
+    description: set a persistent data container
+    usage: /<command>
+  sack:
+    description: open a player's sacks gui
+    usage: /<command>
+  sacks:
+    description: open a player's sacks gui
+    usage: /<command>

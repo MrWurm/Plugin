@@ -1,7 +1,6 @@
 package its.wurm.testplugin.Inventories;
 
 import its.wurm.testplugin.Items.Items;
-import its.wurm.testplugin.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
@@ -38,7 +37,7 @@ public class WeaponsSelectGUI implements InventoryHolder {
         main.setItem(4, Items.NETHERITE_SCIMITAR.getItem(plugin));
         main.setItem(5, Items.TNT_WAND.getItem(plugin));
         main.setItem(6, Items.PUFFERFISH_CANON.getItem(plugin));
-        main.setItem(7, Items.ASPECT_OF_THE_END.getItem(plugin));
+        main.setItem(7, Items.AMETHYST_SPEAR.getItem(plugin));
         main.setItem(8, Items.MEAT_CLEAVER.getItem(plugin));
         main.setItem(9, Items.SLATED_SCIMITAR.getItem(plugin));
         main.setItem(10, Items.ALLOY_SCIMITAR.getItem(plugin));
@@ -54,6 +53,11 @@ public class WeaponsSelectGUI implements InventoryHolder {
         main.setItem(24, Items.REDSTONE_SHIELD.getItem(plugin));
         main.setItem(25, Items.DIAMOND_SHIELD.getItem(plugin));
         main.setItem(26, Items.EMERALD_SHIELD.getItem(plugin));
+        main.setItem(27, Items.QUARTERSTAFF.getItem(plugin));
+        main.setItem(28, Items.BRITTLE_BONE_SPEAR.getItem(plugin));
+        main.setItem(29, Items.BONE_SPEAR.getItem(plugin));
+        main.setItem(30, Items.GEMSTONE_TRIDENT.getItem(plugin));
+        main.setItem(31, Items.STICKY_BOMB_LAUNCHER.getItem(plugin));
         main.setItem(32, Items.NETHERITE_SHIELD.getItem(plugin));
         main.setItem(33, Items.LIGHTNING_WAND.getItem(plugin));
         main.setItem(34, Items.WAND_OF_MAGGOTS.getItem(plugin));
@@ -62,8 +66,11 @@ public class WeaponsSelectGUI implements InventoryHolder {
         main.setItem(37, Items.LESSER_HEAL_WAND.getItem(plugin));
         main.setItem(38, Items.HEAL_WAND.getItem(plugin));
         main.setItem(39, Items.FLASH_HEAL_WAND.getItem(plugin));
+        main.setItem(40, Items.STAFF_OF_EXPLOSIVES.getItem(plugin));
         main.setItem(41, Items.DUNE_WAND.getItem(plugin));
         main.setItem(42, Items.PRISMATIC_WAND.getItem(plugin));
+        main.setItem(43, Items.FLIMSY_BAMBOO_SPEAR.getItem(plugin));
+        main.setItem(44, Items.BAMBOO_SPEAR.getItem(plugin));
 
         //Bottom Row with options to change pages and a go back button
         for (int i = 45; i < 54; i++) {

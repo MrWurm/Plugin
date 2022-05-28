@@ -59,6 +59,22 @@ public class MaterialsSelectGUI3 implements InventoryHolder {
         main.setItem(26, Items.DEEPSLATE_MONOLITH.getItem(plugin));
         main.setItem(27, Items.CACTUS_LEATHER.getItem(plugin));
         main.setItem(28, Items.ENCHANTED_OBSIDIAN.getItem(plugin));
+        main.setItem(29, Items.ENCHANTED_MAGMA_CREAM.getItem(plugin));
+        main.setItem(30, Items.ENCHANTED_MAGMA_BLOCK.getItem(plugin));
+        main.setItem(31, Items.COMPACTED_COAL_LUMP.getItem(plugin));
+        main.setItem(32, Items.PURE_IRON_NUGGET.getItem(plugin));
+        main.setItem(33, Items.POLISHED_SLATED_HANDLE.getItem(plugin));
+        main.setItem(34, Items.SEASTONE.getItem(plugin));
+        main.setItem(35, Items.POLISHED_SEASTONE.getItem(plugin));
+        main.setItem(36, Items.WOOD_PILE.getItem(plugin));
+        main.setItem(37, Items.BUNDLED_OAK_LOGS.getItem(plugin));
+        main.setItem(38, Items.BUNDLED_DARK_OAK_LOGS.getItem(plugin));
+        main.setItem(39, Items.BUNDLED_BIRCH_LOGS.getItem(plugin));
+        main.setItem(40, Items.BUNDLED_SPRUCE_LOGS.getItem(plugin));
+        main.setItem(41, Items.BUNDLED_ACACIA_LOGS.getItem(plugin));
+        main.setItem(42, Items.BUNDLED_JUNGLE_LOGS.getItem(plugin));
+        main.setItem(43, Items.BUNDLED_WARPED_STEMS.getItem(plugin));
+        main.setItem(44, Items.BUNDLED_CRIMSON_STEMS.getItem(plugin));
 
         //Bottom Row with options to change pages and a go back and next page button
         for (int i = 45; i < 54; i++) {

@@ -1,20 +1,19 @@
 package its.wurm.testplugin.Commands.Use;
 
 import its.wurm.testplugin.Events.InventoryEvents;
-import its.wurm.testplugin.Inventories.AnvilGUI;
-import its.wurm.testplugin.Inventories.MainGUI;
-import its.wurm.testplugin.Inventories.PlayerInventoryGUI;
-import its.wurm.testplugin.Inventories.RecipeSelectGUI;
+import its.wurm.testplugin.Inventories.*;
 import its.wurm.testplugin.Items.Items;
 import its.wurm.testplugin.Main;
 import its.wurm.testplugin.Mobs.Mobs;
+import its.wurm.testplugin.persistentDataContainers.stringList;
+import its.wurm.testplugin.statFunctions.StatFunctions;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 
@@ -23,10 +22,12 @@ public class Commands implements CommandExecutor {
 
     Main plugin;
     InventoryEvents inventoryEvents;
+    StatFunctions functions;
 
-    public Commands(Main plugin, InventoryEvents inventoryEvents) {
+    public Commands(Main plugin, InventoryEvents inventoryEvents, StatFunctions functions) {
         this.plugin = plugin;
         this.inventoryEvents = inventoryEvents;
+        this.functions = functions;
     }
 
     @Override
@@ -156,18 +157,101 @@ public class Commands implements CommandExecutor {
                 }
 
                 if (Bukkit.getPlayer(strings[0]) == null) {
-                    player.sendMessage(ChatColor.RED + "You must state a player to view the inventory of");
+                    player.sendMessage(ChatColor.RED + "You must state a player to view the inventory of!");
                     return true;
                 }
 
                 player.openInventory(Bukkit.getPlayer(strings[0]).getInventory());
                 return true;
             }
+
+            if (cmd.getName().equalsIgnoreCase("addenchant")) {
+                if (strings.length < 2) {
+                    player.sendMessage(ChatColor.RED + "You must specify the name and level of the enchantment!");
+                }
+                if (strings.length >= 3) {
+                    player = Bukkit.getPlayer(strings[2]);
+                }
+                ItemMeta meta = player.getInventory().getItemInMainHand().getItemMeta();
+                functions.addEnchant(player.getInventory().getItemInMainHand(), strings[0], Integer.valueOf(strings[1]));
+                return true;
+            }
+
+            if (cmd.getName().equalsIgnoreCase("setContainer")) {
+                if (strings.length < 3) {
+                    player.sendMessage(ChatColor.RED + "You must provide a type, value, and key for this container!");
+                    return true;
+                }
+                Object object = new Object();
+                PersistentDataType type = PersistentDataType.BYTE;
+                switch (strings[0].toUpperCase()) {
+                    case "STRING":
+                        type = PersistentDataType.STRING;
+                        object = strings[1];
+                        break;
+                    case "INT":
+                    case "INTEGER":
+                        type = PersistentDataType.INTEGER;
+                        object = Integer.valueOf(strings[1]);
+                        break;
+                    case "INT_LIST":
+                    case "INTEGER_LIST":
+                    case "INT_ARRAy":
+                    case "INTEGER_ARRAY":
+                        type = PersistentDataType.INTEGER_ARRAY;
+                        object = new int[] {Integer.valueOf(strings[1])};
+                        break;
+                    case "DOUBLE":
+                        type = PersistentDataType.DOUBLE;
+                        object = Double.valueOf(strings[1]);
+                        break;
+                    case "SHORT":
+                        type = PersistentDataType.SHORT;
+                        object = Short.valueOf(strings[1]);
+                        break;
+                    case "LONG":
+                        type = PersistentDataType.LONG;
+                        object = Long.valueOf(strings[1]);
+                        break;
+                    case "BYTE":
+                        type = PersistentDataType.BYTE;
+                        object = Byte.valueOf(strings[1]);
+                        break;
+                    case "FLOAT":
+                        type = PersistentDataType.FLOAT;
+                        object = Float.valueOf(strings[1]);
+                        break;
+                    case "LONG_LIST":
+                    case "LONG_ARRAY":
+                        type = PersistentDataType.LONG_ARRAY;
+                        object = new long[] {Long.valueOf(strings[1])};
+                        break;
+                    case "BYTE_LIST":
+                    case "BYTE_ARRAY":
+                        type = PersistentDataType.BYTE_ARRAY;
+                        object = new byte[] {Byte.valueOf(strings[1])};
+                        break;
+                    case "STRING_LIST":
+                    case "STRING_ARRAY":
+                        type = new stringList();
+                        object = new String[] {strings[1]};
+                        break;
+                }
+
+                ItemMeta meta = player.getInventory().getItemInMainHand().getItemMeta();
+                meta.getPersistentDataContainer().set(new NamespacedKey(plugin, strings[2]),
+                        type, object);
+                player.getInventory().getItemInMainHand().setItemMeta(meta);
+            }
         }
 
         if (cmd.getName().equalsIgnoreCase("menu")) {
-            MainGUI gui = new MainGUI(plugin, player);
-            player.openInventory(gui.getInventory());
+            player.openInventory(new MainGUI(plugin, player).getInventory());
+            return true;
+        }
+
+        if (cmd.getName().equalsIgnoreCase("etable")) {
+            player.openInventory(new EnchantmentsGUI1(plugin).getInventory());
             return true;
         }
 
@@ -203,6 +287,10 @@ public class Commands implements CommandExecutor {
             return true;
         }
 
+        if (cmd.getName().equalsIgnoreCase("sack") ||
+            cmd.getName().equalsIgnoreCase("sacks")) {
+            player.openInventory(new SacksGUI(plugin, player).getInventory());
+        }
         return true;
     }
 }

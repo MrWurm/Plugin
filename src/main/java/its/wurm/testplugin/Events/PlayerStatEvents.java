@@ -1,6 +1,8 @@
 package its.wurm.testplugin.Events;
 
 import its.wurm.testplugin.Main;
+import its.wurm.testplugin.Mobs.Attacks;
+import its.wurm.testplugin.persistentDataContainers.stringList;
 import its.wurm.testplugin.statFunctions.StatFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -8,9 +10,15 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 public class PlayerStatEvents implements Listener {
     Main plugin;
@@ -21,7 +29,7 @@ public class PlayerStatEvents implements Listener {
         this.functions =  new StatFunctions(plugin, null);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void assign(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
@@ -30,21 +38,14 @@ public class PlayerStatEvents implements Listener {
                 PersistentDataType.DOUBLE, 100.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "HealthBonus"),
                 PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "HealthSet"),
-                PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "HealthModifier"),
                 PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "HealthModifierBonus"),
                 PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "HealthModifierSet"),
-                PersistentDataType.DOUBLE, 0.0);
-
 
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "HealModifier"),
                 PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "HealModifierBonus"),
-                PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "HealModifierSet"),
                 PersistentDataType.DOUBLE, 0.0);
 
         //Define Defense
@@ -52,13 +53,9 @@ public class PlayerStatEvents implements Listener {
                 PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DefenseBonus"),
                 PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DefenseSet"),
-                PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DefenseModifier"),
                 PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DefenseModifierBonus"),
-                PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DefenseModifierSet"),
                 PersistentDataType.DOUBLE, 0.0);
 
         //Define Strength
@@ -66,13 +63,9 @@ public class PlayerStatEvents implements Listener {
                 PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "StrengthBonus"),
                 PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "StrengthSet"),
-                PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "StrengthModifier"),
                 PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "StrengthModifierBonus"),
-                PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "StrengthModifierSet"),
                 PersistentDataType.DOUBLE, 0.0);
 
         //Define Crit Chance
@@ -80,13 +73,9 @@ public class PlayerStatEvents implements Listener {
                 PersistentDataType.DOUBLE, 20.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCBonus"),
                 PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCSet"),
-                PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCModifier"),
                 PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCModifierBonus"),
-                PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CCModifierSet"),
                 PersistentDataType.DOUBLE, 0.0);
 
         //Define Crit Damage
@@ -94,28 +83,19 @@ public class PlayerStatEvents implements Listener {
                 PersistentDataType.DOUBLE, 50.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CritBonus"),
                 PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CritSet"),
-                PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CritModifier"),
                 PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CritModifierBonus"),
                 PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "CritModifierSet"),
-                PersistentDataType.DOUBLE, 0.0);
-
 
         //Define Damage
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageBase"),
                 PersistentDataType.DOUBLE, 1.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageBonus"),
                 PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageSet"),
-                PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifier"),
                 PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifierBonus"),
-                PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "DamageModifierSet"),
                 PersistentDataType.DOUBLE, 0.0);
 
         //Define Speed
@@ -123,13 +103,9 @@ public class PlayerStatEvents implements Listener {
                 PersistentDataType.DOUBLE, 100.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "SpeedBonus"),
                 PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "SpeedSet"),
-                PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "SpeedModifier"),
                 PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "SpeedModifierBonus"),
-                PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "SpeedModifierSet"),
                 PersistentDataType.DOUBLE, 0.0);
 
         //Define Attack Speed
@@ -137,13 +113,9 @@ public class PlayerStatEvents implements Listener {
                 PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "AttackSpeedBonus"),
                 PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "AttackSpeedSet"),
-                PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "AttackSpeedModifier"),
                 PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "AttackSpeedModifierBonus"),
-                PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "AttackSpeedModifierSet"),
                 PersistentDataType.DOUBLE, 0.0);
 
         //Define Intelligence
@@ -151,13 +123,9 @@ public class PlayerStatEvents implements Listener {
                 PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "IntBonus"),
                 PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "IntSet"),
-                PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "IntModifier"),
                 PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "IntModifierBonus"),
-                PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "IntModifierSet"),
                 PersistentDataType.DOUBLE, 0.0);
 
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "ManaBase"),
@@ -168,13 +136,9 @@ public class PlayerStatEvents implements Listener {
                 PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "ThaumaturgyBonus"),
                 PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "ThaumaturgySet"),
-                PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "ThaumaturgyModifier"),
                 PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "ThaumaturgyModifierBonus"),
-                PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "ThaumaturgyModifierSet"),
                 PersistentDataType.DOUBLE, 0.0);
 
         //Define Invocation
@@ -182,21 +146,14 @@ public class PlayerStatEvents implements Listener {
                 PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "InvocationBonus"),
                 PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "InvocationSet"),
-                PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "InvocationModifier"),
                 PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "InvocationModifierBonus"),
                 PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "InvocationModifierSet"),
-                PersistentDataType.DOUBLE, 0.0);
-
         //Define Magic Find
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "MagicBase"),
                 PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "MagicBonus"),
-                PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "MagicSet"),
                 PersistentDataType.DOUBLE, 0.0);
 
         //Define Mining Fortune
@@ -204,15 +161,10 @@ public class PlayerStatEvents implements Listener {
                 PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "MineBonus"),
                 PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "MineSet"),
-                PersistentDataType.DOUBLE, 0.0);
-
         //Define Farming Fortune
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "FarmBase"),
                 PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "FarmBonus"),
-                PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "FarmSet"),
                 PersistentDataType.DOUBLE, 0.0);
 
         //Define Excavating Fortune
@@ -220,9 +172,6 @@ public class PlayerStatEvents implements Listener {
                 PersistentDataType.DOUBLE, 0.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "ExcBonus"),
                 PersistentDataType.DOUBLE, 0.0);
-        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "ExcSet"),
-                PersistentDataType.DOUBLE, 0.0);
-
         //Define soup and food limits
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "StrengthSoup"),
                 PersistentDataType.INTEGER, 0);
@@ -241,11 +190,9 @@ public class PlayerStatEvents implements Listener {
 
         //set current health and mana
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
-                PersistentDataType.DOUBLE, player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
-                        PersistentDataType.DOUBLE));
+                PersistentDataType.DOUBLE, 100.0);
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Mana"),
-                PersistentDataType.DOUBLE, player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxMana"),
-                        PersistentDataType.DOUBLE));
+                PersistentDataType.DOUBLE, 100.0);
 
         //set a player's class
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "class"),
@@ -259,123 +206,146 @@ public class PlayerStatEvents implements Listener {
         //set a player's pacifist mode
         player.getPersistentDataContainer().set(new NamespacedKey(plugin, "peace"),
                 PersistentDataType.INTEGER, 0);
+        //set a player's skill noise mode
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "noise"),
+                PersistentDataType.INTEGER, 0);
+        //set a player's unlocked enchantments
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "enchantmentsAvailable"),
+                new stringList(), new String[]{});
+        //set a player's unlocked enchantment levels
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "enchantmentsLevel"),
+                PersistentDataType.INTEGER_ARRAY, new int[]{});
+        //set a player's toggle on if it should be toggled
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "smeltToggles"),
+                PersistentDataType.INTEGER_ARRAY, new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1});
+        //set a player's potion types
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "potionEffects"),
+                new stringList(), new String[]{});
+        //set a player's potion levels
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "potionLevels"),
+                PersistentDataType.INTEGER_ARRAY, new int[]{});
+        //set a player's potions durations
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "potionDurations"),
+                PersistentDataType.LONG_ARRAY, new long[]{});
+        //set a player's unlocked sacks
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "sacksUnlocked"),
+                new stringList(), new String[]{"-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"});
+        //set a player's sack materials
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "sackMaterial"),
+                new stringList(), new String[]{});
+        //set player's maximum amount for a sack material
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "sackMax"),
+                PersistentDataType.INTEGER_ARRAY, new int[]{});
+        //set a player's amount of sack materials
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "sackAmount"),
+                PersistentDataType.INTEGER_ARRAY, new int[]{});
+        //set a player's pet
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Pet"),
+                PersistentDataType.BYTE_ARRAY, new byte[]{});
+        //set a player's available pets
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "availablePets"),
+                PersistentDataType.BYTE_ARRAY, new byte[]{});
+        //set a player's pet selection mode
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "selectionMode"),
+                PersistentDataType.INTEGER, 0);
     }
 
 
-public static void updateStats(Player player, Main plugin) {
+public static void updateStats(Player player, Main plugin, StatFunctions functions) {
 
     //take base damage
     double damage = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageBase"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageSet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageBonus"),
             PersistentDataType.DOUBLE);
 
     //take base damage mod
     double damageMod = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifierSet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifierBonus"),
             PersistentDataType.DOUBLE);
 
     //take base strength
     double strength = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "StrengthBase"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "StrengthSet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "StrengthBonus"),
             PersistentDataType.DOUBLE);
 
     //take base strength mod
     double strengthMod = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "StrengthModifier"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "StrengthModifierSet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "StrengthModifierBonus"),
             PersistentDataType.DOUBLE);
 
     //take base Crit Damage
     double crit = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CritBase"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CritSet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CritBonus"),
             PersistentDataType.DOUBLE);
 
     //take base Crit Damage mod
     double critMod = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CritModifier"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CritModifierSet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CritModifierBonus"),
             PersistentDataType.DOUBLE);
 
     //take base Crit Chance
     double CC = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBase"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCSet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCBonus"),
             PersistentDataType.DOUBLE);
 
     //take base Crit Chance mod
     double CCMod = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCModifier"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCModifierSet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CCModifierBonus"),
             PersistentDataType.DOUBLE);
 
     //take base Attack Speed
     double attackSpeed = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeedBase"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeedSet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeedBonus"),
             PersistentDataType.DOUBLE);
 
     //take base Crit Chance mod
     double attackSpeedMod = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeedModifier"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeedModifierSet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeedModifierBonus"),
             PersistentDataType.DOUBLE);
 
 
     //take base Health
     double health = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "HealthBase"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "HealthSet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "HealthBonus"),
             PersistentDataType.DOUBLE);
 
     //take base Health mod
     double healthMod = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "HealthModifier"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "HealthModifierSet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "HealthModifierBonus"),
             PersistentDataType.DOUBLE);
 
     //take base Heal mod
     double healMod = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "HealModifier"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "HealModifierSet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "HealModifierBonus"),
             PersistentDataType.DOUBLE);
 
     //take base Defense
     double defense = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DefenseBase"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DefenseSet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DefenseBonus"),
             PersistentDataType.DOUBLE);
 
     //take base Defense mod
     double defenseMod = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DefenseModifier"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DefenseModifierSet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "DefenseModifierBonus"),
             PersistentDataType.DOUBLE);
 
     //take base Speed
     double speed = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedBase"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedSet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedBonus"),
             PersistentDataType.DOUBLE);
 
     //take base Speed mod
     double speedMod = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifierSet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifierBonus"),
             PersistentDataType.DOUBLE);
 
     //take base Intelligence
     double intelligence = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "IntBase"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "IntSet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "IntBonus"),
             PersistentDataType.DOUBLE);
 
     //take base intelligence mod
     double intelligenceMod = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifier"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifierSet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "IntModifierBonus"),
             PersistentDataType.DOUBLE);
 
@@ -385,51 +355,416 @@ public static void updateStats(Player player, Main plugin) {
 
     //take base Thaumaturgy
     double thaumaturgy = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "ThaumaturgyBase"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "ThaumaturgySet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "ThaumaturgyBonus"),
             PersistentDataType.DOUBLE);
 
     //take base Thaumaturgy mod
     double thaumaturgyMod = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "ThaumaturgyModifier"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "ThaumaturgyModifierSet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "ThaumaturgyModifierBonus"),
             PersistentDataType.DOUBLE);
 
     //take base Invocation
     double invocation = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "InvocationBase"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "InvocationSet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "InvocationBonus"),
             PersistentDataType.DOUBLE);
 
     //take base Invocation mod
     double invocationMod = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "InvocationModifier"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "InvocationModifierSet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "InvocationModifierBonus"),
             PersistentDataType.DOUBLE);
 
     //take base Magic Find
     double MF = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MagicBase"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MagicSet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MagicBonus"),
             PersistentDataType.DOUBLE);
 
     //take base Farming Fortune
     double Farm = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "FarmBase"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "FarmSet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "FarmBonus"),
             PersistentDataType.DOUBLE);
 
+    //take base Farming Fortune Modifier
+    double FarmMod = 0.0;
+
     //take base Mining Fortune
     double Mine = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MineBase"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MineSet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MineBonus"),
             PersistentDataType.DOUBLE);
 
+    //take base Mining Fortune Modifier
+    double MineMod = 0.0;
+
     //take base Excavating Fortune
     double Excavating = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "ExcBase"),
-            PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "ExcSet"),
             PersistentDataType.DOUBLE) + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "ExcBonus"),
             PersistentDataType.DOUBLE);
+
+    //take base Excavating Fortune Modifier
+    double ExcavatingMod = 0.0;
+
+    //Check a player's pet for stats and apply it to stats
+    if (functions.getPets().get(player) != null) {
+        PersistentDataContainer pet = functions.getPets().get(player).getItemMeta().getPersistentDataContainer();
+        if (pet.get(new NamespacedKey(plugin, "Damage"),
+                PersistentDataType.DOUBLE) != null) {
+            damage += pet.get(new NamespacedKey(plugin, "Damage"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemDamage"),
+                PersistentDataType.DOUBLE) != null) {
+            damage += pet.get(new NamespacedKey(plugin, "ItemDamage"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "DamageModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            damageMod += pet.get(new NamespacedKey(plugin, "DamageModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemDamageModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            damageMod += pet.get(new NamespacedKey(plugin, "ItemDamageModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "Strength"),
+                PersistentDataType.DOUBLE) != null) {
+            strength += pet.get(new NamespacedKey(plugin, "Strength"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemStrength"),
+                PersistentDataType.DOUBLE) != null) {
+            strength += pet.get(new NamespacedKey(plugin, "ItemStrength"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "StrengthModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            strengthMod += pet.get(new NamespacedKey(plugin, "StrengthModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemStrengthModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            strengthMod += pet.get(new NamespacedKey(plugin, "ItemStrengthModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "Crit"),
+                PersistentDataType.DOUBLE) != null) {
+            crit += pet.get(new NamespacedKey(plugin, "Crit"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemCrit"),
+                PersistentDataType.DOUBLE) != null) {
+            crit += pet.get(new NamespacedKey(plugin, "ItemCrit"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "CritModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            critMod += pet.get(new NamespacedKey(plugin, "CritModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemCritModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            critMod += pet.get(new NamespacedKey(plugin, "ItemCritModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "CC"),
+                PersistentDataType.DOUBLE) != null) {
+            CC += pet.get(new NamespacedKey(plugin, "CC"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemCC"),
+                PersistentDataType.DOUBLE) != null) {
+            CC += pet.get(new NamespacedKey(plugin, "ItemCC"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "CCModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            CCMod += pet.get(new NamespacedKey(plugin, "CCModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemCCModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            CCMod += pet.get(new NamespacedKey(plugin, "ItemCCModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "AttackSpeed"),
+                PersistentDataType.DOUBLE) != null) {
+            attackSpeed += pet.get(new NamespacedKey(plugin, "AttackSpeed"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemAttackSpeed"),
+                PersistentDataType.DOUBLE) != null) {
+            attackSpeed += pet.get(new NamespacedKey(plugin, "ItemAttackSpeed"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "AttackSpeedModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            attackSpeedMod += pet.get(new NamespacedKey(plugin, "AttackSpeedModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemAttackSpeedModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            attackSpeedMod += pet.get(new NamespacedKey(plugin, "ItemAttackSpeedModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "Health"),
+                PersistentDataType.DOUBLE) != null) {
+            health += pet.get(new NamespacedKey(plugin, "Health"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemHealth"),
+                PersistentDataType.DOUBLE) != null) {
+            health += pet.get(new NamespacedKey(plugin, "ItemHealth"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "HealthModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            healthMod += pet.get(new NamespacedKey(plugin, "HealthModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemHealthModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            healthMod += pet.get(new NamespacedKey(plugin, "ItemHealthModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "Defense"),
+                PersistentDataType.DOUBLE) != null) {
+            defense += pet.get(new NamespacedKey(plugin, "Defense"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemDefense"),
+                PersistentDataType.DOUBLE) != null) {
+            defense += pet.get(new NamespacedKey(plugin, "ItemDefense"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "DefenseModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            defenseMod += pet.get(new NamespacedKey(plugin, "DefenseModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemDefenseModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            defenseMod += pet.get(new NamespacedKey(plugin, "ItemDefenseModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "Speed"),
+                PersistentDataType.DOUBLE) != null) {
+            speed += pet.get(new NamespacedKey(plugin, "Speed"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemSpeed"),
+                PersistentDataType.DOUBLE) != null) {
+            speed += pet.get(new NamespacedKey(plugin, "ItemSpeed"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "SpeedModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            speedMod += pet.get(new NamespacedKey(plugin, "SpeedModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemSpeedModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            speedMod += pet.get(new NamespacedKey(plugin, "ItemSpeedModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "Intelligence"),
+                PersistentDataType.DOUBLE) != null) {
+            intelligence += pet.get(new NamespacedKey(plugin, "Intelligence"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemIntelligence"),
+                PersistentDataType.DOUBLE) != null) {
+            intelligence += pet.get(new NamespacedKey(plugin, "ItemIntelligence"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "IntelligenceModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            intelligenceMod += pet.get(new NamespacedKey(plugin, "IntelligenceModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemIntelligenceModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            intelligenceMod += pet.get(new NamespacedKey(plugin, "ItemIntelligenceModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "Thaumaturgy"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgy += pet.get(new NamespacedKey(plugin, "Thaumaturgy"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemThaumaturgy"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgy += pet.get(new NamespacedKey(plugin, "ItemThaumaturgy"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ThaumaturgyModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgyMod += pet.get(new NamespacedKey(plugin, "ThaumaturgyModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemThaumaturgyModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgyMod += pet.get(new NamespacedKey(plugin, "ItemThaumaturgyModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "Invocation"),
+                PersistentDataType.DOUBLE) != null) {
+            invocation += pet.get(new NamespacedKey(plugin, "Invocation"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemInvocation"),
+                PersistentDataType.DOUBLE) != null) {
+            invocation += pet.get(new NamespacedKey(plugin, "ItemInvocation"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "InvocationModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            invocationMod += pet.get(new NamespacedKey(plugin, "InvocationModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemInvocationModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            invocationMod += pet.get(new NamespacedKey(plugin, "ItemInvocationModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "Magic"),
+                PersistentDataType.DOUBLE) != null) {
+            MF += pet.get(new NamespacedKey(plugin, "Magic"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemMagic"),
+                PersistentDataType.DOUBLE) != null) {
+            MF += pet.get(new NamespacedKey(plugin, "ReforgeMagic"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "FarmingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Farm += pet.get(new NamespacedKey(plugin, "FarmingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemFarmingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Farm += pet.get(new NamespacedKey(plugin, "ItemFarmingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "FarmingFortuneModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            FarmMod += pet.get(new NamespacedKey(plugin, "FarmingFortuneModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemFarmingFortuneModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            FarmMod += pet.get(new NamespacedKey(plugin, "ItemFarmingFortuneModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "MiningFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Mine += pet.get(new NamespacedKey(plugin, "MiningFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemMiningFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Mine += pet.get(new NamespacedKey(plugin, "ItemMiningFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "MiningFortuneModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            MineMod += pet.get(new NamespacedKey(plugin, "MiningFortuneModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemMiningFortuneModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            MineMod += pet.get(new NamespacedKey(plugin, "ItemMiningFortuneModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ExcavatingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Excavating += pet.get(new NamespacedKey(plugin, "ExcavatingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemExcavatingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Excavating += pet.get(new NamespacedKey(plugin, "ItemExcavatingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ExcavatingFortuneModifier"),
+                PersistentDataType.DOUBLE) != null) {
+             ExcavatingMod += pet.get(new NamespacedKey(plugin, "ExcavatingFortuneModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemExcavatingFortuneModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            ExcavatingMod += pet.get(new NamespacedKey(plugin, "ItemExcavatingFortuneModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "HealMod"),
+                PersistentDataType.DOUBLE) != null) {
+            healMod += pet.get(new NamespacedKey(plugin, "HealMod"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (pet.get(new NamespacedKey(plugin, "ItemHealMod"),
+                PersistentDataType.DOUBLE) != null) {
+            healMod += pet.get(new NamespacedKey(plugin, "ItemHealMod"),
+                    PersistentDataType.DOUBLE);
+        }
+    }
 
     //Check player's main hand item for stats and apply it to stats
     if (player.getInventory().getItemInMainHand() != null &&
@@ -445,328 +780,492 @@ public static void updateStats(Player player, Main plugin) {
                 PersistentDataType.STRING).equals("leggings")) &&
             !(player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "type"),
                 PersistentDataType.STRING).equals("boots"))))) {
+        
+        PersistentDataContainer mainHand = player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Damage"),
+        if (mainHand.get(new NamespacedKey(plugin, "Damage"),
                 PersistentDataType.DOUBLE) != null) {
-            damage += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Damage"),
+            damage += mainHand.get(new NamespacedKey(plugin, "Damage"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDamage"),
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeDamage"),
                 PersistentDataType.DOUBLE) != null) {
-            damage += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDamage"),
+            damage += mainHand.get(new NamespacedKey(plugin, "ReforgeDamage"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantDamage"),
                 PersistentDataType.DOUBLE) != null) {
-            damageMod += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+            damage += mainHand.get(new NamespacedKey(plugin, "EnchantDamage"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDamageModifier"),
+        if (mainHand.get(new NamespacedKey(plugin, "DamageModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            damageMod += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDamageModifier"),
+            damageMod += mainHand.get(new NamespacedKey(plugin, "DamageModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Strength"),
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeDamageModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            strength += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Strength"),
+            damageMod += mainHand.get(new NamespacedKey(plugin, "ReforgeDamageModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeStrength"),
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantDamageModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            strength += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeStrength"),
+            damageMod += mainHand.get(new NamespacedKey(plugin, "EnchantDamageModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "StrengthModifier"),
+        if (mainHand.get(new NamespacedKey(plugin, "Strength"),
                 PersistentDataType.DOUBLE) != null) {
-            strengthMod += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "StrengthModifier"),
+            strength += mainHand.get(new NamespacedKey(plugin, "Strength"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeStrengthModifier"),
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeStrength"),
                 PersistentDataType.DOUBLE) != null) {
-            strengthMod += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeStrengthModifier"),
+            strength += mainHand.get(new NamespacedKey(plugin, "ReforgeStrength"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Crit"),
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantStrength"),
                 PersistentDataType.DOUBLE) != null) {
-            crit += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Crit"),
+            strength += mainHand.get(new NamespacedKey(plugin, "EnchantStrength"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCrit"),
+        if (mainHand.get(new NamespacedKey(plugin, "StrengthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            crit += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCrit"),
+            strengthMod += mainHand.get(new NamespacedKey(plugin, "StrengthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CritModifier"),
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeStrengthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            critMod += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CritModifier"),
+            strengthMod += mainHand.get(new NamespacedKey(plugin, "ReforgeStrengthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCritModifier"),
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantStrengthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            critMod += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCritModifier"),
+            strengthMod += mainHand.get(new NamespacedKey(plugin, "EnchantStrengthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CC"),
+        if (mainHand.get(new NamespacedKey(plugin, "Crit"),
                 PersistentDataType.DOUBLE) != null) {
-            CC += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CC"),
+            crit += mainHand.get(new NamespacedKey(plugin, "Crit"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCC"),
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeCrit"),
                 PersistentDataType.DOUBLE) != null) {
-            CC += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCC"),
+            crit += mainHand.get(new NamespacedKey(plugin, "ReforgeCrit"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CCModifier"),
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantCrit"),
                 PersistentDataType.DOUBLE) != null) {
-            CCMod += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CCModifier"),
+            crit += mainHand.get(new NamespacedKey(plugin, "EnchantCrit"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCCModifier"),
+        if (mainHand.get(new NamespacedKey(plugin, "CritModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            CCMod += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCCModifier"),
+            critMod += mainHand.get(new NamespacedKey(plugin, "CritModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeed"),
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeCritModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            attackSpeed += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeed"),
+            critMod += mainHand.get(new NamespacedKey(plugin, "ReforgeCritModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeAttackSpeed"),
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantCritModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            attackSpeed += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeAttackSpeed"),
+            critMod += mainHand.get(new NamespacedKey(plugin, "EnchantCritModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeedModifier"),
+        if (mainHand.get(new NamespacedKey(plugin, "CC"),
                 PersistentDataType.DOUBLE) != null) {
-            attackSpeedMod += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeedModifier"),
+            CC += mainHand.get(new NamespacedKey(plugin, "CC"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeAttackSpeedModifier"),
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeCC"),
                 PersistentDataType.DOUBLE) != null) {
-            attackSpeedMod += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeAttackSpeedModifier"),
+            CC += mainHand.get(new NamespacedKey(plugin, "ReforgeCC"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantCC"),
                 PersistentDataType.DOUBLE) != null) {
-            health += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+            CC += mainHand.get(new NamespacedKey(plugin, "EnchantCC"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealth"),
+        if (mainHand.get(new NamespacedKey(plugin, "CCModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            health += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealth"),
+            CCMod += mainHand.get(new NamespacedKey(plugin, "CCModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "HealthModifier"),
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeCCModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            healthMod += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "HealthModifier"),
+            CCMod += mainHand.get(new NamespacedKey(plugin, "ReforgeCCModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealthModifier"),
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantCCModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            healthMod += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealthModifier"),
+            CCMod += mainHand.get(new NamespacedKey(plugin, "EnchantCCModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Defense"),
+        if (mainHand.get(new NamespacedKey(plugin, "AttackSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            defense += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Defense"),
+            attackSpeed += mainHand.get(new NamespacedKey(plugin, "AttackSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDefense"),
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeAttackSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            defense += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDefense"),
+            attackSpeed += mainHand.get(new NamespacedKey(plugin, "ReforgeAttackSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DefenseModifier"),
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantAttackSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            defenseMod += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DefenseModifier"),
+            attackSpeed += mainHand.get(new NamespacedKey(plugin, "EnchantAttackSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDefenseModifier"),
+        if (mainHand.get(new NamespacedKey(plugin, "AttackSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            defenseMod += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDefenseModifier"),
+            attackSpeedMod += mainHand.get(new NamespacedKey(plugin, "AttackSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeAttackSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            speed += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
+            attackSpeedMod += mainHand.get(new NamespacedKey(plugin, "ReforgeAttackSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeSpeed"),
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantAttackSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            speed += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeSpeed"),
+            attackSpeedMod += mainHand.get(new NamespacedKey(plugin, "EnchantAttackSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
+        if (mainHand.get(new NamespacedKey(plugin, "Health"),
                 PersistentDataType.DOUBLE) != null) {
-            speedMod += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
+            health += mainHand.get(new NamespacedKey(plugin, "Health"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeSpeedModifier"),
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeHealth"),
                 PersistentDataType.DOUBLE) != null) {
-            speedMod += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeSpeedModifier"),
+            health += mainHand.get(new NamespacedKey(plugin, "ReforgeHealth"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantHealth"),
                 PersistentDataType.DOUBLE) != null) {
-            intelligence += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+            health += mainHand.get(new NamespacedKey(plugin, "EnchantHealth"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeIntelligence"),
+        if (mainHand.get(new NamespacedKey(plugin, "HealthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            intelligence += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeIntelligence"),
+            healthMod += mainHand.get(new NamespacedKey(plugin, "HealthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntelligenceModifier"),
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeHealthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            intelligenceMod += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntelligenceModifier"),
+            healthMod += mainHand.get(new NamespacedKey(plugin, "ReforgeHealthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeIntelligenceModifier"),
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantHealthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            intelligenceMod += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeIntelligenceModifier"),
+            healthMod += mainHand.get(new NamespacedKey(plugin, "EnchantHealthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Thaumaturgy"),
+        if (mainHand.get(new NamespacedKey(plugin, "Defense"),
                 PersistentDataType.DOUBLE) != null) {
-            thaumaturgy += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Thaumaturgy"),
+            defense += mainHand.get(new NamespacedKey(plugin, "Defense"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeThaumaturgy"),
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeDefense"),
                 PersistentDataType.DOUBLE) != null) {
-            thaumaturgy += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeThaumaturgy"),
+            defense += mainHand.get(new NamespacedKey(plugin, "ReforgeDefense"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ThaumaturgyModifier"),
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantDefense"),
                 PersistentDataType.DOUBLE) != null) {
-            thaumaturgyMod += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ThaumaturgyModifier"),
+            defense += mainHand.get(new NamespacedKey(plugin, "EnchantDefense"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeThaumaturgyModifier"),
+        if (mainHand.get(new NamespacedKey(plugin, "DefenseModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            thaumaturgyMod += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeThaumaturgyModifier"),
+            defenseMod += mainHand.get(new NamespacedKey(plugin, "DefenseModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Invocation"),
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeDefenseModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            invocation += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Invocation"),
+            defenseMod += mainHand.get(new NamespacedKey(plugin, "ReforgeDefenseModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeInvocation"),
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantDefenseModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            invocation += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeInvocation"),
+            defenseMod += mainHand.get(new NamespacedKey(plugin, "EnchantDefenseModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "InvocationModifier"),
+        if (mainHand.get(new NamespacedKey(plugin, "Speed"),
                 PersistentDataType.DOUBLE) != null) {
-            invocationMod += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "InvocationModifier"),
+            speed += mainHand.get(new NamespacedKey(plugin, "Speed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeInvocationModifier"),
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            invocationMod += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeInvocationModifier"),
+            speed += mainHand.get(new NamespacedKey(plugin, "ReforgeSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Magic"),
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-             MF += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Magic"),
+            speed += mainHand.get(new NamespacedKey(plugin, "EnchantSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeMagic"),
+        if (mainHand.get(new NamespacedKey(plugin, "SpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            MF += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeMagic"),
+            speedMod += mainHand.get(new NamespacedKey(plugin, "SpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "FarmingFortune"),
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            Farm += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "FarmingFortune"),
+            speedMod += mainHand.get(new NamespacedKey(plugin, "ReforgeSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeFarmingFortune"),
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            Farm += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeFarmingFortune"),
+            speedMod += mainHand.get(new NamespacedKey(plugin, "EnchantSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "MiningFortune"),
+        if (mainHand.get(new NamespacedKey(plugin, "Intelligence"),
                 PersistentDataType.DOUBLE) != null) {
-            Mine += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "MiningFortune"),
+            intelligence += mainHand.get(new NamespacedKey(plugin, "Intelligence"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeMiningFortune"),
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeIntelligence"),
                 PersistentDataType.DOUBLE) != null) {
-            Mine += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeMiningFortune"),
+            intelligence += mainHand.get(new NamespacedKey(plugin, "ReforgeIntelligence"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ExcavatingFortune"),
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantIntelligence"),
                 PersistentDataType.DOUBLE) != null) {
-            Excavating += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ExcavatingFortune"),
+            intelligence += mainHand.get(new NamespacedKey(plugin, "EnchantIntelligence"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeExcavatingFortune"),
+        if (mainHand.get(new NamespacedKey(plugin, "IntelligenceModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            Excavating += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeExcavatingFortune"),
+            intelligenceMod += mainHand.get(new NamespacedKey(plugin, "IntelligenceModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "HealMod"),
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeIntelligenceModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            healMod += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "HealMod"),
+            intelligenceMod += mainHand.get(new NamespacedKey(plugin, "ReforgeIntelligenceModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealMod"),
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantIntelligenceModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            healMod += player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealMod"),
+            intelligenceMod += mainHand.get(new NamespacedKey(plugin, "EnchantIntelligenceModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "Thaumaturgy"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgy += mainHand.get(new NamespacedKey(plugin, "Thaumaturgy"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeThaumaturgy"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgy += mainHand.get(new NamespacedKey(plugin, "ReforgeThaumaturgy"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantThaumaturgy"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgy += mainHand.get(new NamespacedKey(plugin, "EnchantThaumaturgy"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "ThaumaturgyModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgyMod += mainHand.get(new NamespacedKey(plugin, "ThaumaturgyModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeThaumaturgyModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgyMod += mainHand.get(new NamespacedKey(plugin, "ReforgeThaumaturgyModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantThaumaturgyModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgyMod += mainHand.get(new NamespacedKey(plugin, "EnchantThaumaturgyModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "Invocation"),
+                PersistentDataType.DOUBLE) != null) {
+            invocation += mainHand.get(new NamespacedKey(plugin, "Invocation"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeInvocation"),
+                PersistentDataType.DOUBLE) != null) {
+            invocation += mainHand.get(new NamespacedKey(plugin, "ReforgeInvocation"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantInvocation"),
+                PersistentDataType.DOUBLE) != null) {
+            invocation += mainHand.get(new NamespacedKey(plugin, "EnchantInvocation"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "InvocationModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            invocationMod += mainHand.get(new NamespacedKey(plugin, "InvocationModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeInvocationModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            invocationMod += mainHand.get(new NamespacedKey(plugin, "ReforgeInvocationModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantInvocationModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            invocationMod += mainHand.get(new NamespacedKey(plugin, "EnchantInvocationModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "Magic"),
+                PersistentDataType.DOUBLE) != null) {
+             MF += mainHand.get(new NamespacedKey(plugin, "Magic"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeMagic"),
+                PersistentDataType.DOUBLE) != null) {
+            MF += mainHand.get(new NamespacedKey(plugin, "ReforgeMagic"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantMagic"),
+                PersistentDataType.DOUBLE) != null) {
+            MF += mainHand.get(new NamespacedKey(plugin, "EnchantMagic"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "FarmingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Farm += mainHand.get(new NamespacedKey(plugin, "FarmingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeFarmingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Farm += mainHand.get(new NamespacedKey(plugin, "ReforgeFarmingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantFarmingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Farm += mainHand.get(new NamespacedKey(plugin, "EnchantFarmingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "MiningFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Mine += mainHand.get(new NamespacedKey(plugin, "MiningFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeMiningFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Mine += mainHand.get(new NamespacedKey(plugin, "ReforgeMiningFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantMiningFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Mine += mainHand.get(new NamespacedKey(plugin, "EnchantMiningFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "ExcavatingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Excavating += mainHand.get(new NamespacedKey(plugin, "ExcavatingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeExcavatingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Excavating += mainHand.get(new NamespacedKey(plugin, "ReforgeExcavatingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantExcavatingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Excavating += mainHand.get(new NamespacedKey(plugin, "EnchantExcavatingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "HealMod"),
+                PersistentDataType.DOUBLE) != null) {
+            healMod += mainHand.get(new NamespacedKey(plugin, "HealMod"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "ReforgeHealMod"),
+                PersistentDataType.DOUBLE) != null) {
+            healMod += mainHand.get(new NamespacedKey(plugin, "ReforgeHealMod"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (mainHand.get(new NamespacedKey(plugin, "EnchantHealMod"),
+                PersistentDataType.DOUBLE) != null) {
+            healMod += mainHand.get(new NamespacedKey(plugin, "EnchantHealMod"),
                     PersistentDataType.DOUBLE);
         }
     }
@@ -776,317 +1275,475 @@ public static void updateStats(Player player, Main plugin) {
         player.getInventory().getItemInOffHand().getItemMeta() != null &&
         player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer() != null &&
         player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Dual"),
-                PersistentDataType.INTEGER) != null) {
+            PersistentDataType.INTEGER) != null) {
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+        PersistentDataContainer offHand = player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer();
+
+        if (offHand.get(new NamespacedKey(plugin, "DamageModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            damageMod += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+            damageMod += offHand.get(new NamespacedKey(plugin, "DamageModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDamageModifier"),
+        if (offHand.get(new NamespacedKey(plugin, "ReforgeDamageModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            damageMod += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDamageModifier"),
+            damageMod += offHand.get(new NamespacedKey(plugin, "ReforgeDamageModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Strength"),
+        if (offHand.get(new NamespacedKey(plugin, "EnchantDamageModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            strength += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Strength"),
+            damageMod += offHand.get(new NamespacedKey(plugin, "EnchantDamageModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeStrength"),
+        if (offHand.get(new NamespacedKey(plugin, "Strength"),
                 PersistentDataType.DOUBLE) != null) {
-            strength += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeStrength"),
+            strength += offHand.get(new NamespacedKey(plugin, "Strength"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "StrengthModifier"),
+        if (offHand.get(new NamespacedKey(plugin, "ReforgeStrength"),
                 PersistentDataType.DOUBLE) != null) {
-            strengthMod += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "StrengthModifier"),
+            strength += offHand.get(new NamespacedKey(plugin, "ReforgeStrength"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeStrengthModifier"),
+        if (offHand.get(new NamespacedKey(plugin, "EnchantStrength"),
                 PersistentDataType.DOUBLE) != null) {
-            strengthMod += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeStrengthModifier"),
+            strength += offHand.get(new NamespacedKey(plugin, "EnchantStrength"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Crit"),
+        if (offHand.get(new NamespacedKey(plugin, "StrengthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            crit += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Crit"),
+            strengthMod += offHand.get(new NamespacedKey(plugin, "StrengthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCrit"),
+        if (offHand.get(new NamespacedKey(plugin, "ReforgeStrengthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            crit += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCrit"),
+            strengthMod += offHand.get(new NamespacedKey(plugin, "ReforgeStrengthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CritModifier"),
+        if (offHand.get(new NamespacedKey(plugin, "EnchantStrengthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            critMod += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CritModifier"),
+            strengthMod += offHand.get(new NamespacedKey(plugin, "EnchantStrengthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCritModifier"),
+        if (offHand.get(new NamespacedKey(plugin, "Crit"),
                 PersistentDataType.DOUBLE) != null) {
-            critMod += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCritModifier"),
+            crit += offHand.get(new NamespacedKey(plugin, "Crit"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CC"),
+        if (offHand.get(new NamespacedKey(plugin, "ReforgeCrit"),
                 PersistentDataType.DOUBLE) != null) {
-            CC += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CC"),
+            crit += offHand.get(new NamespacedKey(plugin, "ReforgeCrit"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCC"),
+        if (offHand.get(new NamespacedKey(plugin, "EnchantCrit"),
                 PersistentDataType.DOUBLE) != null) {
-            CC += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCC"),
+            crit += offHand.get(new NamespacedKey(plugin, "EnchantCrit"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CCModifier"),
+        if (offHand.get(new NamespacedKey(plugin, "CritModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            CCMod += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CCModifier"),
+            critMod += offHand.get(new NamespacedKey(plugin, "CritModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCCModifier"),
+        if (offHand.get(new NamespacedKey(plugin, "ReforgeCritModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            CCMod += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCCModifier"),
+            critMod += offHand.get(new NamespacedKey(plugin, "ReforgeCritModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeed"),
+        if (offHand.get(new NamespacedKey(plugin, "EnchantCritModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            attackSpeed += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeed"),
+            critMod += offHand.get(new NamespacedKey(plugin, "EnchantCritModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeAttackSpeed"),
+        if (offHand.get(new NamespacedKey(plugin, "CC"),
                 PersistentDataType.DOUBLE) != null) {
-            attackSpeed += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeAttackSpeed"),
+            CC += offHand.get(new NamespacedKey(plugin, "CC"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeedModifier"),
+        if (offHand.get(new NamespacedKey(plugin, "ReforgeCC"),
                 PersistentDataType.DOUBLE) != null) {
-            attackSpeedMod += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeedModifier"),
+            CC += offHand.get(new NamespacedKey(plugin, "ReforgeCC"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeAttackSpeedModifier"),
+        if (offHand.get(new NamespacedKey(plugin, "EnchantCC"),
                 PersistentDataType.DOUBLE) != null) {
-            attackSpeedMod += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeAttackSpeedModifier"),
+            CC += offHand.get(new NamespacedKey(plugin, "EnchantCC"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+        if (offHand.get(new NamespacedKey(plugin, "CCModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            health += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+            CCMod += offHand.get(new NamespacedKey(plugin, "CCModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealth"),
+        if (offHand.get(new NamespacedKey(plugin, "ReforgeCCModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            health += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealth"),
+            CCMod += offHand.get(new NamespacedKey(plugin, "ReforgeCCModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "HealthModifier"),
+        if (offHand.get(new NamespacedKey(plugin, "EnchantCCModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            healthMod += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "HealthModifier"),
+            CCMod += offHand.get(new NamespacedKey(plugin, "EnchantCCModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealthModifier"),
+        if (offHand.get(new NamespacedKey(plugin, "AttackSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            healthMod += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealthModifier"),
+            attackSpeed += offHand.get(new NamespacedKey(plugin, "AttackSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Defense"),
+        if (offHand.get(new NamespacedKey(plugin, "ReforgeAttackSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            defense += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Defense"),
+            attackSpeed += offHand.get(new NamespacedKey(plugin, "ReforgeAttackSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDefense"),
+        if (offHand.get(new NamespacedKey(plugin, "EnchantAttackSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            defense += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDefense"),
+            attackSpeed += offHand.get(new NamespacedKey(plugin, "EnchantAttackSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DefenseModifier"),
+        if (offHand.get(new NamespacedKey(plugin, "AttackSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            defenseMod += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DefenseModifier"),
+            attackSpeedMod += offHand.get(new NamespacedKey(plugin, "AttackSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDefenseModifier"),
+        if (offHand.get(new NamespacedKey(plugin, "ReforgeAttackSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            defenseMod += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDefenseModifier"),
+            attackSpeedMod += offHand.get(new NamespacedKey(plugin, "ReforgeAttackSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
+        if (offHand.get(new NamespacedKey(plugin, "EnchantAttackSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            speed += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
+            attackSpeedMod += offHand.get(new NamespacedKey(plugin, "EnchantAttackSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeSpeed"),
+        if (offHand.get(new NamespacedKey(plugin, "Health"),
                 PersistentDataType.DOUBLE) != null) {
-            speed += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeSpeed"),
+            health += offHand.get(new NamespacedKey(plugin, "Health"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
+        if (offHand.get(new NamespacedKey(plugin, "ReforgeHealth"),
                 PersistentDataType.DOUBLE) != null) {
-            speedMod += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
+            health += offHand.get(new NamespacedKey(plugin, "ReforgeHealth"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeSpeedModifier"),
+        if (offHand.get(new NamespacedKey(plugin, "EnchantHealth"),
                 PersistentDataType.DOUBLE) != null) {
-            speedMod += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeSpeedModifier"),
+            health += offHand.get(new NamespacedKey(plugin, "EnchantHealth"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+        if (offHand.get(new NamespacedKey(plugin, "HealthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            intelligence += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+            healthMod += offHand.get(new NamespacedKey(plugin, "HealthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeIntelligence"),
+        if (offHand.get(new NamespacedKey(plugin, "ReforgeHealthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            intelligence += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeIntelligence"),
+            healthMod += offHand.get(new NamespacedKey(plugin, "ReforgeHealthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntelligenceModifier"),
+        if (offHand.get(new NamespacedKey(plugin, "EnchantHealthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            intelligenceMod += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntelligenceModifier"),
+            healthMod += offHand.get(new NamespacedKey(plugin, "EnchantHealthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeIntelligenceModifier"),
+        if (offHand.get(new NamespacedKey(plugin, "Defense"),
                 PersistentDataType.DOUBLE) != null) {
-            intelligenceMod += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeIntelligenceModifier"),
+            defense += offHand.get(new NamespacedKey(plugin, "Defense"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Thaumaturgy"),
+        if (offHand.get(new NamespacedKey(plugin, "ReforgeDefense"),
                 PersistentDataType.DOUBLE) != null) {
-            thaumaturgy += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Thaumaturgy"),
+            defense += offHand.get(new NamespacedKey(plugin, "ReforgeDefense"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeThaumaturgy"),
+        if (offHand.get(new NamespacedKey(plugin, "EnchantDefense"),
                 PersistentDataType.DOUBLE) != null) {
-            thaumaturgy += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeThaumaturgy"),
+            defense += offHand.get(new NamespacedKey(plugin, "EnchantDefense"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ThaumaturgyModifier"),
+        if (offHand.get(new NamespacedKey(plugin, "DefenseModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            thaumaturgyMod += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ThaumaturgyModifier"),
+            defenseMod += offHand.get(new NamespacedKey(plugin, "DefenseModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeThaumaturgyModifier"),
+        if (offHand.get(new NamespacedKey(plugin, "ReforgeDefenseModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            thaumaturgyMod += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeThaumaturgyModifier"),
+            defenseMod += offHand.get(new NamespacedKey(plugin, "ReforgeDefenseModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Invocation"),
+        if (offHand.get(new NamespacedKey(plugin, "EnchantDefenseModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            invocation += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Invocation"),
+            defenseMod += offHand.get(new NamespacedKey(plugin, "EnchantDefenseModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeInvocation"),
+        if (offHand.get(new NamespacedKey(plugin, "Speed"),
                 PersistentDataType.DOUBLE) != null) {
-            invocation += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeInvocation"),
+            speed += offHand.get(new NamespacedKey(plugin, "Speed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "InvocationModifier"),
+        if (offHand.get(new NamespacedKey(plugin, "ReforgeSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            invocationMod += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "InvocationModifier"),
+            speed += offHand.get(new NamespacedKey(plugin, "ReforgeSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeInvocationModifier"),
+        if (offHand.get(new NamespacedKey(plugin, "EnchantSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            invocationMod += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeInvocationModifier"),
+            speed += offHand.get(new NamespacedKey(plugin, "EnchantSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Magic"),
+        if (offHand.get(new NamespacedKey(plugin, "SpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            MF += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Magic"),
+            speedMod += offHand.get(new NamespacedKey(plugin, "SpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeMagic"),
+        if (offHand.get(new NamespacedKey(plugin, "ReforgeSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            MF += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeMagic"),
+            speedMod += offHand.get(new NamespacedKey(plugin, "ReforgeSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "FarmingFortune"),
+        if (offHand.get(new NamespacedKey(plugin, "EnchantSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            Farm += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "FarmingFortune"),
+            speedMod += offHand.get(new NamespacedKey(plugin, "EnchantSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeFarmingFortune"),
+        if (offHand.get(new NamespacedKey(plugin, "Intelligence"),
                 PersistentDataType.DOUBLE) != null) {
-            Farm += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeFarmingFortune"),
+            intelligence += offHand.get(new NamespacedKey(plugin, "Intelligence"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "MiningFortune"),
+        if (offHand.get(new NamespacedKey(plugin, "ReforgeIntelligence"),
                 PersistentDataType.DOUBLE) != null) {
-            Mine += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "MiningFortune"),
+            intelligence += offHand.get(new NamespacedKey(plugin, "ReforgeIntelligence"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeMiningFortune"),
+        if (offHand.get(new NamespacedKey(plugin, "EnchantIntelligence"),
                 PersistentDataType.DOUBLE) != null) {
-            Mine += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeMiningFortune"),
+            intelligence += offHand.get(new NamespacedKey(plugin, "EnchantIntelligence"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ExcavatingFortune"),
+        if (offHand.get(new NamespacedKey(plugin, "IntelligenceModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            Excavating += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ExcavatingFortune"),
+            intelligenceMod += offHand.get(new NamespacedKey(plugin, "IntelligenceModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeExcavatingFortune"),
+        if (offHand.get(new NamespacedKey(plugin, "ReforgeIntelligenceModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            Excavating += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeExcavatingFortune"),
+            intelligenceMod += offHand.get(new NamespacedKey(plugin, "ReforgeIntelligenceModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "HealMod"),
+        if (offHand.get(new NamespacedKey(plugin, "EnchantIntelligenceModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            healMod += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "HealMod"),
+            intelligenceMod += offHand.get(new NamespacedKey(plugin, "EnchantIntelligenceModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealMod"),
+        if (offHand.get(new NamespacedKey(plugin, "Thaumaturgy"),
                 PersistentDataType.DOUBLE) != null) {
-            healMod += player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealMod"),
+            thaumaturgy += offHand.get(new NamespacedKey(plugin, "Thaumaturgy"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (offHand.get(new NamespacedKey(plugin, "ReforgeThaumaturgy"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgy += offHand.get(new NamespacedKey(plugin, "ReforgeThaumaturgy"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (offHand.get(new NamespacedKey(plugin, "EnchantThaumaturgy"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgy += offHand.get(new NamespacedKey(plugin, "EnchantThaumaturgy"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (offHand.get(new NamespacedKey(plugin, "ThaumaturgyModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgyMod += offHand.get(new NamespacedKey(plugin, "ThaumaturgyModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (offHand.get(new NamespacedKey(plugin, "ReforgeThaumaturgyModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgyMod += offHand.get(new NamespacedKey(plugin, "ReforgeThaumaturgyModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (offHand.get(new NamespacedKey(plugin, "EnchantThaumaturgyModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgyMod += offHand.get(new NamespacedKey(plugin, "EnchantThaumaturgyModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (offHand.get(new NamespacedKey(plugin, "Invocation"),
+                PersistentDataType.DOUBLE) != null) {
+            invocation += offHand.get(new NamespacedKey(plugin, "Invocation"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (offHand.get(new NamespacedKey(plugin, "ReforgeInvocation"),
+                PersistentDataType.DOUBLE) != null) {
+            invocation += offHand.get(new NamespacedKey(plugin, "ReforgeInvocation"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (offHand.get(new NamespacedKey(plugin, "EnchantInvocation"),
+                PersistentDataType.DOUBLE) != null) {
+            invocation += offHand.get(new NamespacedKey(plugin, "EnchantInvocation"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (offHand.get(new NamespacedKey(plugin, "InvocationModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            invocationMod += offHand.get(new NamespacedKey(plugin, "InvocationModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (offHand.get(new NamespacedKey(plugin, "ReforgeInvocationModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            invocationMod += offHand.get(new NamespacedKey(plugin, "ReforgeInvocationModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (offHand.get(new NamespacedKey(plugin, "EnchantInvocationModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            invocationMod += offHand.get(new NamespacedKey(plugin, "EnchantInvocationModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (offHand.get(new NamespacedKey(plugin, "Magic"),
+                PersistentDataType.DOUBLE) != null) {
+            MF += offHand.get(new NamespacedKey(plugin, "Magic"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (offHand.get(new NamespacedKey(plugin, "ReforgeMagic"),
+                PersistentDataType.DOUBLE) != null) {
+            MF += offHand.get(new NamespacedKey(plugin, "ReforgeMagic"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (offHand.get(new NamespacedKey(plugin, "EnchantMagic"),
+                PersistentDataType.DOUBLE) != null) {
+            MF += offHand.get(new NamespacedKey(plugin, "EnchantMagic"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (offHand.get(new NamespacedKey(plugin, "FarmingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Farm += offHand.get(new NamespacedKey(plugin, "FarmingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (offHand.get(new NamespacedKey(plugin, "ReforgeFarmingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Farm += offHand.get(new NamespacedKey(plugin, "ReforgeFarmingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (offHand.get(new NamespacedKey(plugin, "EnchantFarmingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Farm += offHand.get(new NamespacedKey(plugin, "EnchantFarmingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (offHand.get(new NamespacedKey(plugin, "MiningFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Mine += offHand.get(new NamespacedKey(plugin, "MiningFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (offHand.get(new NamespacedKey(plugin, "ReforgeMiningFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Mine += offHand.get(new NamespacedKey(plugin, "ReforgeMiningFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (offHand.get(new NamespacedKey(plugin, "EnchantMiningFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Mine += offHand.get(new NamespacedKey(plugin, "EnchantMiningFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (offHand.get(new NamespacedKey(plugin, "ExcavatingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Excavating += offHand.get(new NamespacedKey(plugin, "ExcavatingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (offHand.get(new NamespacedKey(plugin, "ReforgeExcavatingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Excavating += offHand.get(new NamespacedKey(plugin, "ReforgeExcavatingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (offHand.get(new NamespacedKey(plugin, "EnchantExcavatingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Excavating += offHand.get(new NamespacedKey(plugin, "EnchantExcavatingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (offHand.get(new NamespacedKey(plugin, "HealMod"),
+                PersistentDataType.DOUBLE) != null) {
+            healMod += offHand.get(new NamespacedKey(plugin, "HealMod"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (offHand.get(new NamespacedKey(plugin, "ReforgeHealMod"),
+                PersistentDataType.DOUBLE) != null) {
+            healMod += offHand.get(new NamespacedKey(plugin, "ReforgeHealMod"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (offHand.get(new NamespacedKey(plugin, "EnchantHealMod"),
+                PersistentDataType.DOUBLE) != null) {
+            healMod += offHand.get(new NamespacedKey(plugin, "EnchantHealMod"),
                     PersistentDataType.DOUBLE);
         }
     }
@@ -1100,318 +1757,475 @@ public static void updateStats(Player player, Main plugin) {
         player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "type"),
                 PersistentDataType.STRING).equals("helmet")) {
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+        PersistentDataContainer helmet = player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer();
+
+        if (helmet.get(new NamespacedKey(plugin, "DamageModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            damageMod += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+            damageMod += helmet.get(new NamespacedKey(plugin, "DamageModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDamageModifier"),
+        if (helmet.get(new NamespacedKey(plugin, "ReforgeDamageModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            damageMod += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDamageModifier"),
+            damageMod += helmet.get(new NamespacedKey(plugin, "ReforgeDamageModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Strength"),
+        if (helmet.get(new NamespacedKey(plugin, "EnchantDamageModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            strength += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Strength"),
+            damageMod += helmet.get(new NamespacedKey(plugin, "EnchantDamageModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeStrength"),
+        if (helmet.get(new NamespacedKey(plugin, "Strength"),
                 PersistentDataType.DOUBLE) != null) {
-            strength += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeStrength"),
+            strength += helmet.get(new NamespacedKey(plugin, "Strength"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "StrengthModifier"),
+        if (helmet.get(new NamespacedKey(plugin, "ReforgeStrength"),
                 PersistentDataType.DOUBLE) != null) {
-            strengthMod += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "StrengthModifier"),
+            strength += helmet.get(new NamespacedKey(plugin, "ReforgeStrength"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeStrengthModifier"),
+        if (helmet.get(new NamespacedKey(plugin, "EnchantStrength"),
                 PersistentDataType.DOUBLE) != null) {
-            strengthMod += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeStrengthModifier"),
+            strength += helmet.get(new NamespacedKey(plugin, "EnchantStrength"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Crit"),
+        if (helmet.get(new NamespacedKey(plugin, "StrengthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            crit += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Crit"),
+            strengthMod += helmet.get(new NamespacedKey(plugin, "StrengthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCrit"),
+        if (helmet.get(new NamespacedKey(plugin, "ReforgeStrengthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            crit += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCrit"),
+            strengthMod += helmet.get(new NamespacedKey(plugin, "ReforgeStrengthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CritModifier"),
+        if (helmet.get(new NamespacedKey(plugin, "EnchantStrengthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            critMod += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CritModifier"),
+            strengthMod += helmet.get(new NamespacedKey(plugin, "EnchantStrengthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCritModifier"),
+        if (helmet.get(new NamespacedKey(plugin, "Crit"),
                 PersistentDataType.DOUBLE) != null) {
-            critMod += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCritModifier"),
+            crit += helmet.get(new NamespacedKey(plugin, "Crit"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CC"),
+        if (helmet.get(new NamespacedKey(plugin, "ReforgeCrit"),
                 PersistentDataType.DOUBLE) != null) {
-            CC += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CC"),
+            crit += helmet.get(new NamespacedKey(plugin, "ReforgeCrit"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCC"),
+        if (helmet.get(new NamespacedKey(plugin, "EnchantCrit"),
                 PersistentDataType.DOUBLE) != null) {
-            CC += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCC"),
+            crit += helmet.get(new NamespacedKey(plugin, "EnchantCrit"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CCModifier"),
+        if (helmet.get(new NamespacedKey(plugin, "CritModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            CCMod += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CCModifier"),
+            critMod += helmet.get(new NamespacedKey(plugin, "CritModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCCModifier"),
+        if (helmet.get(new NamespacedKey(plugin, "ReforgeCritModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            CCMod += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCCModifier"),
+            critMod += helmet.get(new NamespacedKey(plugin, "ReforgeCritModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeed"),
+        if (helmet.get(new NamespacedKey(plugin, "EnchantCritModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            attackSpeed += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeed"),
+            critMod += helmet.get(new NamespacedKey(plugin, "EnchantCritModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeAttackSpeed"),
+        if (helmet.get(new NamespacedKey(plugin, "CC"),
                 PersistentDataType.DOUBLE) != null) {
-            attackSpeed += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeAttackSpeed"),
+            CC += helmet.get(new NamespacedKey(plugin, "CC"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeedModifier"),
+        if (helmet.get(new NamespacedKey(plugin, "ReforgeCC"),
                 PersistentDataType.DOUBLE) != null) {
-            attackSpeedMod += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeedModifier"),
+            CC += helmet.get(new NamespacedKey(plugin, "ReforgeCC"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeAttackSpeedModifier"),
+        if (helmet.get(new NamespacedKey(plugin, "EnchantCC"),
                 PersistentDataType.DOUBLE) != null) {
-            attackSpeedMod += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeAttackSpeedModifier"),
+            CC += helmet.get(new NamespacedKey(plugin, "EnchantCC"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+        if (helmet.get(new NamespacedKey(plugin, "CCModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            health += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+            CCMod += helmet.get(new NamespacedKey(plugin, "CCModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealth"),
+        if (helmet.get(new NamespacedKey(plugin, "ReforgeCCModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            health += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealth"),
+            CCMod += helmet.get(new NamespacedKey(plugin, "ReforgeCCModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "HealthModifier"),
+        if (helmet.get(new NamespacedKey(plugin, "EnchantCCModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            healthMod += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "HealthModifier"),
+            CCMod += helmet.get(new NamespacedKey(plugin, "EnchantCCModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealthModifier"),
+        if (helmet.get(new NamespacedKey(plugin, "AttackSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            healthMod += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealthModifier"),
+            attackSpeed += helmet.get(new NamespacedKey(plugin, "AttackSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Defense"),
+        if (helmet.get(new NamespacedKey(plugin, "ReforgeAttackSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            defense += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Defense"),
+            attackSpeed += helmet.get(new NamespacedKey(plugin, "ReforgeAttackSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDefense"),
+        if (helmet.get(new NamespacedKey(plugin, "EnchantAttackSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            defense += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDefense"),
+            attackSpeed += helmet.get(new NamespacedKey(plugin, "EnchantAttackSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DefenseModifier"),
+        if (helmet.get(new NamespacedKey(plugin, "AttackSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            defenseMod += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DefenseModifier"),
+            attackSpeedMod += helmet.get(new NamespacedKey(plugin, "AttackSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDefenseModifier"),
+        if (helmet.get(new NamespacedKey(plugin, "ReforgeAttackSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            defenseMod += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDefenseModifier"),
+            attackSpeedMod += helmet.get(new NamespacedKey(plugin, "ReforgeAttackSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
+        if (helmet.get(new NamespacedKey(plugin, "EnchantAttackSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            speed += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
+            attackSpeedMod += helmet.get(new NamespacedKey(plugin, "EnchantAttackSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeSpeed"),
+        if (helmet.get(new NamespacedKey(plugin, "Health"),
                 PersistentDataType.DOUBLE) != null) {
-            speed += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeSpeed"),
+            health += helmet.get(new NamespacedKey(plugin, "Health"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
+        if (helmet.get(new NamespacedKey(plugin, "ReforgeHealth"),
                 PersistentDataType.DOUBLE) != null) {
-            speedMod += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
+            health += helmet.get(new NamespacedKey(plugin, "ReforgeHealth"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeSpeedModifier"),
+        if (helmet.get(new NamespacedKey(plugin, "EnchantHealth"),
                 PersistentDataType.DOUBLE) != null) {
-            speedMod += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeSpeedModifier"),
+            health += helmet.get(new NamespacedKey(plugin, "EnchantHealth"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+        if (helmet.get(new NamespacedKey(plugin, "HealthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            intelligence += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+            healthMod += helmet.get(new NamespacedKey(plugin, "HealthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeIntelligence"),
+        if (helmet.get(new NamespacedKey(plugin, "ReforgeHealthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            intelligence += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeIntelligence"),
+            healthMod += helmet.get(new NamespacedKey(plugin, "ReforgeHealthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntelligenceModifier"),
+        if (helmet.get(new NamespacedKey(plugin, "EnchantHealthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            intelligenceMod += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntelligenceModifier"),
+            healthMod += helmet.get(new NamespacedKey(plugin, "EnchantHealthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeIntelligenceModifier"),
+        if (helmet.get(new NamespacedKey(plugin, "Defense"),
                 PersistentDataType.DOUBLE) != null) {
-            intelligenceMod += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeIntelligenceModifier"),
+            defense += helmet.get(new NamespacedKey(plugin, "Defense"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Thaumaturgy"),
+        if (helmet.get(new NamespacedKey(plugin, "ReforgeDefense"),
                 PersistentDataType.DOUBLE) != null) {
-            thaumaturgy += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Thaumaturgy"),
+            defense += helmet.get(new NamespacedKey(plugin, "ReforgeDefense"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeThauumaturgy"),
+        if (helmet.get(new NamespacedKey(plugin, "EnchantDefense"),
                 PersistentDataType.DOUBLE) != null) {
-            thaumaturgy += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeThaumaturgy"),
+            defense += helmet.get(new NamespacedKey(plugin, "EnchantDefense"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ThaumaturgyModifier"),
+        if (helmet.get(new NamespacedKey(plugin, "DefenseModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            thaumaturgyMod += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ThaumaturgyModifier"),
+            defenseMod += helmet.get(new NamespacedKey(plugin, "DefenseModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeThaumaturgyModifier"),
+        if (helmet.get(new NamespacedKey(plugin, "ReforgeDefenseModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            thaumaturgyMod += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeThaumaturgyModifier"),
+            defenseMod += helmet.get(new NamespacedKey(plugin, "ReforgeDefenseModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Invocation"),
+        if (helmet.get(new NamespacedKey(plugin, "EnchantDefenseModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            invocation += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Invocation"),
+            defenseMod += helmet.get(new NamespacedKey(plugin, "EnchantDefenseModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeInvocation"),
+        if (helmet.get(new NamespacedKey(plugin, "Speed"),
                 PersistentDataType.DOUBLE) != null) {
-            invocation += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeInvocation"),
+            speed += helmet.get(new NamespacedKey(plugin, "Speed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "InvocationModifier"),
+        if (helmet.get(new NamespacedKey(plugin, "ReforgeSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            invocationMod += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "InvocationModifier"),
+            speed += helmet.get(new NamespacedKey(plugin, "ReforgeSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeInvocationModifier"),
+        if (helmet.get(new NamespacedKey(plugin, "EnchantSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            invocationMod += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeInvocationModifier"),
+            speed += helmet.get(new NamespacedKey(plugin, "EnchantSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Magic"),
+        if (helmet.get(new NamespacedKey(plugin, "SpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            MF += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Magic"),
+            speedMod += helmet.get(new NamespacedKey(plugin, "SpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeMagic"),
+        if (helmet.get(new NamespacedKey(plugin, "ReforgeSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            MF += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeMagic"),
+            speedMod += helmet.get(new NamespacedKey(plugin, "ReforgeSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "FarmingFortune"),
+        if (helmet.get(new NamespacedKey(plugin, "EnchantSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            Farm += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "FarmingFortune"),
+            speedMod += helmet.get(new NamespacedKey(plugin, "EnchantSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeFarmingFortune"),
+        if (helmet.get(new NamespacedKey(plugin, "Intelligence"),
                 PersistentDataType.DOUBLE) != null) {
-            Farm += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeFarmingFortune"),
+            intelligence += helmet.get(new NamespacedKey(plugin, "Intelligence"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "MiningFortune"),
+        if (helmet.get(new NamespacedKey(plugin, "ReforgeIntelligence"),
                 PersistentDataType.DOUBLE) != null) {
-            Mine += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "MiningFortune"),
+            intelligence += helmet.get(new NamespacedKey(plugin, "ReforgeIntelligence"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeMiningFortune"),
+        if (helmet.get(new NamespacedKey(plugin, "EnchantIntelligence"),
                 PersistentDataType.DOUBLE) != null) {
-            Mine += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeMiningFortune"),
+            intelligence += helmet.get(new NamespacedKey(plugin, "EnchantIntelligence"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ExcavatingFortune"),
+        if (helmet.get(new NamespacedKey(plugin, "IntelligenceModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            Excavating += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ExcavatingFortune"),
+            intelligenceMod += helmet.get(new NamespacedKey(plugin, "IntelligenceModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeExcavatingFortune"),
+        if (helmet.get(new NamespacedKey(plugin, "ReforgeIntelligenceModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            Excavating += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeExcavatingFortune"),
+            intelligenceMod += helmet.get(new NamespacedKey(plugin, "ReforgeIntelligenceModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "HealMod"),
+        if (helmet.get(new NamespacedKey(plugin, "EnchantIntelligenceModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            healMod += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "HealMod"),
+            intelligenceMod += helmet.get(new NamespacedKey(plugin, "EnchantIntelligenceModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealMod"),
+        if (helmet.get(new NamespacedKey(plugin, "Thaumaturgy"),
                 PersistentDataType.DOUBLE) != null) {
-            healMod += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealMod"),
+            thaumaturgy += helmet.get(new NamespacedKey(plugin, "Thaumaturgy"),
                     PersistentDataType.DOUBLE);
         }
 
+        if (helmet.get(new NamespacedKey(plugin, "ReforgeThauumaturgy"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgy += helmet.get(new NamespacedKey(plugin, "ReforgeThaumaturgy"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (helmet.get(new NamespacedKey(plugin, "EnchantThauumaturgy"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgy += helmet.get(new NamespacedKey(plugin, "EnchantThaumaturgy"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (helmet.get(new NamespacedKey(plugin, "ThaumaturgyModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgyMod += helmet.get(new NamespacedKey(plugin, "ThaumaturgyModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (helmet.get(new NamespacedKey(plugin, "ReforgeThaumaturgyModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgyMod += helmet.get(new NamespacedKey(plugin, "ReforgeThaumaturgyModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (helmet.get(new NamespacedKey(plugin, "EnchantThaumaturgyModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgyMod += helmet.get(new NamespacedKey(plugin, "EnchantThaumaturgyModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (helmet.get(new NamespacedKey(plugin, "Invocation"),
+                PersistentDataType.DOUBLE) != null) {
+            invocation += helmet.get(new NamespacedKey(plugin, "Invocation"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (helmet.get(new NamespacedKey(plugin, "ReforgeInvocation"),
+                PersistentDataType.DOUBLE) != null) {
+            invocation += helmet.get(new NamespacedKey(plugin, "ReforgeInvocation"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (helmet.get(new NamespacedKey(plugin, "EnchantInvocation"),
+                PersistentDataType.DOUBLE) != null) {
+            invocation += helmet.get(new NamespacedKey(plugin, "EnchantInvocation"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (helmet.get(new NamespacedKey(plugin, "InvocationModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            invocationMod += helmet.get(new NamespacedKey(plugin, "InvocationModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (helmet.get(new NamespacedKey(plugin, "ReforgeInvocationModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            invocationMod += helmet.get(new NamespacedKey(plugin, "ReforgeInvocationModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (helmet.get(new NamespacedKey(plugin, "EnchantInvocationModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            invocationMod += helmet.get(new NamespacedKey(plugin, "EnchantInvocationModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (helmet.get(new NamespacedKey(plugin, "Magic"),
+                PersistentDataType.DOUBLE) != null) {
+            MF += helmet.get(new NamespacedKey(plugin, "Magic"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (helmet.get(new NamespacedKey(plugin, "ReforgeMagic"),
+                PersistentDataType.DOUBLE) != null) {
+            MF += helmet.get(new NamespacedKey(plugin, "ReforgeMagic"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (helmet.get(new NamespacedKey(plugin, "EnchantMagic"),
+                PersistentDataType.DOUBLE) != null) {
+            MF += helmet.get(new NamespacedKey(plugin, "EnchantMagic"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (helmet.get(new NamespacedKey(plugin, "FarmingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Farm += helmet.get(new NamespacedKey(plugin, "FarmingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (helmet.get(new NamespacedKey(plugin, "ReforgeFarmingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Farm += helmet.get(new NamespacedKey(plugin, "ReforgeFarmingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (helmet.get(new NamespacedKey(plugin, "EnchantFarmingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Farm += helmet.get(new NamespacedKey(plugin, "EnchantFarmingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (helmet.get(new NamespacedKey(plugin, "MiningFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Mine += helmet.get(new NamespacedKey(plugin, "MiningFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (helmet.get(new NamespacedKey(plugin, "ReforgeMiningFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Mine += helmet.get(new NamespacedKey(plugin, "ReforgeMiningFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (helmet.get(new NamespacedKey(plugin, "EnchantMiningFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Mine += helmet.get(new NamespacedKey(plugin, "EnchantMiningFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (helmet.get(new NamespacedKey(plugin, "ExcavatingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Excavating += helmet.get(new NamespacedKey(plugin, "ExcavatingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (helmet.get(new NamespacedKey(plugin, "ReforgeExcavatingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Excavating += helmet.get(new NamespacedKey(plugin, "ReforgeExcavatingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (helmet.get(new NamespacedKey(plugin, "EnchantExcavatingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Excavating += helmet.get(new NamespacedKey(plugin, "EnchantExcavatingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (helmet.get(new NamespacedKey(plugin, "HealMod"),
+                PersistentDataType.DOUBLE) != null) {
+            healMod += helmet.get(new NamespacedKey(plugin, "HealMod"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (helmet.get(new NamespacedKey(plugin, "ReforgeHealMod"),
+                PersistentDataType.DOUBLE) != null) {
+            healMod += helmet.get(new NamespacedKey(plugin, "ReforgeHealMod"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (helmet.get(new NamespacedKey(plugin, "EnchantHealMod"),
+                PersistentDataType.DOUBLE) != null) {
+            healMod += helmet.get(new NamespacedKey(plugin, "EnchantHealMod"),
+                    PersistentDataType.DOUBLE);
+        }
     }
 
     //Check player's chest for stats and apply it to stats
@@ -1423,319 +2237,475 @@ public static void updateStats(Player player, Main plugin) {
         player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "type"),
                 PersistentDataType.STRING).equals("chestplate")) {
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+        PersistentDataContainer chest = player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer();
+        
+        if (chest.get(new NamespacedKey(plugin, "DamageModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            damageMod += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+            damageMod += chest.get(new NamespacedKey(plugin, "DamageModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDamageModifier"),
+        if (chest.get(new NamespacedKey(plugin, "ReforgeDamageModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            damageMod += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDamageModifier"),
+            damageMod += chest.get(new NamespacedKey(plugin, "ReforgeDamageModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Strength"),
+        if (chest.get(new NamespacedKey(plugin, "EnchantDamageModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            strength += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Strength"),
+            damageMod += chest.get(new NamespacedKey(plugin, "EnchantDamageModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeStrength"),
+        if (chest.get(new NamespacedKey(plugin, "Strength"),
                 PersistentDataType.DOUBLE) != null) {
-            strength += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeStrength"),
+            strength += chest.get(new NamespacedKey(plugin, "Strength"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "StrengthModifier"),
+        if (chest.get(new NamespacedKey(plugin, "ReforgeStrength"),
                 PersistentDataType.DOUBLE) != null) {
-            strengthMod += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "StrengthModifier"),
+            strength += chest.get(new NamespacedKey(plugin, "ReforgeStrength"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeStrengthModifier"),
+        if (chest.get(new NamespacedKey(plugin, "EnchantStrength"),
                 PersistentDataType.DOUBLE) != null) {
-            strengthMod += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeStrengthModifier"),
+            strength += chest.get(new NamespacedKey(plugin, "EnchantStrength"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Crit"),
+        if (chest.get(new NamespacedKey(plugin, "StrengthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            crit += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Crit"),
+            strengthMod += chest.get(new NamespacedKey(plugin, "StrengthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCrit"),
+        if (chest.get(new NamespacedKey(plugin, "ReforgeStrengthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            crit += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCrit"),
+            strengthMod += chest.get(new NamespacedKey(plugin, "ReforgeStrengthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CritModifier"),
+        if (chest.get(new NamespacedKey(plugin, "EnchantStrengthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            critMod += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CritModifier"),
+            strengthMod += chest.get(new NamespacedKey(plugin, "EnchantStrengthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCritModifier"),
+        if (chest.get(new NamespacedKey(plugin, "Crit"),
                 PersistentDataType.DOUBLE) != null) {
-            critMod += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCritModifier"),
+            crit += chest.get(new NamespacedKey(plugin, "Crit"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CC"),
+        if (chest.get(new NamespacedKey(plugin, "ReforgeCrit"),
                 PersistentDataType.DOUBLE) != null) {
-            CC += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CC"),
+            crit += chest.get(new NamespacedKey(plugin, "ReforgeCrit"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCC"),
+        if (chest.get(new NamespacedKey(plugin, "EnchantCrit"),
                 PersistentDataType.DOUBLE) != null) {
-            CC += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCC"),
+            crit += chest.get(new NamespacedKey(plugin, "EnchantCrit"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CCModifier"),
+        if (chest.get(new NamespacedKey(plugin, "CritModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            CCMod += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CCModifier"),
+            critMod += chest.get(new NamespacedKey(plugin, "CritModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCCModifier"),
+        if (chest.get(new NamespacedKey(plugin, "ReforgeCritModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            CCMod += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCCModifier"),
+            critMod += chest.get(new NamespacedKey(plugin, "ReforgeCritModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeed"),
+        if (chest.get(new NamespacedKey(plugin, "EnchantCritModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            attackSpeed += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeed"),
+            critMod += chest.get(new NamespacedKey(plugin, "EnchantCritModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeAttackSpeed"),
+        if (chest.get(new NamespacedKey(plugin, "CC"),
                 PersistentDataType.DOUBLE) != null) {
-            attackSpeed += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeAttackSpeed"),
+            CC += chest.get(new NamespacedKey(plugin, "CC"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeedModifier"),
+        if (chest.get(new NamespacedKey(plugin, "ReforgeCC"),
                 PersistentDataType.DOUBLE) != null) {
-            attackSpeedMod += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeedModifier"),
+            CC += chest.get(new NamespacedKey(plugin, "ReforgeCC"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeAttackSpeedModifier"),
+        if (chest.get(new NamespacedKey(plugin, "EnchantCC"),
                 PersistentDataType.DOUBLE) != null) {
-            attackSpeedMod += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeAttackSpeedModifier"),
+            CC += chest.get(new NamespacedKey(plugin, "EnchantCC"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+        if (chest.get(new NamespacedKey(plugin, "CCModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            health += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+            CCMod += chest.get(new NamespacedKey(plugin, "CCModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealth"),
+        if (chest.get(new NamespacedKey(plugin, "ReforgeCCModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            health += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealth"),
+            CCMod += chest.get(new NamespacedKey(plugin, "ReforgeCCModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "HealthModifier"),
+        if (chest.get(new NamespacedKey(plugin, "EnchantCCModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            healthMod += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "HealthModifier"),
+            CCMod += chest.get(new NamespacedKey(plugin, "EnchantCCModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealthModifier"),
+        if (chest.get(new NamespacedKey(plugin, "AttackSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            healthMod += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealthModifier"),
+            attackSpeed += chest.get(new NamespacedKey(plugin, "AttackSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Defense"),
+        if (chest.get(new NamespacedKey(plugin, "ReforgeAttackSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            defense += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Defense"),
+            attackSpeed += chest.get(new NamespacedKey(plugin, "ReforgeAttackSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDefense"),
+        if (chest.get(new NamespacedKey(plugin, "EnchantAttackSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            defense += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDefense"),
+            attackSpeed += chest.get(new NamespacedKey(plugin, "EnchantAttackSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DefenseModifier"),
+        if (chest.get(new NamespacedKey(plugin, "AttackSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            defenseMod += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DefenseModifier"),
+            attackSpeedMod += chest.get(new NamespacedKey(plugin, "AttackSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDefenseModifier"),
+        if (chest.get(new NamespacedKey(plugin, "ReforgeAttackSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            defenseMod += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDefenseModifier"),
+            attackSpeedMod += chest.get(new NamespacedKey(plugin, "ReforgeAttackSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
+        if (chest.get(new NamespacedKey(plugin, "EnchantAttackSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            speed += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
+            attackSpeedMod += chest.get(new NamespacedKey(plugin, "EnchantAttackSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeSpeed"),
+        if (chest.get(new NamespacedKey(plugin, "Health"),
                 PersistentDataType.DOUBLE) != null) {
-            speed += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeSpeed"),
+            health += chest.get(new NamespacedKey(plugin, "Health"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
+        if (chest.get(new NamespacedKey(plugin, "ReforgeHealth"),
                 PersistentDataType.DOUBLE) != null) {
-            speedMod += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
+            health += chest.get(new NamespacedKey(plugin, "ReforgeHealth"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeSpeedModifier"),
+        if (chest.get(new NamespacedKey(plugin, "EnchantHealth"),
                 PersistentDataType.DOUBLE) != null) {
-            speedMod += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeSpeedModifier"),
+            health += chest.get(new NamespacedKey(plugin, "EnchantHealth"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+        if (chest.get(new NamespacedKey(plugin, "HealthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            intelligence += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+            healthMod += chest.get(new NamespacedKey(plugin, "HealthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeIntelligence"),
+        if (chest.get(new NamespacedKey(plugin, "ReforgeHealthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            intelligence += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeIntelligence"),
+            healthMod += chest.get(new NamespacedKey(plugin, "ReforgeHealthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntelligenceModifier"),
+        if (chest.get(new NamespacedKey(plugin, "EnchantHealthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            intelligenceMod += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntelligenceModifier"),
+            healthMod += chest.get(new NamespacedKey(plugin, "EnchantHealthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeIntelligenceModifier"),
+        if (chest.get(new NamespacedKey(plugin, "Defense"),
                 PersistentDataType.DOUBLE) != null) {
-            intelligenceMod += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeIntelligenceModifier"),
+            defense += chest.get(new NamespacedKey(plugin, "Defense"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Thaumaturgy"),
+        if (chest.get(new NamespacedKey(plugin, "ReforgeDefense"),
                 PersistentDataType.DOUBLE) != null) {
-            thaumaturgy += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Thaumaturgy"),
+            defense += chest.get(new NamespacedKey(plugin, "ReforgeDefense"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeThaumaturgy"),
+        if (chest.get(new NamespacedKey(plugin, "EnchantDefense"),
                 PersistentDataType.DOUBLE) != null) {
-            thaumaturgy += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeThaumaturgy"),
+            defense += chest.get(new NamespacedKey(plugin, "EnchantDefense"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ThamauturgyModifier"),
+        if (chest.get(new NamespacedKey(plugin, "DefenseModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            thaumaturgyMod += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ThaumaturgyModifier"),
+            defenseMod += chest.get(new NamespacedKey(plugin, "DefenseModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeThaumaturgyModifier"),
+        if (chest.get(new NamespacedKey(plugin, "ReforgeDefenseModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            thaumaturgyMod += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeThaumaturgyModifier"),
+            defenseMod += chest.get(new NamespacedKey(plugin, "ReforgeDefenseModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Invocation"),
+        if (chest.get(new NamespacedKey(plugin, "EnchantDefenseModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            invocation += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Invocation"),
+            defenseMod += chest.get(new NamespacedKey(plugin, "EnchantDefenseModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeInvocation"),
+        if (chest.get(new NamespacedKey(plugin, "Speed"),
                 PersistentDataType.DOUBLE) != null) {
-            invocation += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeInvocation"),
+            speed += chest.get(new NamespacedKey(plugin, "Speed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "InvocationModifier"),
+        if (chest.get(new NamespacedKey(plugin, "ReforgeSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            invocationMod += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "InvocationModifier"),
+            speed += chest.get(new NamespacedKey(plugin, "ReforgeSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeInvocationModifier"),
+        if (chest.get(new NamespacedKey(plugin, "EnchantSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            invocationMod += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeInvocationModifier"),
+            speed += chest.get(new NamespacedKey(plugin, "EnchantSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Magic"),
+        if (chest.get(new NamespacedKey(plugin, "SpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            MF += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Magic"),
+            speedMod += chest.get(new NamespacedKey(plugin, "SpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeMagic"),
+        if (chest.get(new NamespacedKey(plugin, "ReforgeSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            MF += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeMagic"),
+            speedMod += chest.get(new NamespacedKey(plugin, "ReforgeSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "FarmingFortune"),
+        if (chest.get(new NamespacedKey(plugin, "EnchantSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            Farm += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "FarmingFortune"),
+            speedMod += chest.get(new NamespacedKey(plugin, "EnchantSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeFarmingFortune"),
+        if (chest.get(new NamespacedKey(plugin, "Intelligence"),
                 PersistentDataType.DOUBLE) != null) {
-            Farm += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeFarmingFortune"),
+            intelligence += chest.get(new NamespacedKey(plugin, "Intelligence"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "MiningFortune"),
+        if (chest.get(new NamespacedKey(plugin, "ReforgeIntelligence"),
                 PersistentDataType.DOUBLE) != null) {
-            Mine += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "MiningFortune"),
+            intelligence += chest.get(new NamespacedKey(plugin, "ReforgeIntelligence"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeMiningFortune"),
+        if (chest.get(new NamespacedKey(plugin, "EnchantIntelligence"),
                 PersistentDataType.DOUBLE) != null) {
-            Mine += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeMiningFortune"),
+            intelligence += chest.get(new NamespacedKey(plugin, "EnchantIntelligence"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ExcavatingFortune"),
+        if (chest.get(new NamespacedKey(plugin, "IntelligenceModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            Excavating += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ExcavatingFortune"),
+            intelligenceMod += chest.get(new NamespacedKey(plugin, "IntelligenceModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeExcavatingFortune"),
+        if (chest.get(new NamespacedKey(plugin, "ReforgeIntelligenceModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            Excavating += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeExcavatingFortune"),
+            intelligenceMod += chest.get(new NamespacedKey(plugin, "ReforgeIntelligenceModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "HealMod"),
+        if (chest.get(new NamespacedKey(plugin, "EnchantIntelligenceModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            healMod += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "HealMod"),
+            intelligenceMod += chest.get(new NamespacedKey(plugin, "EnchantIntelligenceModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealMod"),
+        if (chest.get(new NamespacedKey(plugin, "Thaumaturgy"),
                 PersistentDataType.DOUBLE) != null) {
-            healMod += player.getInventory().getChestplate().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealMod"),
+            thaumaturgy += chest.get(new NamespacedKey(plugin, "Thaumaturgy"),
                     PersistentDataType.DOUBLE);
         }
 
+        if (chest.get(new NamespacedKey(plugin, "ReforgeThaumaturgy"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgy += chest.get(new NamespacedKey(plugin, "ReforgeThaumaturgy"),
+                    PersistentDataType.DOUBLE);
+        }
 
+        if (chest.get(new NamespacedKey(plugin, "EnchantThaumaturgy"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgy += chest.get(new NamespacedKey(plugin, "EnchantThaumaturgy"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (chest.get(new NamespacedKey(plugin, "ThamauturgyModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgyMod += chest.get(new NamespacedKey(plugin, "ThaumaturgyModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (chest.get(new NamespacedKey(plugin, "ReforgeThaumaturgyModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgyMod += chest.get(new NamespacedKey(plugin, "ReforgeThaumaturgyModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (chest.get(new NamespacedKey(plugin, "EnchantThaumaturgyModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgyMod += chest.get(new NamespacedKey(plugin, "EnchantThaumaturgyModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (chest.get(new NamespacedKey(plugin, "Invocation"),
+                PersistentDataType.DOUBLE) != null) {
+            invocation += chest.get(new NamespacedKey(plugin, "Invocation"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (chest.get(new NamespacedKey(plugin, "ReforgeInvocation"),
+                PersistentDataType.DOUBLE) != null) {
+            invocation += chest.get(new NamespacedKey(plugin, "ReforgeInvocation"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (chest.get(new NamespacedKey(plugin, "EnchantInvocation"),
+                PersistentDataType.DOUBLE) != null) {
+            invocation += chest.get(new NamespacedKey(plugin, "EnchantInvocation"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (chest.get(new NamespacedKey(plugin, "InvocationModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            invocationMod += chest.get(new NamespacedKey(plugin, "InvocationModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (chest.get(new NamespacedKey(plugin, "ReforgeInvocationModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            invocationMod += chest.get(new NamespacedKey(plugin, "ReforgeInvocationModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (chest.get(new NamespacedKey(plugin, "EnchantInvocationModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            invocationMod += chest.get(new NamespacedKey(plugin, "EnchantInvocationModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (chest.get(new NamespacedKey(plugin, "Magic"),
+                PersistentDataType.DOUBLE) != null) {
+            MF += chest.get(new NamespacedKey(plugin, "Magic"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (chest.get(new NamespacedKey(plugin, "ReforgeMagic"),
+                PersistentDataType.DOUBLE) != null) {
+            MF += chest.get(new NamespacedKey(plugin, "ReforgeMagic"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (chest.get(new NamespacedKey(plugin, "EnchantMagic"),
+                PersistentDataType.DOUBLE) != null) {
+            MF += chest.get(new NamespacedKey(plugin, "EnchantMagic"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (chest.get(new NamespacedKey(plugin, "FarmingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Farm += chest.get(new NamespacedKey(plugin, "FarmingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (chest.get(new NamespacedKey(plugin, "ReforgeFarmingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Farm += chest.get(new NamespacedKey(plugin, "ReforgeFarmingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (chest.get(new NamespacedKey(plugin, "EnchantFarmingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Farm += chest.get(new NamespacedKey(plugin, "EnchantFarmingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (chest.get(new NamespacedKey(plugin, "MiningFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Mine += chest.get(new NamespacedKey(plugin, "MiningFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (chest.get(new NamespacedKey(plugin, "ReforgeMiningFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Mine += chest.get(new NamespacedKey(plugin, "ReforgeMiningFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (chest.get(new NamespacedKey(plugin, "EnchantMiningFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Mine += chest.get(new NamespacedKey(plugin, "EnchantMiningFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (chest.get(new NamespacedKey(plugin, "ExcavatingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Excavating += chest.get(new NamespacedKey(plugin, "ExcavatingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (chest.get(new NamespacedKey(plugin, "ReforgeExcavatingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Excavating += chest.get(new NamespacedKey(plugin, "ReforgeExcavatingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (chest.get(new NamespacedKey(plugin, "EnchantExcavatingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Excavating += chest.get(new NamespacedKey(plugin, "EnchantExcavatingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (chest.get(new NamespacedKey(plugin, "HealMod"),
+                PersistentDataType.DOUBLE) != null) {
+            healMod += chest.get(new NamespacedKey(plugin, "HealMod"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (chest.get(new NamespacedKey(plugin, "ReforgeHealMod"),
+                PersistentDataType.DOUBLE) != null) {
+            healMod += chest.get(new NamespacedKey(plugin, "ReforgeHealMod"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (chest.get(new NamespacedKey(plugin, "EnchantHealMod"),
+                PersistentDataType.DOUBLE) != null) {
+            healMod += chest.get(new NamespacedKey(plugin, "EnchantHealMod"),
+                    PersistentDataType.DOUBLE);
+        }
     }
 
     //Check player's legs for stats and apply it to stats
@@ -1747,315 +2717,473 @@ public static void updateStats(Player player, Main plugin) {
         player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "type"),
                 PersistentDataType.STRING).equals("leggings")) {
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+        PersistentDataContainer legs = player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer();
+
+        if (legs.get(new NamespacedKey(plugin, "DamageModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            damageMod += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+            damageMod += legs.get(new NamespacedKey(plugin, "DamageModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDamageModifier"),
+        if (legs.get(new NamespacedKey(plugin, "ReforgeDamageModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            damageMod += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDamageModifier"),
+            damageMod += legs.get(new NamespacedKey(plugin, "ReforgeDamageModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Strength"),
+        if (legs.get(new NamespacedKey(plugin, "EnchantDamageModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            strength += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Strength"),
+            damageMod += legs.get(new NamespacedKey(plugin, "EnchantDamageModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeStrength"),
+        if (legs.get(new NamespacedKey(plugin, "Strength"),
                 PersistentDataType.DOUBLE) != null) {
-            strength += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeStrength"),
+            strength += legs.get(new NamespacedKey(plugin, "Strength"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "StrengthModifier"),
+        if (legs.get(new NamespacedKey(plugin, "ReforgeStrength"),
                 PersistentDataType.DOUBLE) != null) {
-            strengthMod += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "StrengthModifier"),
+            strength += legs.get(new NamespacedKey(plugin, "ReforgeStrength"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeStrengthModifier"),
+        if (legs.get(new NamespacedKey(plugin, "EnchantStrength"),
                 PersistentDataType.DOUBLE) != null) {
-            strengthMod += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeStrengthModifier"),
+            strength += legs.get(new NamespacedKey(plugin, "EnchantStrength"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Crit"),
+        if (legs.get(new NamespacedKey(plugin, "StrengthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            crit += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Crit"),
+            strengthMod += legs.get(new NamespacedKey(plugin, "StrengthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCrit"),
+        if (legs.get(new NamespacedKey(plugin, "ReforgeStrengthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            crit += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCrit"),
+            strengthMod += legs.get(new NamespacedKey(plugin, "ReforgeStrengthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CritModifier"),
+        if (legs.get(new NamespacedKey(plugin, "EnchantStrengthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            critMod += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CritModifier"),
+            strengthMod += legs.get(new NamespacedKey(plugin, "EnchantStrengthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCritModifier"),
+        if (legs.get(new NamespacedKey(plugin, "Crit"),
                 PersistentDataType.DOUBLE) != null) {
-            critMod += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCritModifier"),
+            crit += legs.get(new NamespacedKey(plugin, "Crit"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CC"),
+        if (legs.get(new NamespacedKey(plugin, "ReforgeCrit"),
                 PersistentDataType.DOUBLE) != null) {
-            CC += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CC"),
+            crit += legs.get(new NamespacedKey(plugin, "ReforgeCrit"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCC"),
+        if (legs.get(new NamespacedKey(plugin, "EnchantCrit"),
                 PersistentDataType.DOUBLE) != null) {
-            CC += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCC"),
+            crit += legs.get(new NamespacedKey(plugin, "EnchantCrit"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CCModifier"),
+        if (legs.get(new NamespacedKey(plugin, "CritModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            CCMod += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CCModifier"),
+            critMod += legs.get(new NamespacedKey(plugin, "CritModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCCModifier"),
+        if (legs.get(new NamespacedKey(plugin, "ReforgeCritModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            CCMod += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCCModifier"),
+            critMod += legs.get(new NamespacedKey(plugin, "ReforgeCritModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeed"),
+        if (legs.get(new NamespacedKey(plugin, "EnchantCritModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            attackSpeed += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeed"),
+            critMod += legs.get(new NamespacedKey(plugin, "EnchantCritModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeAttackSpeed"),
+        if (legs.get(new NamespacedKey(plugin, "CC"),
                 PersistentDataType.DOUBLE) != null) {
-            attackSpeed += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeAttackSpeed"),
+            CC += legs.get(new NamespacedKey(plugin, "CC"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeedModifier"),
+        if (legs.get(new NamespacedKey(plugin, "ReforgeCC"),
                 PersistentDataType.DOUBLE) != null) {
-            attackSpeedMod += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeedModifier"),
+            CC += legs.get(new NamespacedKey(plugin, "ReforgeCC"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeAttackSpeedModifier"),
+        if (legs.get(new NamespacedKey(plugin, "EnchantCC"),
                 PersistentDataType.DOUBLE) != null) {
-            attackSpeedMod += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeAttackSpeedModifier"),
+            CC += legs.get(new NamespacedKey(plugin, "EnchantCC"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+        if (legs.get(new NamespacedKey(plugin, "CCModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            health += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+            CCMod += legs.get(new NamespacedKey(plugin, "CCModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealth"),
+        if (legs.get(new NamespacedKey(plugin, "ReforgeCCModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            health += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealth"),
+            CCMod += legs.get(new NamespacedKey(plugin, "ReforgeCCModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "HealthModifier"),
+        if (legs.get(new NamespacedKey(plugin, "EnchantCCModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            healthMod += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "HealthModifier"),
+            CCMod += legs.get(new NamespacedKey(plugin, "EnchantCCModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealthModifier"),
+        if (legs.get(new NamespacedKey(plugin, "AttackSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            healthMod += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealthModifier"),
+            attackSpeed += legs.get(new NamespacedKey(plugin, "AttackSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Defense"),
+        if (legs.get(new NamespacedKey(plugin, "ReforgeAttackSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            defense += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Defense"),
+            attackSpeed += legs.get(new NamespacedKey(plugin, "ReforgeAttackSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDefense"),
+        if (legs.get(new NamespacedKey(plugin, "EnchantAttackSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            defense += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDefense"),
+            attackSpeed += legs.get(new NamespacedKey(plugin, "EnchantAttackSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DefenseModifier"),
+        if (legs.get(new NamespacedKey(plugin, "AttackSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            defenseMod += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DefenseModifier"),
+            attackSpeedMod += legs.get(new NamespacedKey(plugin, "AttackSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDefenseModifier"),
+        if (legs.get(new NamespacedKey(plugin, "ReforgeAttackSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            defenseMod += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDefenseModifier"),
+            attackSpeedMod += legs.get(new NamespacedKey(plugin, "ReforgeAttackSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
+        if (legs.get(new NamespacedKey(plugin, "EnchantAttackSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            speed += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
+            attackSpeedMod += legs.get(new NamespacedKey(plugin, "EnchantAttackSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeSpeed"),
+        if (legs.get(new NamespacedKey(plugin, "Health"),
                 PersistentDataType.DOUBLE) != null) {
-            speed += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeSpeed"),
+            health += legs.get(new NamespacedKey(plugin, "Health"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
+        if (legs.get(new NamespacedKey(plugin, "ReforgeHealth"),
                 PersistentDataType.DOUBLE) != null) {
-            speedMod += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
+            health += legs.get(new NamespacedKey(plugin, "ReforgeHealth"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeSpeedModifier"),
+        if (legs.get(new NamespacedKey(plugin, "EnchantHealth"),
                 PersistentDataType.DOUBLE) != null) {
-            speedMod += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeSpeedModifier"),
+            health += legs.get(new NamespacedKey(plugin, "EnchantHealth"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+        if (legs.get(new NamespacedKey(plugin, "HealthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            intelligence += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+            healthMod += legs.get(new NamespacedKey(plugin, "HealthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeIntelligence"),
+        if (legs.get(new NamespacedKey(plugin, "ReforgeHealthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            intelligence += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeIntelligence"),
+            healthMod += legs.get(new NamespacedKey(plugin, "ReforgeHealthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntelligenceModifier"),
+        if (legs.get(new NamespacedKey(plugin, "EnchantHealthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            intelligenceMod += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntelligenceModifier"),
+            healthMod += legs.get(new NamespacedKey(plugin, "EnchantHealthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeIntelligenceModifier"),
+        if (legs.get(new NamespacedKey(plugin, "Defense"),
                 PersistentDataType.DOUBLE) != null) {
-            intelligenceMod += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeIntelligenceModifier"),
+            defense += legs.get(new NamespacedKey(plugin, "Defense"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Thaumaturgy"),
+        if (legs.get(new NamespacedKey(plugin, "ReforgeDefense"),
                 PersistentDataType.DOUBLE) != null) {
-            thaumaturgy += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Thaumaturgy"),
+            defense += legs.get(new NamespacedKey(plugin, "ReforgeDefense"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeThaumaturgy"),
+        if (legs.get(new NamespacedKey(plugin, "EnchantDefense"),
                 PersistentDataType.DOUBLE) != null) {
-            thaumaturgy += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeThaumaturgy"),
+            defense += legs.get(new NamespacedKey(plugin, "EnchantDefense"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ThaumaturgyModifier"),
+        if (legs.get(new NamespacedKey(plugin, "DefenseModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            thaumaturgyMod += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ThaumaturgyModifier"),
+            defenseMod += legs.get(new NamespacedKey(plugin, "DefenseModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeThaumaturgyModifier"),
+        if (legs.get(new NamespacedKey(plugin, "ReforgeDefenseModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            thaumaturgyMod += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeThaumaturgyModifier"),
+            defenseMod += legs.get(new NamespacedKey(plugin, "ReforgeDefenseModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Invocation"),
+        if (legs.get(new NamespacedKey(plugin, "EnchantDefenseModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            invocation += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Invocation"),
+            defenseMod += legs.get(new NamespacedKey(plugin, "EnchantDefenseModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeInvocation"),
+        if (legs.get(new NamespacedKey(plugin, "Speed"),
                 PersistentDataType.DOUBLE) != null) {
-            invocation += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeInvocation"),
+            speed += legs.get(new NamespacedKey(plugin, "Speed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "InvocationModifier"),
+        if (legs.get(new NamespacedKey(plugin, "ReforgeSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            invocationMod += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "InvocationModifier"),
+            speed += legs.get(new NamespacedKey(plugin, "ReforgeSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeInvocationModifier"),
+        if (legs.get(new NamespacedKey(plugin, "EnchantSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            invocationMod += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeInvocationModifier"),
+            speed += legs.get(new NamespacedKey(plugin, "EnchantSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Magic"),
+        if (legs.get(new NamespacedKey(plugin, "SpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            MF += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Magic"),
+            speedMod += legs.get(new NamespacedKey(plugin, "SpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeMagic"),
+        if (legs.get(new NamespacedKey(plugin, "ReforgeSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            MF += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeMagic"),
+            speedMod += legs.get(new NamespacedKey(plugin, "ReforgeSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "FarmingFortune"),
+        if (legs.get(new NamespacedKey(plugin, "EnchantSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            Farm += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "FarmingFortune"),
+            speedMod += legs.get(new NamespacedKey(plugin, "EnchantSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeFarmingFortune"),
+        if (legs.get(new NamespacedKey(plugin, "Intelligence"),
                 PersistentDataType.DOUBLE) != null) {
-            Farm += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeFarmingFortune"),
+            intelligence += legs.get(new NamespacedKey(plugin, "Intelligence"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "MiningFortune"),
+        if (legs.get(new NamespacedKey(plugin, "ReforgeIntelligence"),
                 PersistentDataType.DOUBLE) != null) {
-            Mine += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "MiningFortune"),
+            intelligence += legs.get(new NamespacedKey(plugin, "ReforgeIntelligence"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeMiningFortune"),
+        if (legs.get(new NamespacedKey(plugin, "EnchantIntelligence"),
                 PersistentDataType.DOUBLE) != null) {
-            Mine += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeMiningFortune"),
+            intelligence += legs.get(new NamespacedKey(plugin, "EnchantIntelligence"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ExcavatingFortune"),
+        if (legs.get(new NamespacedKey(plugin, "IntelligenceModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            Excavating += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ExcavatingFortune"),
+            intelligenceMod += legs.get(new NamespacedKey(plugin, "IntelligenceModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeExcavatingFortune"),
+        if (legs.get(new NamespacedKey(plugin, "ReforgeIntelligenceModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            Excavating += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeExcavatingFortune"),
+            intelligenceMod += legs.get(new NamespacedKey(plugin, "ReforgeIntelligenceModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "HealMod"),
+        if (legs.get(new NamespacedKey(plugin, "EnchantIntelligenceModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            healMod += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "HealMod"),
+            intelligenceMod += legs.get(new NamespacedKey(plugin, "EnchantIntelligenceModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealMod"),
+        if (legs.get(new NamespacedKey(plugin, "Thaumaturgy"),
                 PersistentDataType.DOUBLE) != null) {
-            healMod += player.getInventory().getLeggings().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealMod"),
+            thaumaturgy += legs.get(new NamespacedKey(plugin, "Thaumaturgy"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (legs.get(new NamespacedKey(plugin, "ReforgeThaumaturgy"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgy += legs.get(new NamespacedKey(plugin, "ReforgeThaumaturgy"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (legs.get(new NamespacedKey(plugin, "EnchantThaumaturgy"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgy += legs.get(new NamespacedKey(plugin, "EnchantThaumaturgy"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (legs.get(new NamespacedKey(plugin, "ThaumaturgyModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgyMod += legs.get(new NamespacedKey(plugin, "ThaumaturgyModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (legs.get(new NamespacedKey(plugin, "ReforgeThaumaturgyModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgyMod += legs.get(new NamespacedKey(plugin, "ReforgeThaumaturgyModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (legs.get(new NamespacedKey(plugin, "EnchantThaumaturgyModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgyMod += legs.get(new NamespacedKey(plugin, "EnchantThaumaturgyModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (legs.get(new NamespacedKey(plugin, "Invocation"),
+                PersistentDataType.DOUBLE) != null) {
+            invocation += legs.get(new NamespacedKey(plugin, "Invocation"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (legs.get(new NamespacedKey(plugin, "ReforgeInvocation"),
+                PersistentDataType.DOUBLE) != null) {
+            invocation += legs.get(new NamespacedKey(plugin, "ReforgeInvocation"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (legs.get(new NamespacedKey(plugin, "EnchantInvocation"),
+                PersistentDataType.DOUBLE) != null) {
+            invocation += legs.get(new NamespacedKey(plugin, "EnchantInvocation"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (legs.get(new NamespacedKey(plugin, "InvocationModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            invocationMod += legs.get(new NamespacedKey(plugin, "InvocationModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (legs.get(new NamespacedKey(plugin, "ReforgeInvocationModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            invocationMod += legs.get(new NamespacedKey(plugin, "ReforgeInvocationModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (legs.get(new NamespacedKey(plugin, "EnchantInvocationModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            invocationMod += legs.get(new NamespacedKey(plugin, "EnchantInvocationModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (legs.get(new NamespacedKey(plugin, "Magic"),
+                PersistentDataType.DOUBLE) != null) {
+            MF += legs.get(new NamespacedKey(plugin, "Magic"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (legs.get(new NamespacedKey(plugin, "ReforgeMagic"),
+                PersistentDataType.DOUBLE) != null) {
+            MF += legs.get(new NamespacedKey(plugin, "ReforgeMagic"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (legs.get(new NamespacedKey(plugin, "EnchantMagic"),
+                PersistentDataType.DOUBLE) != null) {
+            MF += legs.get(new NamespacedKey(plugin, "EnchantMagic"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (legs.get(new NamespacedKey(plugin, "FarmingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Farm += legs.get(new NamespacedKey(plugin, "FarmingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (legs.get(new NamespacedKey(plugin, "ReforgeFarmingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Farm += legs.get(new NamespacedKey(plugin, "ReforgeFarmingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (legs.get(new NamespacedKey(plugin, "EnchantFarmingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Farm += legs.get(new NamespacedKey(plugin, "EnchantFarmingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (legs.get(new NamespacedKey(plugin, "MiningFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Mine += legs.get(new NamespacedKey(plugin, "MiningFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (legs.get(new NamespacedKey(plugin, "ReforgeMiningFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Mine += legs.get(new NamespacedKey(plugin, "ReforgeMiningFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (legs.get(new NamespacedKey(plugin, "EnchantMiningFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Mine += legs.get(new NamespacedKey(plugin, "EnchantMiningFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (legs.get(new NamespacedKey(plugin, "ExcavatingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Excavating += legs.get(new NamespacedKey(plugin, "ExcavatingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (legs.get(new NamespacedKey(plugin, "ReforgeExcavatingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Excavating += legs.get(new NamespacedKey(plugin, "ReforgeExcavatingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (legs.get(new NamespacedKey(plugin, "EnchantExcavatingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Excavating += legs.get(new NamespacedKey(plugin, "EnchantExcavatingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (legs.get(new NamespacedKey(plugin, "HealMod"),
+                PersistentDataType.DOUBLE) != null) {
+            healMod += legs.get(new NamespacedKey(plugin, "HealMod"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (legs.get(new NamespacedKey(plugin, "ReforgeHealMod"),
+                PersistentDataType.DOUBLE) != null) {
+            healMod += legs.get(new NamespacedKey(plugin, "ReforgeHealMod"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (legs.get(new NamespacedKey(plugin, "EnchantHealMod"),
+                PersistentDataType.DOUBLE) != null) {
+            healMod += legs.get(new NamespacedKey(plugin, "EnchantHealMod"),
                     PersistentDataType.DOUBLE);
         }
     }
@@ -2069,324 +3197,478 @@ public static void updateStats(Player player, Main plugin) {
         player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "type"),
                 PersistentDataType.STRING).equals("boots")) {
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+        PersistentDataContainer boots = player.getInventory().getBoots().getItemMeta().getPersistentDataContainer();
+
+        if (boots.get(new NamespacedKey(plugin, "DamageModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            damageMod += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
+            damageMod += boots.get(new NamespacedKey(plugin, "DamageModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDamageModifier"),
+        if (boots.get(new NamespacedKey(plugin, "ReforgeDamageModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            damageMod += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDamageModifier"),
+            damageMod += boots.get(new NamespacedKey(plugin, "ReforgeDamageModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Strength"),
+        if (boots.get(new NamespacedKey(plugin, "EnchantDamageModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            strength += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Strength"),
+            damageMod += boots.get(new NamespacedKey(plugin, "EnchantDamageModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeStrength"),
+        if (boots.get(new NamespacedKey(plugin, "Strength"),
                 PersistentDataType.DOUBLE) != null) {
-            strength += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeStrength"),
+            strength += boots.get(new NamespacedKey(plugin, "Strength"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "StrengthModifier"),
+        if (boots.get(new NamespacedKey(plugin, "ReforgeStrength"),
                 PersistentDataType.DOUBLE) != null) {
-            strengthMod += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "StrengthModifier"),
+            strength += boots.get(new NamespacedKey(plugin, "ReforgeStrength"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeStrengthModifier"),
+        if (boots.get(new NamespacedKey(plugin, "EnchantStrength"),
                 PersistentDataType.DOUBLE) != null) {
-            strengthMod += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeStrengthModifier"),
+            strength += boots.get(new NamespacedKey(plugin, "EnchantStrength"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Crit"),
+        if (boots.get(new NamespacedKey(plugin, "StrengthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            crit += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Crit"),
+            strengthMod += boots.get(new NamespacedKey(plugin, "StrengthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCrit"),
+        if (boots.get(new NamespacedKey(plugin, "ReforgeStrengthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            crit += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCrit"),
+            strengthMod += boots.get(new NamespacedKey(plugin, "ReforgeStrengthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CritModifier"),
+        if (boots.get(new NamespacedKey(plugin, "EnchantStrengthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            critMod += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CritModifier"),
+            strengthMod += boots.get(new NamespacedKey(plugin, "EnchantStrengthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCritModifier"),
+        if (boots.get(new NamespacedKey(plugin, "Crit"),
                 PersistentDataType.DOUBLE) != null) {
-            critMod += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCritModifier"),
+            crit += boots.get(new NamespacedKey(plugin, "Crit"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CC"),
+        if (boots.get(new NamespacedKey(plugin, "ReforgeCrit"),
                 PersistentDataType.DOUBLE) != null) {
-            CC += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CC"),
+            crit += boots.get(new NamespacedKey(plugin, "ReforgeCrit"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCC"),
+        if (boots.get(new NamespacedKey(plugin, "EnchantCrit"),
                 PersistentDataType.DOUBLE) != null) {
-            CC += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCC"),
+            crit += boots.get(new NamespacedKey(plugin, "EnchantCrit"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CCModifier"),
+        if (boots.get(new NamespacedKey(plugin, "CritModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            CCMod += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "CCModifier"),
+            critMod += boots.get(new NamespacedKey(plugin, "CritModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCCModifier"),
+        if (boots.get(new NamespacedKey(plugin, "ReforgeCritModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            CCMod += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeCCModifier"),
+            critMod += boots.get(new NamespacedKey(plugin, "ReforgeCritModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeed"),
+        if (boots.get(new NamespacedKey(plugin, "EnchantCritModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            attackSpeed += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeed"),
+            critMod += boots.get(new NamespacedKey(plugin, "EnchantCritModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeAttackSpeed"),
+        if (boots.get(new NamespacedKey(plugin, "CC"),
                 PersistentDataType.DOUBLE) != null) {
-            attackSpeed += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeAttackSpeed"),
+            CC += boots.get(new NamespacedKey(plugin, "CC"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeedModifier"),
+        if (boots.get(new NamespacedKey(plugin, "ReforgeCC"),
                 PersistentDataType.DOUBLE) != null) {
-            attackSpeedMod += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeedModifier"),
+            CC += boots.get(new NamespacedKey(plugin, "ReforgeCC"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeAttackSpeedModifier"),
+        if (boots.get(new NamespacedKey(plugin, "EnchantCC"),
                 PersistentDataType.DOUBLE) != null) {
-            attackSpeedMod += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeAttackSpeedModifier"),
+            CC += boots.get(new NamespacedKey(plugin, "EnchantCC"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+        if (boots.get(new NamespacedKey(plugin, "CCModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            health += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+            CCMod += boots.get(new NamespacedKey(plugin, "CCModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealth"),
+        if (boots.get(new NamespacedKey(plugin, "ReforgeCCModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            health += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealth"),
+            CCMod += boots.get(new NamespacedKey(plugin, "ReforgeCCModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "HealthModifier"),
+        if (boots.get(new NamespacedKey(plugin, "EnchantCCModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            healthMod += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "HealthModifier"),
+            CCMod += boots.get(new NamespacedKey(plugin, "EnchantCCModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealthModifier"),
+        if (boots.get(new NamespacedKey(plugin, "AttackSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            healthMod += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealthModifier"),
+            attackSpeed += boots.get(new NamespacedKey(plugin, "AttackSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Defense"),
+        if (boots.get(new NamespacedKey(plugin, "ReforgeAttackSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            defense += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Defense"),
+            attackSpeed += boots.get(new NamespacedKey(plugin, "ReforgeAttackSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDefense"),
+        if (boots.get(new NamespacedKey(plugin, "EnchantAttackSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            defense += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDefense"),
+            attackSpeed += boots.get(new NamespacedKey(plugin, "EnchantAttackSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DefenseModifier"),
+        if (boots.get(new NamespacedKey(plugin, "AttackSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            defenseMod += player.getInventory().getHelmet().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "DefenseModifier"),
+            attackSpeedMod += boots.get(new NamespacedKey(plugin, "AttackSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDefenseModifier"),
+        if (boots.get(new NamespacedKey(plugin, "ReforgeAttackSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            defenseMod += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeDefenseModifier"),
+            attackSpeedMod += boots.get(new NamespacedKey(plugin, "ReforgeAttackSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
+        if (boots.get(new NamespacedKey(plugin, "EnchantAttackSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            speed += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
+            attackSpeedMod += boots.get(new NamespacedKey(plugin, "EnchantAttackSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeSpeed"),
+        if (boots.get(new NamespacedKey(plugin, "Health"),
                 PersistentDataType.DOUBLE) != null) {
-            speed += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeSpeed"),
+            health += boots.get(new NamespacedKey(plugin, "Health"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
+        if (boots.get(new NamespacedKey(plugin, "ReforgeHealth"),
                 PersistentDataType.DOUBLE) != null) {
-            speedMod += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "SpeedModifier"),
+            health += boots.get(new NamespacedKey(plugin, "ReforgeHealth"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeSpeedModifier"),
+        if (boots.get(new NamespacedKey(plugin, "EnchantHealth"),
                 PersistentDataType.DOUBLE) != null) {
-            speedMod += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeSpeedModifier"),
+            health += boots.get(new NamespacedKey(plugin, "EnchantHealth"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+        if (boots.get(new NamespacedKey(plugin, "HealthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            intelligence += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
+            healthMod += boots.get(new NamespacedKey(plugin, "HealthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeIntelligence"),
+        if (boots.get(new NamespacedKey(plugin, "ReforgeHealthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            intelligence += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeIntelligence"),
+            healthMod += boots.get(new NamespacedKey(plugin, "ReforgeHealthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntelligenceModifier"),
+        if (boots.get(new NamespacedKey(plugin, "EnchantHealthModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            intelligenceMod += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "IntelligenceModifier"),
+            healthMod += boots.get(new NamespacedKey(plugin, "EnchantHealthModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeIntelligenceModifier"),
+        if (boots.get(new NamespacedKey(plugin, "Defense"),
                 PersistentDataType.DOUBLE) != null) {
-            intelligenceMod += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeIntelligenceModifier"),
+            defense += boots.get(new NamespacedKey(plugin, "Defense"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Thaumaturgy"),
+        if (boots.get(new NamespacedKey(plugin, "ReforgeDefense"),
                 PersistentDataType.DOUBLE) != null) {
-            thaumaturgy += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Thaumaturgy"),
+            defense += boots.get(new NamespacedKey(plugin, "ReforgeDefense"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeThaumaturgy"),
+        if (boots.get(new NamespacedKey(plugin, "EnchantDefense"),
                 PersistentDataType.DOUBLE) != null) {
-            thaumaturgy += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeThaumaturgy"),
+            defense += boots.get(new NamespacedKey(plugin, "EnchantDefense"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ThaumaturgyModifier"),
+        if (boots.get(new NamespacedKey(plugin, "DefenseModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            thaumaturgyMod += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ThaumaturgyModifier"),
+            defenseMod += boots.get(new NamespacedKey(plugin, "DefenseModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeThaumaturgyModifier"),
+        if (boots.get(new NamespacedKey(plugin, "ReforgeDefenseModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            thaumaturgyMod += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeThaumaturgyModifier"),
+            defenseMod += boots.get(new NamespacedKey(plugin, "ReforgeDefenseModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Invocation"),
+        if (boots.get(new NamespacedKey(plugin, "EnchantDefenseModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            invocation += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Invocation"),
+            defenseMod += boots.get(new NamespacedKey(plugin, "EnchantDefenseModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeInvocation"),
+        if (boots.get(new NamespacedKey(plugin, "Speed"),
                 PersistentDataType.DOUBLE) != null) {
-            invocation += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeInvocation"),
+            speed += boots.get(new NamespacedKey(plugin, "Speed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "InvocationModifier"),
+        if (boots.get(new NamespacedKey(plugin, "ReforgeSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            invocationMod += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "InvocationModifier"),
+            speed += boots.get(new NamespacedKey(plugin, "ReforgeSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeInvocationModifier"),
+        if (boots.get(new NamespacedKey(plugin, "EnchantSpeed"),
                 PersistentDataType.DOUBLE) != null) {
-            invocationMod += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeInvocationModifier"),
+            speed += boots.get(new NamespacedKey(plugin, "EnchantSpeed"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Magic"),
+        if (boots.get(new NamespacedKey(plugin, "SpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            MF += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Magic"),
+            speedMod += boots.get(new NamespacedKey(plugin, "SpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeMagic"),
+        if (boots.get(new NamespacedKey(plugin, "ReforgeSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            MF += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeMagic"),
+            speedMod += boots.get(new NamespacedKey(plugin, "ReforgeSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "FarmingFortune"),
+        if (boots.get(new NamespacedKey(plugin, "EnchantSpeedModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            Farm += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "FarmingFortune"),
+            speedMod += boots.get(new NamespacedKey(plugin, "EnchantSpeedModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeFarmingFortune"),
+        if (boots.get(new NamespacedKey(plugin, "Intelligence"),
                 PersistentDataType.DOUBLE) != null) {
-            Farm += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeFarmingFortune"),
+            intelligence += boots.get(new NamespacedKey(plugin, "Intelligence"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "MiningFortune"),
+        if (boots.get(new NamespacedKey(plugin, "ReforgeIntelligence"),
                 PersistentDataType.DOUBLE) != null) {
-            Mine += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "MiningFortune"),
+            intelligence += boots.get(new NamespacedKey(plugin, "ReforgeIntelligence"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeMiningFortune"),
+        if (boots.get(new NamespacedKey(plugin, "EnchantIntelligence"),
                 PersistentDataType.DOUBLE) != null) {
-            Mine += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeMiningFortune"),
+            intelligence += boots.get(new NamespacedKey(plugin, "EnchantIntelligence"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ExcavatingFortune"),
+        if (boots.get(new NamespacedKey(plugin, "IntelligenceModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            Excavating += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ExcavatingFortune"),
+            intelligenceMod += boots.get(new NamespacedKey(plugin, "IntelligenceModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeExcavatingFortune"),
+        if (boots.get(new NamespacedKey(plugin, "ReforgeIntelligenceModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            Excavating += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeExcavatingFortune"),
+            intelligenceMod += boots.get(new NamespacedKey(plugin, "ReforgeIntelligenceModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "HealMod"),
+        if (boots.get(new NamespacedKey(plugin, "EnchantIntelligenceModifier"),
                 PersistentDataType.DOUBLE) != null) {
-            healMod += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "HealMod"),
+            intelligenceMod += boots.get(new NamespacedKey(plugin, "EnchantIntelligenceModifier"),
                     PersistentDataType.DOUBLE);
         }
 
-        if (player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealMod"),
+        if (boots.get(new NamespacedKey(plugin, "Thaumaturgy"),
                 PersistentDataType.DOUBLE) != null) {
-            healMod += player.getInventory().getBoots().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "ReforgeHealMod"),
+            thaumaturgy += boots.get(new NamespacedKey(plugin, "Thaumaturgy"),
                     PersistentDataType.DOUBLE);
         }
 
+        if (boots.get(new NamespacedKey(plugin, "ReforgeThaumaturgy"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgy += boots.get(new NamespacedKey(plugin, "ReforgeThaumaturgy"),
+                    PersistentDataType.DOUBLE);
+        }
 
+        if (boots.get(new NamespacedKey(plugin, "EnchantThaumaturgy"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgy += boots.get(new NamespacedKey(plugin, "EnchantThaumaturgy"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (boots.get(new NamespacedKey(plugin, "ThaumaturgyModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgyMod += boots.get(new NamespacedKey(plugin, "ThaumaturgyModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (boots.get(new NamespacedKey(plugin, "ReforgeThaumaturgyModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgyMod += boots.get(new NamespacedKey(plugin, "ReforgeThaumaturgyModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (boots.get(new NamespacedKey(plugin, "EnchantThaumaturgyModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            thaumaturgyMod += boots.get(new NamespacedKey(plugin, "EnchantThaumaturgyModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (boots.get(new NamespacedKey(plugin, "Invocation"),
+                PersistentDataType.DOUBLE) != null) {
+            invocation += boots.get(new NamespacedKey(plugin, "Invocation"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (boots.get(new NamespacedKey(plugin, "ReforgeInvocation"),
+                PersistentDataType.DOUBLE) != null) {
+            invocation += boots.get(new NamespacedKey(plugin, "ReforgeInvocation"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (boots.get(new NamespacedKey(plugin, "EnchantInvocation"),
+                PersistentDataType.DOUBLE) != null) {
+            invocation += boots.get(new NamespacedKey(plugin, "EnchantInvocation"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (boots.get(new NamespacedKey(plugin, "InvocationModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            invocationMod += boots.get(new NamespacedKey(plugin, "InvocationModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (boots.get(new NamespacedKey(plugin, "ReforgeInvocationModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            invocationMod += boots.get(new NamespacedKey(plugin, "ReforgeInvocationModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (boots.get(new NamespacedKey(plugin, "EnchantInvocationModifier"),
+                PersistentDataType.DOUBLE) != null) {
+            invocationMod += boots.get(new NamespacedKey(plugin, "EnchantInvocationModifier"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (boots.get(new NamespacedKey(plugin, "Magic"),
+                PersistentDataType.DOUBLE) != null) {
+            MF += boots.get(new NamespacedKey(plugin, "Magic"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (boots.get(new NamespacedKey(plugin, "ReforgeMagic"),
+                PersistentDataType.DOUBLE) != null) {
+            MF += boots.get(new NamespacedKey(plugin, "ReforgeMagic"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (boots.get(new NamespacedKey(plugin, "EnchantMagic"),
+                PersistentDataType.DOUBLE) != null) {
+            MF += boots.get(new NamespacedKey(plugin, "EnchantMagic"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (boots.get(new NamespacedKey(plugin, "FarmingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Farm += boots.get(new NamespacedKey(plugin, "FarmingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (boots.get(new NamespacedKey(plugin, "ReforgeFarmingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Farm += boots.get(new NamespacedKey(plugin, "ReforgeFarmingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (boots.get(new NamespacedKey(plugin, "EnchantFarmingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Farm += boots.get(new NamespacedKey(plugin, "EnchantFarmingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (boots.get(new NamespacedKey(plugin, "MiningFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Mine += boots.get(new NamespacedKey(plugin, "MiningFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (boots.get(new NamespacedKey(plugin, "ReforgeMiningFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Mine += boots.get(new NamespacedKey(plugin, "ReforgeMiningFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (boots.get(new NamespacedKey(plugin, "EnchantMiningFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Mine += boots.get(new NamespacedKey(plugin, "EnchantMiningFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (boots.get(new NamespacedKey(plugin, "ExcavatingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Excavating += boots.get(new NamespacedKey(plugin, "ExcavatingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (boots.get(new NamespacedKey(plugin, "ReforgeExcavatingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Excavating += boots.get(new NamespacedKey(plugin, "ReforgeExcavatingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (boots.get(new NamespacedKey(plugin, "EnchantExcavatingFortune"),
+                PersistentDataType.DOUBLE) != null) {
+            Excavating += boots.get(new NamespacedKey(plugin, "EnchantExcavatingFortune"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (boots.get(new NamespacedKey(plugin, "HealMod"),
+                PersistentDataType.DOUBLE) != null) {
+            healMod += boots.get(new NamespacedKey(plugin, "HealMod"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (boots.get(new NamespacedKey(plugin, "ReforgeHealMod"),
+                PersistentDataType.DOUBLE) != null) {
+            healMod += boots.get(new NamespacedKey(plugin, "ReforgeHealMod"),
+                    PersistentDataType.DOUBLE);
+        }
+
+        if (boots.get(new NamespacedKey(plugin, "EnchantHealMod"),
+                PersistentDataType.DOUBLE) != null) {
+            healMod += boots.get(new NamespacedKey(plugin, "EnchantHealMod"),
+                    PersistentDataType.DOUBLE);
+        }
     }
 
-    //Check player's full set bonus for stats
     //Check player for bonus stats
-
     player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Damage"),
             PersistentDataType.DOUBLE, (1 + damageMod) * damage);
 
@@ -2424,13 +3706,13 @@ public static void updateStats(Player player, Main plugin) {
             PersistentDataType.DOUBLE, MF);
 
     player.getPersistentDataContainer().set(new NamespacedKey(plugin, "FarmingFortune"),
-            PersistentDataType.DOUBLE, Farm);
+            PersistentDataType.DOUBLE, (1 + FarmMod) * Farm);
 
     player.getPersistentDataContainer().set(new NamespacedKey(plugin, "MiningFortune"),
-            PersistentDataType.DOUBLE, Mine);
+            PersistentDataType.DOUBLE, (1 + MineMod) * Mine);
 
     player.getPersistentDataContainer().set(new NamespacedKey(plugin, "ExcavatingFortune"),
-            PersistentDataType.DOUBLE, Excavating);
+            PersistentDataType.DOUBLE, (1 + ExcavatingMod) * Excavating);
 
     player.getPersistentDataContainer().set(new NamespacedKey(plugin, "MaxMana"),
             PersistentDataType.DOUBLE, mana + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Intelligence"),
@@ -2449,37 +3731,70 @@ public static void updateStats(Player player, Main plugin) {
                 PersistentDataType.DOUBLE, 0.0);
 
         String name = player.getName();
-        switch (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Rank"),
-                PersistentDataType.STRING)) {
-            case "VIP":
-                name = ChatColor.GREEN + "[" + ChatColor.GOLD + "V" + ChatColor.GREEN + "I" + ChatColor.GOLD + "P" + ChatColor.GREEN + "] " + player.getName();
-                break;
-            case "MVP":
-                name = ChatColor.GOLD + "[MVP] " + player.getName();
-                break;
-            case "ADMIN":
-                name = ChatColor.RED + "[ADMIN] " + player.getName();
-                break;
-            case "PATRON":
-                name = ChatColor.DARK_BLUE + "[" + ChatColor.BLUE + "P" + ChatColor.DARK_PURPLE + "A" + ChatColor.BLUE + "T" + ChatColor.DARK_PURPLE + "R" + ChatColor.BLUE + "O" + ChatColor.DARK_PURPLE + "N"+ ChatColor.DARK_BLUE + "] " + ChatColor.BLUE + player.getName();
-                break;
-            case "WURM":
-                name = ChatColor.DARK_AQUA + "[WURM] " + player.getName();
-                break;
-            default:
-                break;
+        if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Rank"),
+                PersistentDataType.STRING) != null) {
+            switch (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Rank"),
+                    PersistentDataType.STRING)) {
+                case "VIP":
+                    name = ChatColor.GREEN + "[" + ChatColor.GOLD + "V" + ChatColor.GREEN + "I" + ChatColor.GOLD + "P" + ChatColor.GREEN + "] " + player.getName();
+                    break;
+                case "MVP":
+                    name = ChatColor.GOLD + "[MVP] " + player.getName();
+                    break;
+                case "ADMIN":
+                    name = ChatColor.RED + "[ADMIN] " + player.getName();
+                    break;
+                case "PATRON":
+                    name = ChatColor.DARK_BLUE + "[" + ChatColor.BLUE + "P" + ChatColor.DARK_PURPLE + "A" + ChatColor.BLUE + "T" + ChatColor.DARK_PURPLE + "R" + ChatColor.BLUE + "O" + ChatColor.DARK_PURPLE + "N" + ChatColor.DARK_BLUE + "] " + ChatColor.BLUE + player.getName();
+                    break;
+                case "WURM":
+                    name = ChatColor.DARK_AQUA + "[WURM] " + player.getName();
+                    break;
+                default:
+                    break;
+            }
         }
         player.setDisplayName(name);
         player.setPlayerListName(name);
 
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            @Override
-            public void run() {
+        new BukkitRunnable() {
+            int iterations = 0;
+            public void run()
+            {
+                iterations += 1;
+                if (!player.isOnline()) {
+                    this.cancel();
+                    return;
+                }
 
-                PlayerStatEvents.updateStats(player, plugin);
+                if (iterations % 4 == 0) {
+                    functions.heal(plugin, player, player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
+                            PersistentDataType.DOUBLE)/50);
+
+                    if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxMana"),
+                            PersistentDataType.DOUBLE) > player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Mana"),
+                            PersistentDataType.DOUBLE)) {
+                        double mana = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxMana"),
+                                PersistentDataType.DOUBLE)/100;
+                        mana = mana * 2;
+                        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Mana"),
+                                PersistentDataType.DOUBLE, player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Mana"),
+                                        PersistentDataType.DOUBLE) + mana);
+
+                    }
+                    if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxMana"),
+                            PersistentDataType.DOUBLE) < player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Mana"),
+                            PersistentDataType.DOUBLE)) {
+                        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Mana"),
+                                PersistentDataType.DOUBLE, player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxMana"),
+                                        PersistentDataType.DOUBLE));
+                    }
+                }
+
+                PlayerStatEvents.updateStats(player, plugin, functions);
 
                 float speed = (float) (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Speed"),
-                                        PersistentDataType.DOUBLE) / 1000);
+                        PersistentDataType.DOUBLE) / 1000);
                 if (speed > 0) {
                     player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speed);
                 } else {
@@ -2538,7 +3853,7 @@ public static void updateStats(Player player, Main plugin) {
                 player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(attack);
 
                 if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "CoolDown"),
-                    PersistentDataType.DOUBLE) == 0) {
+                        PersistentDataType.DOUBLE) == 0) {
                     functions.ShowStat(player, plugin);
                 }
                 else {
@@ -2548,33 +3863,6 @@ public static void updateStats(Player player, Main plugin) {
                             PersistentDataType.DOUBLE, cd);
                 }
             }
-        }, 100, 5);
-
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            public void run() {
-
-                functions.heal(plugin, player, player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
-                        PersistentDataType.DOUBLE)/50);
-
-                if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxMana"),
-                        PersistentDataType.DOUBLE) > player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Mana"),
-                        PersistentDataType.DOUBLE)) {
-                    double mana = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxMana"),
-                            PersistentDataType.DOUBLE)/100;
-                    mana = mana * 2;
-                    player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Mana"),
-                            PersistentDataType.DOUBLE, player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Mana"),
-                                    PersistentDataType.DOUBLE) + mana);
-
-                }
-                if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxMana"),
-                        PersistentDataType.DOUBLE) < player.getPersistentDataContainer().get(new NamespacedKey(plugin, "Mana"),
-                        PersistentDataType.DOUBLE)) {
-                    player.getPersistentDataContainer().set(new NamespacedKey(plugin, "Mana"),
-                            PersistentDataType.DOUBLE, player.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxMana"),
-                                    PersistentDataType.DOUBLE));
-                }
-            }
-        }, 100, 20);
+        }.runTaskTimer(plugin, 100, 5);
     }
 }

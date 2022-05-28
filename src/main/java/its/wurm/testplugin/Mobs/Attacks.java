@@ -211,6 +211,21 @@ public class Attacks implements Listener {
         return tnt;
     }
 
+    public void createExplosion(Location location, double damage, float power, boolean fire, boolean destroy, Entity source) {
+        Marker stand = location.getWorld().spawn(location, Marker.class);
+        stand.getPersistentDataContainer().set(new NamespacedKey(plugin, "Damage"),
+                PersistentDataType.DOUBLE, damage);
+        stand.getPersistentDataContainer().set(new NamespacedKey(plugin, "owner"),
+                PersistentDataType.STRING, source.getUniqueId().toString());
+
+        stand.getWorld().createExplosion(location.getX(), location.getY(), location.getZ(), power, fire, destroy, stand);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            public void run() {
+                stand.remove();
+            }
+        }, 4);
+    }
+
     public AreaEffectCloud createCloud(Location location, Double damage, int delay, Entity source, int duration, float range, Color color, float size) {
         AreaEffectCloud cloud = location.getWorld().spawn(location, AreaEffectCloud.class);
 
@@ -362,7 +377,7 @@ public class Attacks implements Listener {
         return arrow;
     }
 
-    public Snowball createSnowball(Location location, Double damage, ProjectileSource source, org.bukkit.util.Vector velocity, String id, Material material) {
+    public Snowball createSnowball(Location location, double damage, ProjectileSource source, org.bukkit.util.Vector velocity, String id, Material material) {
         Snowball snowball = location.getWorld().spawn(location, Snowball.class);
         ItemStack item = new ItemStack(material);
         snowball.setShooter(source);
@@ -377,7 +392,7 @@ public class Attacks implements Listener {
         return snowball;
     }
 
-    public static Snowball createStaticSnowball(Plugin plugin, Location location, Double damage, ProjectileSource source, org.bukkit.util.Vector velocity, String id, Material material) {
+    public static Snowball createStaticSnowball(Plugin plugin, Location location, double damage, ProjectileSource source, org.bukkit.util.Vector velocity, String id, Material material) {
         Snowball snowball = location.getWorld().spawn(location, Snowball.class);
         ItemStack item = new ItemStack(material);
         snowball.setShooter(source);

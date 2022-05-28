@@ -11,6 +11,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.AxolotlBucketMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
@@ -89,6 +90,51 @@ public class AnvilEvents implements Listener {
                 //anvil actions
                 switch (inventory.getItem(34).getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
                         PersistentDataType.STRING)) {
+                    case "Shortbow Cord":
+                        if (checkType(item, "bow") &&
+                            item.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "cord"),
+                            PersistentDataType.INTEGER) == null) {
+                            meta = item.getItemMeta();
+                            meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "cord"),
+                                    PersistentDataType.INTEGER, 1);
+                            if (meta.getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeed"),
+                                    PersistentDataType.DOUBLE) == null) {
+                                meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "AttackSpeed"),
+                                    PersistentDataType.DOUBLE, 15.0);
+                            } else {
+                                meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "AttackSpeed"),
+                                    PersistentDataType.DOUBLE, meta.getPersistentDataContainer().get(new NamespacedKey(plugin, "AttackSpeed"),
+                                    PersistentDataType.DOUBLE) + 15);
+                            }
+                            item.setItemMeta(meta);
+                            upgrade.setAmount(upgrade.getAmount() - 1);
+                            value.updateItem(plugin, item);
+                        } else {
+                            player.sendMessage(ChatColor.RED + "Invalid option");
+                            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 60, 0);
+                        }
+                        break;
+                    case "Armor Dye":
+                        if (item != null &&
+                            item.getType() == Material.LEATHER_HELMET ||
+                            item.getType() == Material.LEATHER_CHESTPLATE ||
+                            item.getType() == Material.LEATHER_LEGGINGS ||
+                            item.getType() == Material.LEATHER_BOOTS ||
+                            item.getType() == Material.LEATHER_HORSE_ARMOR) {
+                            ItemMeta leatherMeta = item.hasItemMeta() ? item.getItemMeta() : Bukkit.getItemFactory().getItemMeta(item.getType());
+                            LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) leatherMeta;
+                            leatherArmorMeta.setColor(Color.fromRGB(inventory.getItem(34).getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "color"),
+                                    PersistentDataType.INTEGER_ARRAY)[0], inventory.getItem(34).getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "color"),
+                                    PersistentDataType.INTEGER_ARRAY)[1],inventory.getItem(34).getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "color"),
+                                    PersistentDataType.INTEGER_ARRAY)[2]));
+                            item.setItemMeta(leatherMeta);
+                            inventory.getItem(34).setAmount(inventory.getItem(34).getAmount() - 1);
+                        } else {
+                            player.sendMessage(ChatColor.RED + "Invalid option");
+                            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 60, 0);
+                        }
+
+                        break;
                     case "Renegade Crossbow":
                         if (inventory.getItem(28).getItemMeta() != null &&
                                     inventory.getItem(28).getItemMeta().getPersistentDataContainer() != null &&
@@ -499,196 +545,50 @@ public class AnvilEvents implements Listener {
                         break;
                     case "Test Stone":
                         //give an item the reforged reforge
-
                         upgrade.setAmount(upgrade.getAmount() - 1);
-
-                        refreshStats(item);
-
                         meta = item.getItemMeta();
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeDamage"), PersistentDataType.DOUBLE, 1.0);
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeStrength"), PersistentDataType.DOUBLE, 1.0);
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeCC"), PersistentDataType.DOUBLE, 1.0);
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeCrit"), PersistentDataType.DOUBLE, 1.0);
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeHealth"), PersistentDataType.DOUBLE, 1.0);
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeDefense"), PersistentDataType.DOUBLE, 1.0);
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeIntelligence"), PersistentDataType.DOUBLE, 0.0);
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeSpeed"), PersistentDataType.DOUBLE, 1.0);
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeThaumaturgy"), PersistentDataType.DOUBLE, 1.0);
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeInvocation"), PersistentDataType.DOUBLE, 1.0);
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeMagic"), PersistentDataType.DOUBLE, 1.0);
-
                         meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "reforge"), PersistentDataType.STRING, "Reforged");
                         item.setItemMeta(meta);
-
                         value.updateItem(plugin, item);
                         break;
 
                     case "Prismatic Stone":
                         //give an item the prismatic reforge
-
                         if (!(checkType(item, "Armor"))) {
                             player.sendMessage(ChatColor.RED + "Invalid option");
                             player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 60, 0);
                             return;
                         }
-
                         upgrade.setAmount(upgrade.getAmount() - 1);
-
-                        double intelligencePrismatic;
-                        double thaumaturgyPrismatic;
-
-                        switch (meta.getPersistentDataContainer().get(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING)) {
-                            case "COMMON":
-                                intelligencePrismatic = 25;
-                                thaumaturgyPrismatic = 5;
-                                break;
-                            case "UNCOMMON":
-                                intelligencePrismatic = 40;
-                                thaumaturgyPrismatic = 10;
-                                break;
-                            case "RARE":
-                                intelligencePrismatic = 75;
-                                thaumaturgyPrismatic = 16;
-                                break;
-                            case "EPIC":
-                                intelligencePrismatic = 120;
-                                thaumaturgyPrismatic = 25;
-                                break;
-                            case "LEGENDARY":
-                                intelligencePrismatic = 160;
-                                thaumaturgyPrismatic = 40;
-                                break;
-                            case "MYTHIC":
-                                intelligencePrismatic = 210;
-                                thaumaturgyPrismatic = 65;
-                                break;
-                            default:
-                                intelligencePrismatic = 10;
-                                thaumaturgyPrismatic = 3;
-                                break;
-                        }
-
-                        refreshStats(item);
-
                         meta = item.getItemMeta();
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeIntelligence"), PersistentDataType.DOUBLE, intelligencePrismatic);
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeThaumaturgy"), PersistentDataType.DOUBLE, thaumaturgyPrismatic);
-
                         meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "reforge"), PersistentDataType.STRING, "Prismatic");
                         item.setItemMeta(meta);
-
                         value.updateItem(plugin, item);
                         break;
                     case "Whetstone":
                         //give an item the sharp reforge
-
                         if (!checkType(item, "sword")) {
                             player.sendMessage(ChatColor.RED + "Invalid option");
                             player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 60, 0);
                             return;
                         }
-
                         upgrade.setAmount(upgrade.getAmount() - 1);
-
-                        double critSharp;
-                        double ccSharp;
-
-                        switch (meta.getPersistentDataContainer().get(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING)) {
-                            case "COMMON":
-                                critSharp = 7;
-                                ccSharp = 1;
-                                break;
-                            case "UNCOMMON":
-                                critSharp = 12;
-                                ccSharp = 2;
-                                break;
-                            case "RARE":
-                                critSharp = 16;
-                                ccSharp = 3;
-                                break;
-                            case "EPIC":
-                                critSharp = 21;
-                                ccSharp = 5;
-                                break;
-                            case "LEGENDARY":
-                                critSharp = 27;
-                                ccSharp = 7;
-                                break;
-                            case "MYTHIC":
-                                critSharp = 35;
-                                ccSharp = 12;
-                                break;
-                            default:
-                                critSharp = 3;
-                                ccSharp = 1;
-                                break;
-                        }
-
-                        refreshStats(item);
-
                         meta = item.getItemMeta();
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeCrit"), PersistentDataType.DOUBLE, critSharp);
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeCC"), PersistentDataType.DOUBLE, ccSharp);
-
                         meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "reforge"), PersistentDataType.STRING, "Sharp");
-                            item.setItemMeta(meta);
-
+                        item.setItemMeta(meta);
                         value.updateItem(plugin, item);
                         break;
                     case "Chunk of Meat":
                         //give an item the meaty reforge
-
                         if (!checkType(item, "Armor")) {
                             player.sendMessage(ChatColor.RED + "Invalid option1");
                             player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 60, 0);
                             return;
                         }
-
                         upgrade.setAmount(upgrade.getAmount() - 1);
-
-                        double healthMeaty;
-                        double strengthMeaty;
-
-                        switch (meta.getPersistentDataContainer().get(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING)) {
-                            case "COMMON":
-                                healthMeaty = 9;
-                                strengthMeaty = 0;
-                                break;
-                            case "UNCOMMON":
-                                healthMeaty = 15;
-                                strengthMeaty = 0;
-                                break;
-                            case "RARE":
-                                healthMeaty = 23;
-                                strengthMeaty = 0;
-                                break;
-                            case "EPIC":
-                                healthMeaty = 31;
-                                strengthMeaty = 4;
-                                break;
-                            case "LEGENDARY":
-                                healthMeaty = 47;
-                                strengthMeaty = 7;
-                                break;
-                            case "MYTHIC":
-                                healthMeaty = 55;
-                                strengthMeaty = 13;
-                                break;
-                            default:
-                                healthMeaty = 2;
-                                strengthMeaty = 0;
-                                break;
-                        }
-
-                        refreshStats(item);
-
                         meta = item.getItemMeta();
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeHealth"), PersistentDataType.DOUBLE, healthMeaty);
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeStrength"), PersistentDataType.DOUBLE, strengthMeaty);
-
                         meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "reforge"), PersistentDataType.STRING, "Meaty");
                         item.setItemMeta(meta);
-
                         value.updateItem(plugin, item);
                         break;
                     case "Old Vase":
@@ -698,52 +598,10 @@ public class AnvilEvents implements Listener {
                             player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 60, 0);
                             return;
                         }
-
                         upgrade.setAmount(upgrade.getAmount() - 1);
-
-                        double intAntique;
-                        double invocationAntique;
-
-                        switch (meta.getPersistentDataContainer().get(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING)) {
-                            case "COMMON":
-                                intAntique = 12;
-                                invocationAntique = 5;
-                                break;
-                            case "UNCOMMON":
-                                intAntique = 18;
-                                invocationAntique = 8;
-                                break;
-                            case "RARE":
-                                intAntique = 35;
-                                invocationAntique = 13;
-                                break;
-                            case "EPIC":
-                                intAntique = 44;
-                                invocationAntique = 18;
-                                break;
-                            case "LEGENDARY":
-                                intAntique = 60;
-                                invocationAntique = 25;
-                                break;
-                            case "MYTHIC":
-                                intAntique = 74;
-                                invocationAntique = 31;
-                                break;
-                            default:
-                                intAntique = 4;
-                                invocationAntique = 1;
-                                break;
-                        }
-
-                        refreshStats(item);
-
                         meta = item.getItemMeta();
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeIntelligence"), PersistentDataType.DOUBLE, intAntique);
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeInvocation"), PersistentDataType.DOUBLE, invocationAntique);
-
                         meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "reforge"), PersistentDataType.STRING, "Antique");
                         item.setItemMeta(meta);
-
                         value.updateItem(plugin, item);
                         break;
                     case "Hair Trigger":
@@ -754,52 +612,10 @@ public class AnvilEvents implements Listener {
                             player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 60, 0);
                             return;
                         }
-
                         upgrade.setAmount(upgrade.getAmount() - 1);
-
-                        double critRepeating;
-                        double strengthRepeating;
-
-                        switch (meta.getPersistentDataContainer().get(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING)) {
-                            case "COMMON":
-                                critRepeating = 4;
-                                strengthRepeating = 6;
-                                break;
-                            case "UNCOMMON":
-                                critRepeating = 7;
-                                strengthRepeating = 11;
-                                break;
-                            case "RARE":
-                                critRepeating = 10;
-                                strengthRepeating = 17;
-                                break;
-                            case "EPIC":
-                                critRepeating = 16;
-                                strengthRepeating = 25;
-                                break;
-                            case "LEGENDARY":
-                                critRepeating = 21;
-                                strengthRepeating = 34;
-                                break;
-                            case "MYTHIC":
-                                critRepeating = 27;
-                                strengthRepeating = 46;
-                                break;
-                            default:
-                                critRepeating = 2;
-                                strengthRepeating = 5;
-                                break;
-                        }
-
-                        refreshStats(item);
-
                         meta = item.getItemMeta();
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeCrit"), PersistentDataType.DOUBLE, critRepeating);
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeStrength"), PersistentDataType.DOUBLE, strengthRepeating);
-
                         meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "reforge"), PersistentDataType.STRING, "Repeating");
                         item.setItemMeta(meta);
-
                         value.updateItem(plugin, item);
                         break;
                     case "Living Honey":
@@ -810,61 +626,10 @@ public class AnvilEvents implements Listener {
                             player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 60, 0);
                             return;
                         }
-
                         upgrade.setAmount(upgrade.getAmount() - 1);
-
-                        double healthGooey;
-                        double strengthGooey;
-                        double speedGooey;
-
-                        switch (meta.getPersistentDataContainer().get(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING)) {
-                            case "COMMON":
-                                healthGooey = 10;
-                                strengthGooey = 4;
-                                speedGooey = -3;
-                                break;
-                            case "UNCOMMON":
-                                healthGooey = 14;
-                                strengthGooey = 6;
-                                speedGooey = -5;
-                                break;
-                            case "RARE":
-                                healthGooey = 21;
-                                strengthGooey = 10;
-                                speedGooey = -8;
-                                break;
-                            case "EPIC":
-                                healthGooey = 34;
-                                strengthGooey = 16;
-                                speedGooey = -13;
-                                break;
-                            case "LEGENDARY":
-                                healthGooey = 47;
-                                strengthGooey = 22;
-                                speedGooey = -17;
-                                break;
-                            case "MYTHIC":
-                                healthGooey = 72;
-                                strengthGooey = 31;
-                                speedGooey = -22;
-                                break;
-                            default:
-                                healthGooey = 4;
-                                strengthGooey = 2;
-                                speedGooey = -1;
-                                break;
-                        }
-
-                        refreshStats(item);
-
                         meta = item.getItemMeta();
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeHealth"), PersistentDataType.DOUBLE, healthGooey);
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeStrength"), PersistentDataType.DOUBLE, strengthGooey);
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeSpeed"), PersistentDataType.DOUBLE, speedGooey);
-
                         meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "reforge"), PersistentDataType.STRING, "Gooey");
                         item.setItemMeta(meta);
-
                         value.updateItem(plugin, item);
                         break;
                     case "Rusty Cog":
@@ -875,69 +640,10 @@ public class AnvilEvents implements Listener {
                             player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 60, 0);
                             return;
                         }
-
                         upgrade.setAmount(upgrade.getAmount() - 1);
-
-                        double defenseRusty;
-                        double strengthRusty;
-                        double critRusty;
-
-                        switch (meta.getPersistentDataContainer().get(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING)) {
-                            case "COMMON":
-                                defenseRusty = 4;
-                                strengthRusty = 1;
-                                critRusty = 2;
-                                break;
-                            case "UNCOMMON":
-                                defenseRusty = 6;
-                                strengthRusty = 2;
-                                critRusty = 3;
-                                break;
-                            case "RARE":
-                                defenseRusty = 9;
-                                strengthRusty = 3;
-                                critRusty = 5;
-                                break;
-                            case "EPIC":
-                                defenseRusty = 13;
-                                strengthRusty = 6;
-                                critRusty = 8;
-                                break;
-                            case "LEGENDARY":
-                                defenseRusty = 20;
-                                strengthRusty = 9;
-                                critRusty = 11;
-                                break;
-                            case "MYTHIC":
-                                defenseRusty = 26;
-                                strengthRusty = 13;
-                                critRusty = 15;
-                                break;
-                            default:
-                                defenseRusty = 2;
-                                strengthRusty = 1;
-                                critRusty = 1;
-                                break;
-                        }
-
-                        refreshStats(item);
-
                         meta = item.getItemMeta();
-                        if (item.getType() == Material.IRON_HELMET || item.getType() == Material.IRON_CHESTPLATE ||
-                            item.getType() == Material.IRON_LEGGINGS || item.getType() == Material.IRON_BOOTS ||
-                            item.getType() == Material.CHAINMAIL_HELMET || item.getType() == Material.CHAINMAIL_CHESTPLATE ||
-                            item.getType() == Material.CHAINMAIL_LEGGINGS || item.getType() == Material.CHAINMAIL_BOOTS) {
-                            defenseRusty *= 2;
-                            strengthRusty *= 2;
-                            critRusty *= 2;
-                        }
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeDefense"), PersistentDataType.DOUBLE, defenseRusty);
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeStrength"), PersistentDataType.DOUBLE, strengthRusty);
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeCrit"), PersistentDataType.DOUBLE, critRusty);
-
                         meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "reforge"), PersistentDataType.STRING, "Rusty");
                         item.setItemMeta(meta);
-
                         value.updateItem(plugin, item);
                         break;
                     case "Venomous Fang":
@@ -948,60 +654,104 @@ public class AnvilEvents implements Listener {
                             player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 60, 0);
                             return;
                         }
-
                         upgrade.setAmount(upgrade.getAmount() - 1);
-
-                        double attackSpeedVenomous;
-                        double CCVenomous;
-                        double critVenomous;
-
-                        switch (meta.getPersistentDataContainer().get(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING)) {
-                            case "COMMON":
-                                attackSpeedVenomous = 7;
-                                CCVenomous = 1;
-                                critVenomous = 4;
-                                break;
-                            case "UNCOMMON":
-                                attackSpeedVenomous = 11;
-                                CCVenomous = 3;
-                                critVenomous = 6;
-                                break;
-                            case "RARE":
-                                attackSpeedVenomous = 15;
-                                CCVenomous = 5;
-                                critVenomous = 9;
-                                break;
-                            case "EPIC":
-                                attackSpeedVenomous = 21;
-                                CCVenomous = 8;
-                                critVenomous = 14;
-                                break;
-                            case "LEGENDARY":
-                                attackSpeedVenomous = 37;
-                                CCVenomous = 11;
-                                critVenomous = 19;
-                                break;
-                            case "MYTHIC":
-                                attackSpeedVenomous = 53;
-                                CCVenomous = 16;
-                                critVenomous = 26;
-                                break;
-                            default:
-                                attackSpeedVenomous = 4;
-                                CCVenomous = 0;
-                                critVenomous = 2;
-                                break;
-                        }
-
-                        refreshStats(item);
-
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeAttackSpeed"), PersistentDataType.DOUBLE, attackSpeedVenomous);
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeCC"), PersistentDataType.DOUBLE, CCVenomous);
-                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeCrit"), PersistentDataType.DOUBLE, critVenomous);
-
                         meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "reforge"), PersistentDataType.STRING, "Venomous");
                         item.setItemMeta(meta);
+                        value.updateItem(plugin, item);
+                        break;
+                    case "Attachable Lantern":
+                        //give an item the illuminating reforge
 
+                        if (!checkType(item, "helmet")) {
+                            player.sendMessage(ChatColor.RED + "Invalid option");
+                            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 60, 0);
+                            return;
+                        }
+                        upgrade.setAmount(upgrade.getAmount() - 1);
+                        meta = item.getItemMeta();
+                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "reforge"), PersistentDataType.STRING, "Illuminating");
+                        item.setItemMeta(meta);
+
+                        value.updateItem(plugin, item);
+                        break;
+                    case "Stimulating Gland":
+                        //give an item the stimulating reforge
+                        if (!checkType(item, "shield")) {
+                            player.sendMessage(ChatColor.RED + "Invalid option");
+                            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 60, 0);
+                            return;
+                        }
+                        upgrade.setAmount(upgrade.getAmount() - 1);
+                        meta = item.getItemMeta();
+                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "reforge"), PersistentDataType.STRING, "Stimulating");
+                        item.setItemMeta(meta);
+
+                        value.updateItem(plugin, item);
+                        break;
+                    case "Discreet Sludge":
+                        //give an item the camouflaged reforge
+                        if (!checkType(item, "Armor")) {
+                            player.sendMessage(ChatColor.RED + "Invalid option");
+                            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 60, 0);
+                            return;
+                        }
+                        upgrade.setAmount(upgrade.getAmount() - 1);
+                        meta = item.getItemMeta();
+                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "reforge"), PersistentDataType.STRING, "Camouflaged");
+                        item.setItemMeta(meta);
+
+                        value.updateItem(plugin, item);
+                        break;
+                    case "Relentless Lifeblood":
+                        //give an item the tenacious reforge
+                        if (!checkType(item, "chestplate")) {
+                            player.sendMessage(ChatColor.RED + "Invalid option");
+                            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 60, 0);
+                            return;
+                        }
+                        upgrade.setAmount(upgrade.getAmount() - 1);
+                        meta = item.getItemMeta();
+                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "reforge"), PersistentDataType.STRING, "Tenacious");
+                        item.setItemMeta(meta);
+                        value.updateItem(plugin, item);
+                        break;
+                    case "Shady Augment":
+                        //give an item the sawed-off reforge
+                        if (!checkType(item, "bow")) {
+                            player.sendMessage(ChatColor.RED + "Invalid option");
+                            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 60, 0);
+                            return;
+                        }
+                        upgrade.setAmount(upgrade.getAmount() - 1);
+                        meta = item.getItemMeta();
+                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "reforge"), PersistentDataType.STRING, "Sawed-Off");
+                        item.setItemMeta(meta);
+                        value.updateItem(plugin, item);
+                        break;
+                    case "Giant's Heart":
+                        //give an item the sawed-off reforge
+                        if (!checkType(item, "Armor")) {
+                            player.sendMessage(ChatColor.RED + "Invalid option");
+                            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 60, 0);
+                            return;
+                        }
+                        upgrade.setAmount(upgrade.getAmount() - 1);
+                        meta = item.getItemMeta();
+                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "reforge"), PersistentDataType.STRING, "Gigantic");
+                        item.setItemMeta(meta);
+                        value.updateItem(plugin, item);
+                        break;
+                    case "Vile Blood":
+                        //give an item the leaching reforge
+                        if (!checkType(item, "bow")) {
+                            player.sendMessage(ChatColor.RED + "Invalid option");
+                            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 60, 0);
+                            return;
+                        }
+                        upgrade.setAmount(upgrade.getAmount() - 1);
+                        meta = item.getItemMeta();
+                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "reforge"), PersistentDataType.STRING, "Leaching");
+                        item.setItemMeta(meta);
                         value.updateItem(plugin, item);
                         break;
                     default:
@@ -1011,40 +761,6 @@ public class AnvilEvents implements Listener {
                 }
             }
         }
-    }
-
-    public void refreshStats(ItemStack item) {
-        ItemMeta meta = item.getItemMeta();
-
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeDamage"), PersistentDataType.DOUBLE, 0.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeStrength"), PersistentDataType.DOUBLE, 0.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeCC"), PersistentDataType.DOUBLE, 0.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeAttackSpeed"), PersistentDataType.DOUBLE, 0.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeCrit"), PersistentDataType.DOUBLE, 0.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeHealth"), PersistentDataType.DOUBLE, 0.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeDefense"), PersistentDataType.DOUBLE, 0.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeSpeed"), PersistentDataType.DOUBLE, 0.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeIntelligence"), PersistentDataType.DOUBLE, 0.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeThaumaturgy"), PersistentDataType.DOUBLE, 0.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeInvocation"), PersistentDataType.DOUBLE, 0.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeMagic"), PersistentDataType.DOUBLE, 0.0);
-
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeDamageModifier"), PersistentDataType.DOUBLE, 0.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeStrengthModifier"), PersistentDataType.DOUBLE, 0.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeCCModifier"), PersistentDataType.DOUBLE, 0.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeAttackSpeedModifier"), PersistentDataType.DOUBLE, 0.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeCritModifier"), PersistentDataType.DOUBLE, 0.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeHealthModifier"), PersistentDataType.DOUBLE, 0.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeDefenseModifier"), PersistentDataType.DOUBLE, 0.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeIntelligenceModifier"), PersistentDataType.DOUBLE, 0.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeSpeedModifier"), PersistentDataType.DOUBLE, 0.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeThaumaturgyModifier"), PersistentDataType.DOUBLE, 0.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeInvocationModifier"), PersistentDataType.DOUBLE, 0.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeManaModifier"), PersistentDataType.DOUBLE, 0.0);
-        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "ReforgeManaSave"), PersistentDataType.DOUBLE, 0.0);
-
-        item.setItemMeta(meta);
-
     }
 
     public boolean checkType(ItemStack item, String category) {

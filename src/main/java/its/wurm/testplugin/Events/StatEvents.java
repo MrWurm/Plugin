@@ -5,26 +5,30 @@ import its.wurm.testplugin.Items.Items;
 import its.wurm.testplugin.Main;
 import its.wurm.testplugin.Mobs.Attacks;
 import its.wurm.testplugin.Mobs.Mobs;
+import its.wurm.testplugin.persistentDataContainers.stringList;
 import its.wurm.testplugin.statFunctions.StatFunctions;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.CrossbowMeta;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.projectiles.ProjectileSource;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class StatEvents implements Listener {
 
@@ -53,10 +57,56 @@ public class StatEvents implements Listener {
     }
 
     @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+        functions.addPlayer(event.getPlayer());
+    }
+    @EventHandler
     public void onSpawn(EntitySpawnEvent event) {
         Entity entity = event.getEntity();
-        if (!(entity instanceof Player)) {
-            functions.CheckHealth(entity, plugin);
+
+        if (entity instanceof Item) {
+            Item item = (Item) entity;
+            if (item.getItemStack().getItemMeta().getLore() == null) {
+                ItemMeta meta = item.getItemStack().getItemMeta();
+                List<String> lore = new ArrayList<>();
+                switch (item.getItemStack().getType()) {
+                    case DIAMOND:
+                    case EMERALD:
+                    case ANCIENT_DEBRIS:
+                    case NETHERITE_INGOT:
+                    case CONDUIT:
+                    case MUSIC_DISC_11:
+                    case MUSIC_DISC_13:
+                    case MUSIC_DISC_BLOCKS:
+                    case MUSIC_DISC_CAT:
+                    case MUSIC_DISC_CHIRP:
+                    case MUSIC_DISC_FAR:
+                    case MUSIC_DISC_MALL:
+                    case MUSIC_DISC_MELLOHI:
+                    case MUSIC_DISC_PIGSTEP:
+                    case MUSIC_DISC_STAL:
+                    case MUSIC_DISC_STRAD:
+                    case MUSIC_DISC_WAIT:
+                    case MUSIC_DISC_WARD:
+                    case BEACON:
+                    case HEART_OF_THE_SEA:
+                    case NETHER_STAR:
+                    case DIAMOND_BLOCK:
+                    case EMERALD_BLOCK:
+                    case JUKEBOX:
+                    case ENCHANTING_TABLE:
+                    case ENCHANTED_GOLDEN_APPLE:
+                        lore.add(ChatColor.GREEN.toString() + ChatColor.BOLD + "UNCOMMON");
+                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "UNCOMMON");
+                        break;
+                    default:
+                        lore.add(ChatColor.WHITE.toString() + ChatColor.BOLD + "COMMON");
+                        meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "rarity"), PersistentDataType.STRING, "COMMON");
+                        break;
+                }
+                meta.setLore(lore);
+                item.getItemStack().setItemMeta(meta);
+            }
         }
 
         if (entity.getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
@@ -65,14 +115,14 @@ public class StatEvents implements Listener {
                     PersistentDataType.STRING)) {
                 case "DEATH_POTION_ARROW":
                     entity.getPersistentDataContainer().set(new NamespacedKey(plugin, "Damage"),
-                            PersistentDataType.DOUBLE, entity.getPersistentDataContainer().get(new NamespacedKey(plugin, "Damage"),
-                                    PersistentDataType.DOUBLE) * 1.4);
+                        PersistentDataType.DOUBLE, entity.getPersistentDataContainer().get(new NamespacedKey(plugin, "Damage"),
+                        PersistentDataType.DOUBLE) * 1.4);
             }
         }
     }
 
     @EventHandler
-    public void onRespawn(PlayerRespawnEvent event) {
+    public void onRespawn (PlayerRespawnEvent event) {
         Double MaxHealth = event.getPlayer().getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
                 PersistentDataType.DOUBLE);
         Double MaxMana = event.getPlayer().getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxMana"),
@@ -85,34 +135,81 @@ public class StatEvents implements Listener {
         Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             public void run() {
                 event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,
-                        9999999, 5, true, false));
+                        9999999, 4, true, false));
             }
         }, 3L);
     }
 
     @EventHandler
-    public void onTarget(EntityTargetEvent event) {
+    public void onTarget (EntityTargetEvent event) {
         Entity entity = event.getEntity();
         Entity target = event.getTarget();
         if (target == null) {
             return;
         }
+
         if (target.getPersistentDataContainer().get(new NamespacedKey(plugin, "class"),
                 PersistentDataType.STRING) == entity.getPersistentDataContainer().get(new NamespacedKey(plugin, "class"),
                 PersistentDataType.STRING) &&
             event.getReason() != EntityTargetEvent.TargetReason.TARGET_ATTACKED_ENTITY) {
             event.setCancelled(true);
         }
+
+        if (entity.getPersistentDataContainer().get(new NamespacedKey(plugin, "ignore"),
+                PersistentDataType.INTEGER) != null &&
+            entity.getPersistentDataContainer().get(new NamespacedKey(plugin, "ignore"),
+                        PersistentDataType.INTEGER) == 1) {
+            event.setCancelled(true);
+        }
+
+        if (entity.getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                PersistentDataType.STRING) != null) {
+            switch (entity.getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                    PersistentDataType.STRING)) {
+                case "MULCHLING":
+                    if (entity.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+                            PersistentDataType.DOUBLE) <= 240 && !(target instanceof ArmorStand)) {
+                        event.setCancelled(true);
+                    }
+                    return;
+            }
+        }
     }
 
     @EventHandler
-    public void onSplit(SlimeSplitEvent event) {
+    public void onSplit (SlimeSplitEvent event) {
         Slime entity = event.getEntity();
         if (entity.getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
                 PersistentDataType.STRING) != null) {
             switch (entity.getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
                     PersistentDataType.STRING)) {
+                case "CAMO_OOZE":
+                    event.setCount(3);
+                    break;
+                case "VOLATILE_SLIME":
+                    event.setCount(0);
+                    break;
+            }
+        }
+    }
 
+    @EventHandler
+    public void onTransform(EntityTransformEvent event) {
+        EntityTransformEvent.TransformReason reason = event.getTransformReason();
+        Random random = new Random();
+        List<Entity> entities = event.getTransformedEntities();
+        Entity entity = event.getEntity();
+
+        if (entity.getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                PersistentDataType.STRING) != null) {
+            switch (entity.getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                    PersistentDataType.STRING)) {
+                case "CAMO_OOZE":
+                    for (int target = 0; target < entities.size(); target++) {
+                        entities.get(target).remove();
+                        Mobs.SMALL_CAMO_OOZE.createMob(plugin, entity.getLocation());
+                    }
+                    break;
             }
         }
     }
@@ -207,15 +304,7 @@ public class StatEvents implements Listener {
                 entity.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
                     PersistentDataType.DOUBLE, entity.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
                     PersistentDataType.DOUBLE) - AfterDamage);
-                entity.setCustomName(ChatColor.GOLD + "" + entity.getPersistentDataContainer().get(new NamespacedKey(plugin, "Name"),
-                    PersistentDataType.STRING) + "" + ChatColor.RED + " ❤" +
-                    entity.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
-                    PersistentDataType.DOUBLE) + "/" + entity.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
-                    PersistentDataType.DOUBLE));
-                if (entity.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
-                        PersistentDataType.DOUBLE) <= 1) {
-                    entity.setHealth(0);
-                }
+                functions.updateHealth(entity);
             }
         }
     }
@@ -229,7 +318,7 @@ public class StatEvents implements Listener {
         if (shooter instanceof Player) {
             return;
         }
-        Entity proj = event.getEntity();
+        Projectile proj = event.getEntity();
         double dmg = shooter.getPersistentDataContainer().get(new NamespacedKey(plugin, "Damage"),
                 PersistentDataType.DOUBLE);
         Random random = new Random();
@@ -286,6 +375,7 @@ public class StatEvents implements Listener {
                             PersistentDataType.STRING, "SWARM_ARROW");
                     break;
                 case "SKELETON_GRUNT":
+                case "DARK_IRON_ARCHER":
                     event.setCancelled(true);
                     break;
                 case "HUNTER":
@@ -298,33 +388,45 @@ public class StatEvents implements Listener {
                     proj.getPersistentDataContainer().set(new NamespacedKey(plugin, "id"),
                             PersistentDataType.STRING, "SAND_ARROW");
                     break;
+                case "ELITE_HUNTER":
+                    CrossbowMeta metaMain1 = (CrossbowMeta) ((Pillager)shooter).getEquipment().getItemInMainHand().getItemMeta();
+                    List<ItemStack> items1 = new ArrayList<>();
+                    items1.add(new ItemStack(Material.SPECTRAL_ARROW));
+                    ((Pillager)shooter).getEquipment().getItemInMainHand().setItemMeta(metaMain1);
+                    attacks.track(proj, shooter, 2, 0.32);
+                    break;
+                case "STONESHELL":
+                    attacks.createSnowball(proj.getLocation(), ((Shulker)proj.getShooter()).getPersistentDataContainer().get(new NamespacedKey(plugin, "Damage"),
+                            PersistentDataType.DOUBLE) * .15, ((Shulker)proj.getShooter()), new Vector(((Shulker)proj.getShooter()).getTarget().getEyeLocation().getX() - proj.getLocation().getX(), ((Shulker)proj.getShooter()).getTarget().getEyeLocation().getY() - proj.getLocation().getY(), ((Shulker)proj.getShooter()).getTarget().getEyeLocation().getZ() - proj.getLocation().getZ()).normalize().multiply(2.1),
+                            "", Material.FIRE_CHARGE).setVisualFire(true);
+                    proj.remove();
+                    break;
             }
         }
     }
 
     @EventHandler
     public void onDamage(EntityDamageByEntityEvent event) {
-        if (!(event.getEntity() instanceof Damageable)) {
+        if (!(event.getEntity() instanceof LivingEntity)) {
             return;
         }
-
 
         org.bukkit.entity.Damageable victim = (Damageable) event.getEntity();
 
         org.bukkit.entity.LivingEntity living = (LivingEntity) victim;
         boolean max = false;
         if (victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
-                PersistentDataType.DOUBLE).equals(victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
-                PersistentDataType.DOUBLE))) {
+            PersistentDataType.DOUBLE).equals(victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
+            PersistentDataType.DOUBLE))) {
             max = true;
         }
-
         Entity attacker = event.getDamager();
         double Health = victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
                 PersistentDataType.DOUBLE);
 
         if (victim instanceof Player &&
             functions.CheckDamage(event, plugin) instanceof Player &&
+            functions.CheckDamage(event, plugin) != victim &&
             ((Player)functions.CheckDamage(event, plugin)).getPersistentDataContainer().get(new NamespacedKey(plugin, "peace"),
                     PersistentDataType.INTEGER) == 1) {
 
@@ -345,8 +447,8 @@ public class StatEvents implements Listener {
                     Double cd = 120.0;
                     List<Double> list;
 
-                    if (player.getInventory().getItemInOffHand().getType() == Material.SHIELD && player.getInventory().getItemInMainHand().getType() != Material.SHIELD) {
-                        cd = (100.0 * (2 + (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Integrity"),
+                    if (player.getInventory().getItemInOffHand().getType() == Material.SHIELD && (player.getInventory().getItemInMainHand() == null ||player.getInventory().getItemInMainHand().getType() != Material.SHIELD)) {
+                        cd = (100.0 * (2 + (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Integrity"),
                                 PersistentDataType.DOUBLE)/10)))/((attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "Damage"),
                                 PersistentDataType.DOUBLE) + 100)/attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "Damage"),
                                 PersistentDataType.DOUBLE));
@@ -380,7 +482,90 @@ public class StatEvents implements Listener {
 
             double AfterDamage = attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "Damage"),
                     PersistentDataType.DOUBLE);
+            if (victim instanceof Shulker &&
+                    ((Shulker)victim).getPeek() == 0f) {
+                AfterDamage *= .2;
+            }
 
+            if ((attacker instanceof Arrow ||
+                attacker instanceof SpectralArrow) &&
+                ((Projectile)attacker).getShooter() instanceof Player &&
+                attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "enchantments"),
+                    new stringList()) != null) {
+                Projectile arrow = (Projectile) attacker;
+                String[] enchantments = attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "enchantments"),
+                    new stringList());
+                int[] level = attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "levels"),
+                    PersistentDataType.INTEGER_ARRAY);
+                String reforge = attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "reforge"),
+                    PersistentDataType.STRING);
+
+                switch (reforge) {
+                    case "Leaching":
+                        functions.heal(plugin, (Entity)arrow.getShooter(), ((Entity)arrow.getShooter()).getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
+                                PersistentDataType.DOUBLE) * .02);
+                        break;
+                }
+
+                if (enchantments.length > 0 &&
+                    Arrays.asList(enchantments).indexOf("Ballistics") != -1 &&
+                    !(victim.isOnGround())) {
+                    AfterDamage *= 1 + ((level)[Arrays.asList(enchantments).indexOf("Ballistics")] * .09);
+                }
+
+                if (enchantments.length > 0 &&
+                    Arrays.asList(enchantments).indexOf("Hunter") != -1 &&
+                    (victim instanceof Animals ||
+                    victim instanceof Bat ||
+                    victim instanceof WaterMob ||
+                    victim instanceof Zoglin)) {
+                    AfterDamage *= 1 + ((level)[Arrays.asList(enchantments).indexOf("Hunter")] * .09);
+                }
+
+                if (enchantments.length > 0 &&
+                    Arrays.asList(enchantments).indexOf("Dismantle") != -1 &&
+                    (victim instanceof Golem ||
+                    victim instanceof Wither)) {
+                    AfterDamage *= 1 + ((level)[Arrays.asList(enchantments).indexOf("Dismantle")] * .09);
+                }
+
+                if (enchantments.length > 0 &&
+                    Arrays.asList(enchantments).indexOf("Impair") != -1 &&
+                    attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "Defense"),
+                            PersistentDataType.DOUBLE) > 100) {
+                    AfterDamage *= 1 + ((level)[Arrays.asList(enchantments).indexOf("Impair")] * .06);
+                }
+
+                if (enchantments.length > 0 &&
+                        Arrays.asList(enchantments).indexOf("Splash") != -1) {
+                    ArmorStand placeHoldDamager = victim.getWorld().spawn(new Location(victim.getWorld(),
+                            victim.getLocation().getX(), victim.getLocation().getY() + 100, victim.getLocation().getZ()), ArmorStand.class);
+                    placeHoldDamager.setGravity(false);
+                    placeHoldDamager.setInvulnerable(true);
+                    placeHoldDamager.getPersistentDataContainer().set(new NamespacedKey(plugin, "MaxHealth"),
+                            PersistentDataType.DOUBLE, 1.0);
+                    placeHoldDamager.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
+                            PersistentDataType.DOUBLE, 1.0);
+                    placeHoldDamager.getPersistentDataContainer().set(new NamespacedKey(plugin, "Damage"),
+                            PersistentDataType.DOUBLE, AfterDamage * ((level)[Arrays.asList(enchantments).indexOf("Splash")] * .02));
+                    List<Entity> entities = victim.getNearbyEntities(4, 4, 4);
+                    for (int i = 0; i < entities.size(); i++) {
+
+                        if (entities.get(i) instanceof LivingEntity &&
+                            entities.get(i) != victim) {
+                            ((LivingEntity) entities.get(i)).damage(1, placeHoldDamager);
+                            entities.get(i).getWorld().spawnParticle(Particle.WATER_SPLASH,
+                                entities.get(i).getLocation(), 12);
+                        }
+                    }
+                    placeHoldDamager.remove();
+                }
+
+                if (enchantments.length > 0 &&
+                    Arrays.asList(enchantments).indexOf("Leach") != -1) {
+                    functions.heal(plugin, (Entity)((Projectile)attacker).getShooter(), AfterDamage * (level)[Arrays.asList(enchantments).indexOf("Leach")] * .02);
+                }
+            }
             if (attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
                     PersistentDataType.STRING) != null) {
                 Random random = new Random();
@@ -406,12 +591,10 @@ public class StatEvents implements Listener {
 
                             if (victim instanceof Player) {
                                 org.bukkit.entity.Player vic = (Player) event.getEntity();
-                                if (vic.getInventory().getItemInMainHand().equals(Material.AIR)) {
+                                if (vic.getInventory().getItemInMainHand() == null) {
                                     return;
                                 }
                                 vic.getWorld().dropItem(attacker.getLocation(), vic.getInventory().getItemInMainHand());
-                                ItemStack item = new ItemStack(Material.AIR, 1);
-                                vic.getInventory().setItemInMainHand(item);
                             }
                         }
                         break;
@@ -420,7 +603,7 @@ public class StatEvents implements Listener {
                                 PersistentDataType.INTEGER)) {
                             case 2:
                                 living.addPotionEffect(new PotionEffect(PotionEffectType.POISON,
-                                        2400, 2));
+                                        2400, 1));
                             case 3:
                                 if (victim instanceof Player) {
                                     victim.getPersistentDataContainer().set(new NamespacedKey(plugin, "SpeedModifier"),
@@ -450,12 +633,11 @@ public class StatEvents implements Listener {
                     case "ZOMBIE_CRUSADER":
                         living.sendMessage(max + "");
                         if (max) {
-                            living.sendMessage("smite");
                             living.getWorld().spawnParticle(Particle.FLASH, living.getLocation(), 1);
                             living.getWorld().playSound(living.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 100, 1);
                             if (victim instanceof Player) {
-                                victim.getPersistentDataContainer().set(new NamespacedKey(plugin, "DefenseBase"),
-                                        PersistentDataType.DOUBLE, victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "DefenseBase"),
+                                victim.getPersistentDataContainer().set(new NamespacedKey(plugin, "DefenseBonus"),
+                                        PersistentDataType.DOUBLE, victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "DefenseBonus"),
                                                 PersistentDataType.DOUBLE) - 50);
                             } else {
                                 victim.getPersistentDataContainer().set(new NamespacedKey(plugin, "Defense"),
@@ -465,8 +647,8 @@ public class StatEvents implements Listener {
                             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                 public void run() {
                                     if (victim instanceof Player) {
-                                        victim.getPersistentDataContainer().set(new NamespacedKey(plugin, "DefenseBase"),
-                                                PersistentDataType.DOUBLE, victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "DefenseBase"),
+                                        victim.getPersistentDataContainer().set(new NamespacedKey(plugin, "DefenseBonus"),
+                                                PersistentDataType.DOUBLE, victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "DefenseBonus"),
                                                         PersistentDataType.DOUBLE) + 50);
                                     } else {
                                         victim.getPersistentDataContainer().set(new NamespacedKey(plugin, "Defense"),
@@ -516,6 +698,7 @@ public class StatEvents implements Listener {
                         ((LivingEntity) victim).setRemainingAir(0);
                         break;
                     case "HUNTER":
+                    case "ELITE_HUNTER":
                         if (living.hasPotionEffect(PotionEffectType.GLOWING)) {
                             AfterDamage *= 1.35;
                         }
@@ -523,6 +706,118 @@ public class StatEvents implements Listener {
                     case "SAND_ARROW":
                         living.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,
                                 45, 0));
+                        break;
+                    case "PIGMENTED_CREEPER":
+                        living.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,
+                                160, 0));
+                        living.addPotionEffect(new PotionEffect(PotionEffectType.POISON,
+                                100, 2));
+                        living.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION,
+                                320, 1));
+                        break;
+                    case "HOG_RIDER":
+                        if (attacker.getVehicle() == null) {
+                            AfterDamage *= 0.75;
+                        }
+                        break;
+                    case "Poison Dart":
+                        living.addPotionEffect(new PotionEffect(PotionEffectType.POISON,
+                                60, 3));
+                        break;
+                    case "SPEARMAN":
+                        if (attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "attack"),
+                            PersistentDataType.INTEGER) == 1) {
+                            attacker.getPersistentDataContainer().set(new NamespacedKey(plugin, "attack"),
+                                    PersistentDataType.INTEGER, 0);
+                            break;
+                        } else {
+                            event.setCancelled(true);
+                            return;
+                        }
+                    case "AMBUSH_SPIDER":
+                        ((LivingEntity)attacker).removePotionEffect(PotionEffectType.INVISIBILITY);
+                        break;
+                    case "EPSILON":
+                        if (victim.getVehicle() != null &&
+                            victim.getVehicle() instanceof Ocelot) {
+                            victim.getVehicle().remove();
+                        }
+                        break;
+                    case "HUNTER_ARROW":
+                        if (victim instanceof Animals ||
+                            victim instanceof Bat ||
+                            victim instanceof WaterMob ||
+                            victim instanceof Zoglin) {
+                            AfterDamage *= 1.35;
+                        }
+                        break;
+                    case "TIMBER_WOLF":
+                        new BukkitRunnable() {
+                            int iterations = 0;
+                            public void run()
+                            {
+                                if (iterations >= 3 || victim.isDead()) {
+                                    this.cancel();
+                                    return;
+                                }
+                                victim.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
+                                    PersistentDataType.DOUBLE, victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+                                    PersistentDataType.DOUBLE) - 20);
+                                victim.damage(1);
+                                victim.getWorld().spawnParticle(Particle.ITEM_CRACK, victim.getLocation(), 2, new ItemStack(Material.REDSTONE_BLOCK));
+                                iterations += 1;
+                            }
+                        }.runTaskTimer(plugin, 1, 20);
+                        break;
+                    case "UNDEAD_LOGGER":
+                        ((LivingEntity)victim).addPotionEffect(new PotionEffect(PotionEffectType.SLOW,
+                                25, 7, true, false));
+                        break;
+                    case "WEB_ARROW":
+                        ((LivingEntity)victim).addPotionEffect(new PotionEffect(PotionEffectType.SLOW,
+                                40, 7, true, false));
+                        attacks.createItem(victim.getLocation(),5980,  Material.COBWEB, true);
+                        break;
+                    case "SPIDER_QUEEN":
+                        ((LivingEntity)victim).addPotionEffect(new PotionEffect(PotionEffectType.SLOW,
+                                35, 2, true, false));
+                        ((LivingEntity)victim).addPotionEffect(new PotionEffect(PotionEffectType.POISON,
+                                90, 1, true, false));
+                        break;
+                    case "SNAPPER":
+                        victim.setVelocity(new Vector(victim.getLocation().getX() - attacker.getLocation().getX(), victim.getLocation().getY() - attacker.getLocation().getY(), victim.getLocation().getZ() - attacker.getLocation().getZ()).normalize().multiply(4));
+                        break;
+                    case "ALGAE_GOLEM":
+                        functions.heal(plugin, attacker, 60);
+                        break;
+                    case "CORRUPTED_MOSQUITO":
+                        new BukkitRunnable() {
+                            int iterations = 0;
+                            public void run()
+                            {
+                                if (iterations >= 4 || victim.isDead()) {
+                                    this.cancel();
+                                    return;
+                                }
+                                victim.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
+                                        PersistentDataType.DOUBLE, victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+                                                PersistentDataType.DOUBLE) - 15);
+                                victim.damage(1);
+                                functions.heal(plugin, attacker, 25);
+                                victim.getWorld().spawnParticle(Particle.ITEM_CRACK, victim.getLocation(), 2, new ItemStack(Material.COAL_BLOCK));
+                                iterations += 1;
+                            }
+                        }.runTaskTimer(plugin, 1, 30);
+                        break;
+                    case "VILE_LEACH":
+                        attacker.getPersistentDataContainer().set(new NamespacedKey(plugin, "MaxHealth"),
+                            PersistentDataType.DOUBLE, attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
+                            PersistentDataType.DOUBLE) + 30);
+                        attacker.getPersistentDataContainer().set(new NamespacedKey(plugin, "HealMod"),
+                                PersistentDataType.DOUBLE, attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "HealMod"),
+                                        PersistentDataType.DOUBLE) + .05);
+                        living.addPotionEffect(new PotionEffect(PotionEffectType.POISON,
+                                120, 2));
                         break;
                 }
             }
@@ -563,8 +858,8 @@ public class StatEvents implements Listener {
                     double mod = 1.0;
                     List<Double> list;
 
-                    if (player.getInventory().getItemInOffHand().getType() == Material.SHIELD && player.getInventory().getItemInMainHand().getType() != Material.SHIELD) {
-                        cd = (100.0 * (2 + (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Integrity"),
+                    if (player.getInventory().getItemInOffHand().getType() == Material.SHIELD && (player.getInventory().getItemInMainHand() == null ||player.getInventory().getItemInMainHand().getType() != Material.SHIELD)) {
+                        cd = (100.0 * (2 + (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "Integrity"),
                                 PersistentDataType.DOUBLE)/10)))/((attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "Damage"),
                                 PersistentDataType.DOUBLE) + 100)/attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "Damage"),
                                 PersistentDataType.DOUBLE));
@@ -602,9 +897,19 @@ public class StatEvents implements Listener {
                     PersistentDataType.DOUBLE);
             AfterDamage = ((attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "Strength"),
                     PersistentDataType.DOUBLE)/100) + 1) * AfterDamage;
+            if (victim instanceof Shulker &&
+                ((Shulker)victim).getPeek() == 0f) {
+                AfterDamage *= .2;
+            }
 
+            List<Object> apply = functions.reforgeOnDamage(((Player) attacker), plugin, AfterDamage, iscrit, max, (LivingEntity)victim);
+
+            if ((boolean)apply.get(1)) {
+                event.setCancelled(true);
+                return;
+            }
             AfterDamage = (attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "DamageModifier"),
-                    PersistentDataType.DOUBLE) +  functions.reforgeOnDamage(((Player) attacker), plugin, AfterDamage, iscrit, max, (LivingEntity)victim).get(0)) * AfterDamage;
+                    PersistentDataType.DOUBLE) + (double)apply.get(0)) * AfterDamage;
 
             if (choice <= attacker.getPersistentDataContainer().get(new NamespacedKey(plugin, "CritChance"),
                     PersistentDataType.DOUBLE)) {
@@ -723,8 +1028,31 @@ public class StatEvents implements Listener {
                             husk.getEquipment().setItemInMainHand(item);
                         }
                     }
+                    break;
                 case "RUSTY_GOLEM":
-                    attacks.createItem(victim.getLocation(), 5960, Material.EXPOSED_COPPER, true);
+                    switch (new Random().nextInt(12)) {
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 5:
+                            attacks.createItem(victim.getLocation(), 5980, Material.COPPER_INGOT, true);
+                            break;
+                        case 6:
+                        case 7:
+                        case 9:
+                            attacks.createItem(victim.getLocation(), 5980, Material.EXPOSED_COPPER, true);
+                            break;
+                        case 10:
+                            attacks.createItem(victim.getLocation(), 5980, Material.EXPOSED_CUT_COPPER_STAIRS, true);
+                            break;
+                        case 11:
+                            attacks.createItem(victim.getLocation(), 5980, Material.EXPOSED_CUT_COPPER_SLAB, true);
+                            break;
+                        case 12:
+                            attacks.createItem(victim.getLocation(), 5980, Material.LIGHTNING_ROD, true);
+                            break;
+                    }
                     living.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.2 * ((victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
                             PersistentDataType.DOUBLE)/victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
                             PersistentDataType.DOUBLE)) + 1));
@@ -745,31 +1073,92 @@ public class StatEvents implements Listener {
                                 PersistentDataType.DOUBLE));
                     }
                     break;
+                case "DEEP_MOUNTAIN_BURROWER":
+                    attacks.createSnowball(((LivingEntity) victim).getEyeLocation(), victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "Damage"),
+                            PersistentDataType.DOUBLE) * .15, (ProjectileSource) victim, victim.getFacing().getDirection().multiply(0.6).rotateAroundX(new Random().nextInt(360)), "", Material.STONE);
+                    break;
+                case "ALGAE_GOLEM":
+                    switch (new Random().nextInt(7)) {
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                            attacks.createItem(victim.getLocation(), 5980, Material.KELP, true);
+                            break;
+                        case 5:
+                            attacks.createItem(victim.getLocation(), 5980, Material.SCUTE, true);
+                            break;
+                        case 6:
+                            attacks.createItem(victim.getLocation(), 5980, Material.SEA_PICKLE, true);
+                            break;
+                        case 7:
+                            attacks.createItem(victim.getLocation(), 5980, Material.SEAGRASS, true);
+                    }
+                    break;
             }
         }
     }
 
     @EventHandler
     public void onOtherDamage(EntityDamageEvent event) {
-        if (!(event.getEntity() instanceof Damageable)) {
+        if (!(event.getEntity() instanceof LivingEntity)) {
             return;
         }
 
-        org.bukkit.entity.Damageable victim = (Damageable) event.getEntity();
+        org.bukkit.entity.LivingEntity victim = (LivingEntity) event.getEntity();
         double damage = 0.0;
+        double mod = 1.0;
 
+        Player player;
+        if (victim instanceof Player) {
+            player = (Player)victim;
+            List<ItemStack> listItem = new ArrayList<>();
+            for (int i = 0; i < 36; i++) {
+                if (player.getInventory().getItem(i) != null &&
+                        player.getInventory().getItem(i).getItemMeta() != null &&
+                        player.getInventory().getItem(i).getItemMeta().getPersistentDataContainer() != null &&
+                        player.getInventory().getItem(i).getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                                PersistentDataType.STRING) != null) {
+                    listItem.add(player.getInventory().getItem(i));
+                }
+            }
+
+            List<String> listName = new ArrayList<>();
+            for (int i = 0; i < listItem.size(); i++) {
+                listName.add(listItem.get(i).getItemMeta().getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
+                        PersistentDataType.STRING));
+            }
+            String main = "";
+            String mainRef = "";
+            String off = "";
+            String offRef = "";
+            String helmet = "";
+            String helmetRef = "";
+            String chest = "";
+            String chestRef = "";
+            String legs = "";
+            String legsRef = "";
+            String boots = "";
+            String bootsRef = "";
+
+            if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
+                mod -= .9;
+            }
+        }
         String id = victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
                 PersistentDataType.STRING);
         if (id == null) {
             id = "";
         }
 
+        if (id.equals("DAMAGE_INDICATOR")) {
+            return;
+        }
+
         double MaxHealth = victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
                 PersistentDataType.DOUBLE);
         double Health = victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
                 PersistentDataType.DOUBLE);
-        String Name = victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "Name"),
-                PersistentDataType.STRING);
 
         if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
             float distance = victim.getFallDistance();
@@ -786,13 +1175,10 @@ public class StatEvents implements Listener {
             }
         }
 
-        if (id == null) {
-            id = "";
-        }
         if (event.getCause() == EntityDamageEvent.DamageCause.CRAMMING ||
-                event.getCause() == EntityDamageEvent.DamageCause.DROWNING ||
-                event.getCause() == EntityDamageEvent.DamageCause.DRYOUT ||
-                event.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION) {
+            event.getCause() == EntityDamageEvent.DamageCause.DROWNING ||
+            event.getCause() == EntityDamageEvent.DamageCause.DRYOUT ||
+            event.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION) {
             if (victim instanceof Player) {
                 damage = MaxHealth / 20;
             } else {
@@ -807,10 +1193,11 @@ public class StatEvents implements Listener {
         }
 
         if (event.getCause() == EntityDamageEvent.DamageCause.FIRE ||
-                event.getCause() == EntityDamageEvent.DamageCause.POISON ||
-                event.getCause() == EntityDamageEvent.DamageCause.FREEZE ||
-                event.getCause() == EntityDamageEvent.DamageCause.HOT_FLOOR ||
-                event.getCause() == EntityDamageEvent.DamageCause.MELTING) {
+            event.getCause() == EntityDamageEvent.DamageCause.POISON ||
+            event.getCause() == EntityDamageEvent.DamageCause.FREEZE ||
+            event.getCause() == EntityDamageEvent.DamageCause.HOT_FLOOR ||
+            event.getCause() == EntityDamageEvent.DamageCause.MELTING ||
+            event.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) {
             if (victim instanceof Player) {
                 damage = MaxHealth / 35;
             } else {
@@ -840,6 +1227,10 @@ public class StatEvents implements Listener {
         }
 
 
+        if (mod < 0) {
+            mod = 0;
+        }
+        damage *= mod;
         victim.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
                 PersistentDataType.DOUBLE, Health - damage);
 
@@ -849,10 +1240,7 @@ public class StatEvents implements Listener {
                         if (!(victim instanceof Player) &&
                             victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
                                     PersistentDataType.STRING) != "DAMAGE_INDICATOR") {
-                            victim.setCustomName(ChatColor.GOLD + "" + Name + "" + ChatColor.RED + " ❤" +
-                                    victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
-                                            PersistentDataType.DOUBLE) + "/" + victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "MaxHealth"),
-                                    PersistentDataType.DOUBLE));
+                            functions.updateHealth(victim);
                         }
                         if (victim.getPersistentDataContainer().get(new NamespacedKey(plugin, "id"),
                                 PersistentDataType.STRING) != null) {
@@ -872,6 +1260,35 @@ public class StatEvents implements Listener {
                                     }
                                     passenger.setCustomName(victim.getCustomName());
                                     break;
+                                case "VOLATILE_SLIME":
+                                    new BukkitRunnable() {
+                                        int iterations = 0;
+                                        FallingBlock block = attacks.createBlock(victim.getLocation(), 2400.0, Material.SLIME_BLOCK, victim, true);
+                                        public void run()
+                                        {
+                                            block.setGravity(false);
+                                            iterations += 1;
+                                            if (block.isDead() ||
+                                                iterations >= 6) {
+                                                block.getWorld().createExplosion(block.getLocation(), 7.2f, false, false, block);
+                                                block.remove();
+                                                this.cancel();
+                                                return;
+                                            }
+
+                                            if (iterations % 2 == 0) {
+                                                block.remove();
+                                                block = attacks.createBlock(block.getLocation(), 2400.0, Material.HONEY_BLOCK, victim, true);
+                                                block.setGravity(false);
+                                            } else {
+                                                block.remove();
+                                                block = attacks.createBlock(block.getLocation(), 2400.0, Material.SLIME_BLOCK, victim, true);
+                                                block.setGravity(false);
+                                            }
+                                        }
+                                    }.runTaskTimer(plugin, 0, 15);
+                                    break;
+
                             }
                         }
 
@@ -880,17 +1297,9 @@ public class StatEvents implements Listener {
                             victim.setHealth(0.0);
                         }
 
-                        LivingEntity frame = (LivingEntity) victim;
-                        if (event.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION ||
-                            event.getCause() == EntityDamageEvent.DamageCause.CONTACT ||
-                            event.getCause() == EntityDamageEvent.DamageCause.DRAGON_BREATH ||
-                            event.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK ||
-                            event.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION ||
-                            event.getCause() == EntityDamageEvent.DamageCause.LIGHTNING ||
-                            event.getCause() == EntityDamageEvent.DamageCause.MAGIC ||
-                            event.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
-                            frame.setNoDamageTicks(0);
-                }
+                        victim.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE,
+                                10, 0, true, false));
+                        victim.setNoDamageTicks(0);
 
             }
         }, 1);
@@ -911,6 +1320,20 @@ public class StatEvents implements Listener {
                     Wolf wolfGreater = (Wolf) entity;
                     Bukkit.getPlayer(wolfGreater.getOwner().getUniqueId()).getInventory().addItem(Items.GREATER_SPIRIT_BONE_SHARD.getItem(plugin));
                     break;
+                case "REVENANT":
+                    if (entity.getPersistentDataContainer().get(new NamespacedKey(plugin, "Health"),
+                            PersistentDataType.DOUBLE) != 0) {
+                    ((LivingEntity) entity).setHealth(20);
+                    entity.setInvulnerable(true);
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                        public void run() {
+                            entity.setInvulnerable(false);
+                            entity.getPersistentDataContainer().set(new NamespacedKey(plugin, "Health"),
+                                    PersistentDataType.DOUBLE, 0.0);
+                            ((LivingEntity) entity).setHealth(0);
+                        }
+                    }, 80);
+                }
             }
         }
     }

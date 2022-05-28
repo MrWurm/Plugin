@@ -70,6 +70,10 @@ public class ArmorSelectGUI implements InventoryHolder {
         main.setItem(37, Items.ONYX_BOOTS.getItem(plugin));
         main.setItem(38, Items.SATURATED_CREEPER_MASK.getItem(plugin));
         main.setItem(39, Items.INTRICATE_CREEPER_MASK.getItem(plugin));
+        main.setItem(40, Items.DARK_IRON_HELMET.getItem(plugin));
+        main.setItem(41, Items.DARK_IRON_CHESTPLATE.getItem(plugin));
+        main.setItem(42, Items.DARK_IRON_LEGGINGS.getItem(plugin));
+        main.setItem(43, Items.DARK_IRON_BOOTS.getItem(plugin));
 
         //Bottom Row with options to change pages and a go back button
         for (int i = 45; i < 54; i++) {

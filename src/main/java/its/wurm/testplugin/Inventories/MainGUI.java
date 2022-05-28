@@ -1,20 +1,20 @@
 package its.wurm.testplugin.Inventories;
 
+import dev.dbassett.skullcreator.SkullCreator;
 import its.wurm.testplugin.Items.Items;
+import its.wurm.testplugin.persistentDataContainers.stringList;
 import org.bukkit.*;
-import org.bukkit.block.banner.Pattern;
-import org.bukkit.block.banner.PatternType;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,6 @@ public class MainGUI implements InventoryHolder {
         init(player);
     }
 
-
     private void init(Player player)
     {
         ItemStack item;
@@ -46,7 +45,7 @@ public class MainGUI implements InventoryHolder {
         main.setItem(49, item);
 
         //Adding in all selection menus
-        item = createStats("§eYour Stats", Material.NETHER_STAR, player);
+        item = createStats("§eYour Stats", player);
         main.setItem(13, item);
         item = createItem("§aSkills", Material.DIAMOND_PICKAXE, false);
         main.setItem(19, item);
@@ -60,42 +59,87 @@ public class MainGUI implements InventoryHolder {
         main.setItem(29, item);
         item = createItem("§aRecipes", Material.CRAFTING_TABLE, false);
         main.setItem(30, item);
-        item = createItem("§6Inspect Item", Material.BOOKSHELF, false);
+        item = createItem(ChatColor.LIGHT_PURPLE + "Enchantments", Material.ENCHANTING_TABLE, false);
         main.setItem(31, item);
         item = createItem("§4Rituals - Coming Soon", Material.WRITABLE_BOOK, true);
         main.setItem(32, item);
         item = createItem("§eRewards - Coming Soon", Material.SUNFLOWER, false);
         main.setItem(33, item);
-        if (player.getPersistentDataContainer().get(new NamespacedKey(plugin, "peace"),
-                PersistentDataType.INTEGER) == 0) {
-            item = new ItemStack(Material.WHITE_BANNER);
-            ItemMeta meta = item.getItemMeta();
-            meta.setDisplayName(ChatColor.YELLOW + "Pacifist Mode");
-            lore.add(ChatColor.GRAY + "You and your followers deal no");
-            lore.add(ChatColor.RED + "damage " + ChatColor.GRAY + "to other players however");
-            lore.add(ChatColor.GRAY + "they can still hurt you.");
-            lore.add(" ");
-            lore.add(ChatColor.YELLOW + "Click to toggle");
-            lore.add(ChatColor.DARK_GRAY + "Currently " + ChatColor.RED + "OFF");
-            meta.setLore(lore);
-            item.setItemMeta(meta);
-        } else {
-            item = new ItemStack(Material.BLACK_BANNER);
-            BannerMeta meta = (BannerMeta) item.getItemMeta();
-            Pattern pattern = new Pattern(DyeColor.RED, PatternType.SKULL);
-            meta.addPattern(pattern);
-            meta.setDisplayName(ChatColor.YELLOW + "Pacifist Mode");
-            lore.add(ChatColor.GRAY + "You and your followers deal no");
-            lore.add(ChatColor.RED + "damage " + ChatColor.GRAY + "to other players however");
-            lore.add(ChatColor.GRAY + "they can still hurt you.");
-            lore.add(" ");
-            lore.add(ChatColor.YELLOW + "Click to toggle");
-            lore.add(ChatColor.DARK_GRAY + "Currently " + ChatColor.GREEN + "ON");
-            meta.setLore(lore);
-            meta.addItemFlags(ItemFlag.HIDE_DYE);
-            item.setItemMeta(meta);
-        }
+        item = createItem(ChatColor.GREEN + "Settings", Material.COMMAND_BLOCK, false);
         main.setItem(46, item);
+        item = createItem(ChatColor.YELLOW + "Potion Effects", Material.POTION, false);
+        main.setItem(47, item);
+        new BukkitRunnable() {
+            ItemStack potion = main.getItem(47);
+            public void run()
+            {
+                if (main.getViewers().isEmpty()) {
+                    this.cancel();
+                    return;
+                }
+
+                ItemMeta potionsMeta = potion.getItemMeta();
+                List<String> potionsLore = new ArrayList<>();
+                if (player.getPersistentDataContainer().get(new NamespacedKey(plugin,"potionEffects"), new stringList()).length > 0) {
+                    String potions = "";
+                    String testName = "";
+                    String[] potionName = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "potionEffects"), new stringList());
+                    int[] potionLevel = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "potionLevels"), PersistentDataType.INTEGER_ARRAY);
+                    long[] potionDuration = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "potionDurations"), PersistentDataType.LONG_ARRAY);
+                    for (int i = 0; i < potionName.length; i++) {
+                        boolean previous = false;
+                        String formattedTime = "";
+                        long cutTime = potionDuration[i] - System.currentTimeMillis();
+                        if (cutTime / 3600000 >= 1) {
+                            formattedTime = " " + formattedTime + (int) (cutTime/3600000) + ":";
+                            cutTime -= 3600000 * (int)(cutTime / 3600000);
+                            previous = true;
+                        }
+                        if (cutTime / 60000 >= 1) {
+                            formattedTime = formattedTime + (int) (cutTime/60000) + ":";
+                            cutTime -= 60000 * (int)(cutTime / 60000);
+                            previous = true;
+                        } else {
+                            if (previous) {
+                                formattedTime = formattedTime + "00:";
+                            }
+                        }
+                        if (cutTime / 1000 >= 1) {
+                            if ((int) (cutTime/1000) >= 10) {
+                                formattedTime = formattedTime + (int) (cutTime / 1000);
+                            } else {
+                                formattedTime = formattedTime + "0" + (int) (cutTime / 1000);
+                            }
+                            cutTime -= 1000 * (int)(cutTime / 1000);
+                        } else {
+                        if (previous) {
+                            formattedTime = formattedTime  + "00";
+                        }
+                    }
+
+                        testName = potionName[i] + " " + potionLevel[i] + " " + formattedTime + ", ";
+                        if (potions.length() + testName.length() < 22) {
+                            potions += testName;
+                        } else {
+                            potionsLore.add(ChatColor.BLUE + potions);
+                            potions = testName;
+                        }
+                        if (i + 1 == potionName.length) {
+                            potionsLore.add(ChatColor.BLUE + potions.substring(0, potions.length() - 2));
+                            break;
+                        }
+                    }
+                }
+                potionsMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+                potionsMeta.setLore(potionsLore);
+                potion.setItemMeta(potionsMeta);
+            }
+        }.runTaskTimer(plugin, 0, 20);
+        item = SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTJlZjM5NDM3ZDdkNDNhMDM0YzVhNDBiOTc0ZThkMmM2NzM0YTIxOGM3NjQ4NWQwNDkxMGY1MDdiZGMyZTgwOSJ9fX0=");
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(ChatColor.DARK_GRAY + "Sacks");
+        item.setItemMeta(meta);
+        main.setItem(51, item);
     }
 
     private ItemStack createItem(String name, Material mat, boolean glint) {
@@ -108,10 +152,9 @@ public class MainGUI implements InventoryHolder {
         meta.setDisplayName(name);
         item.setItemMeta(meta);
         return item;
-
     }
 
-    private ItemStack createStats(String name, Material mat, Player player) {
+    private ItemStack createStats(String name, Player player) {
         ItemStack item = new ItemStack(Material.PLAYER_HEAD, 1);
         SkullMeta meta = (SkullMeta) item.getItemMeta();
         meta.setOwningPlayer(player);
@@ -148,7 +191,6 @@ public class MainGUI implements InventoryHolder {
         meta.setLore(lore);
         item.setItemMeta(meta);
         return item;
-
     }
 
     @Override

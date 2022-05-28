@@ -12,15 +12,15 @@ import org.bukkit.plugin.Plugin;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StonesSelectGUI implements InventoryHolder {
+public class MaterialsSelectGUI4 implements InventoryHolder {
 
     private Inventory main;
 
     Plugin plugin;
 
-    public StonesSelectGUI(Plugin plugin) {
+    public MaterialsSelectGUI4(Plugin plugin) {
         this.plugin = plugin;
-        main = Bukkit.createInventory(this, 54, "Reforge Stones - 1");
+        main = Bukkit.createInventory(this, 54, "Materials - 4");
         init();
     }
 
@@ -29,17 +29,23 @@ public class StonesSelectGUI implements InventoryHolder {
         ItemStack item;
         List<String> lore = new ArrayList<>();
 
-        //Adding in all instances of the reforge stones
-        main.setItem(0, Items.WHETSTONE.getItem(plugin));
-        main.setItem(1, Items.CHUNK_OF_MEAT.getItem(plugin));
-        main.setItem(2, Items.LIVING_HONEY.getItem(plugin));
-        main.setItem(3, Items.ATTACHABLE_LANTERN.getItem(plugin));
+        //Adding in all instances of the materials
+        main.setItem(0, Items.TOUGH_CORD.getItem(plugin));
+        main.setItem(1, Items.MAGMITE_HANDLE.getItem(plugin));
+        main.setItem(2, Items.SEASTONE_HANDLE.getItem(plugin));
+        main.setItem(3, Items.ENCHANTED_PAPER.getItem(plugin));
+        main.setItem(4, Items.NECRONOMICON_PAGE.getItem(plugin));
+        main.setItem(5, Items.AMALGAMATED_TISSUE.getItem(plugin));
+        main.setItem(6, Items.SUPERSTONE_POWDER.getItem(plugin));
 
-        //Bottom Row with options to change pages and a go back button
+        //Bottom Row with options to change pages and a go back and next page button
         for (int i = 45; i < 54; i++) {
             main.setItem(i, Items.MENU_GLASS.getItem(plugin));
         }
+
+        main.setItem(45, Items.PREVIOUS_ARROW.getItem(plugin));
         main.setItem(49, Items.BACK_ARROW.getItem(plugin));
+        main.setItem(53, Items.NEXT_ARROW.getItem(plugin));
 
     }
 

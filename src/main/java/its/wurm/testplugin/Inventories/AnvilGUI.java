@@ -16,7 +16,7 @@ public class AnvilGUI implements InventoryHolder {
 
     private Inventory main;
 
-    static Plugin plugin;
+    Plugin plugin;
 
     public AnvilGUI(Plugin plugin) {
         this.plugin = plugin;

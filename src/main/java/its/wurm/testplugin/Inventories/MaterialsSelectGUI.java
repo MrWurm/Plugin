@@ -1,7 +1,6 @@
 package its.wurm.testplugin.Inventories;
 
 import its.wurm.testplugin.Items.Items;
-import its.wurm.testplugin.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
